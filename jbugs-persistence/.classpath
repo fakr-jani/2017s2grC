@@ -6,9 +6,19 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources">
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="oracle.eclipse.tools.glassfish.lib.system">
+		<attributes>
+			<attribute name="owner.project.facets" value="jst.ejb"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
@@ -17,29 +27,12 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources">
+	<classpathentry kind="lib" path="T:/20_TOOLS/servers/payara41/glassfish/modules/jaxb-osgi.jar">
 		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="javadoc_location" value="http://docs.oracle.com/javaee/7/api/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/EclipseLink 2.5.2">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-			<attribute name="owner.project.facets" value="jpt.jpa"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="con" path="oracle.eclipse.tools.glassfish.lib.system">
-		<attributes>
-			<attribute name="owner.project.facets" value="jst.ejb"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
