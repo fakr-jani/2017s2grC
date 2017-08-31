@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
 import entities.User;
 
 @Stateless(name = "UserDAOImpl")
-public class UserDAOImpl implements UserDAO, Serializable{
+public class UserDAOImpl implements UserDAO, Serializable {
 
 	@PersistenceContext(unitName = "jbugs-persistence")
 	EntityManager em;
