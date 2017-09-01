@@ -7,12 +7,14 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.Transient;
 
 import entities.Role;
 
 @Stateless(name = "RoleDAOImpl")
 public class RoleDAOImpl implements RoleDAO, Serializable {
 
+	@Transient
 	@PersistenceContext(unitName = "jbugs-persistence")
 	EntityManager em;
 
