@@ -6,12 +6,14 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Transient;
 
 import entities.User;
 
 @Stateless(name = "UserDAOImpl")
 public class UserDAOImpl implements UserDAO, Serializable {
 
+	@Transient
 	@PersistenceContext(unitName = "jbugs-persistence")
 	EntityManager em;
 
