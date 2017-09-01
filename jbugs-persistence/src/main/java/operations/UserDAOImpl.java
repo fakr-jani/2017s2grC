@@ -32,8 +32,7 @@ public class UserDAOImpl implements UserDAO, Serializable {
 
 	@Override
 	public User findUser(int idUser) {
-		User u = em.find(User.class, idUser);
-		return u;
+		return em.find(User.class, idUser);
 	}
 
 	@Override
