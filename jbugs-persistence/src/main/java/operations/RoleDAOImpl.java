@@ -13,7 +13,6 @@ import entities.Role;
 @Stateless(name = "RoleDAOImpl")
 public class RoleDAOImpl implements RoleDAO, Serializable {
 
-	@Serializable
 	@PersistenceContext(unitName = "jbugs-persistence")
 	EntityManager em;
 
