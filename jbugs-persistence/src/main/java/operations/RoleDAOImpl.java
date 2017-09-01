@@ -33,8 +33,7 @@ public class RoleDAOImpl implements RoleDAO, Serializable {
 
 	@Override
 	public Role findRole(int idRole) {
-		Role r = em.find(Role.class, idRole);
-		return r;
+		return em.find(Role.class, idRole);
 	}
 
 	@Override
