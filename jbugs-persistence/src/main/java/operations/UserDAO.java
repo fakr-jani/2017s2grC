@@ -3,7 +3,6 @@ package operations;
 import java.util.List;
 
 import javax.ejb.Remote;
-import javax.ejb.Stateless;
 
 import entities.User;
 
