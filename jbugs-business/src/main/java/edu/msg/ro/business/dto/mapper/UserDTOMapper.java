@@ -10,6 +10,11 @@ public class UserDTOMapper {
 		userDTO.setId(userEntity.getId());
 		userDTO.setLastname(userEntity.getLastname());
 		userDTO.setFirstname(userEntity.getFirstname());
+		userDTO.setUsername(userEntity.getUsername());
+		userDTO.setPassword(userEntity.getPassword());
+		userDTO.setEmail(userEntity.getEmail());
+		userDTO.setPhoneNumber(userEntity.getPhoneNumber());
+		userDTO.setActive(userEntity.isActive());
 
 		return userDTO;
 	}
@@ -22,6 +27,11 @@ public class UserDTOMapper {
 		userEntity.setId(userDTO.getId());
 		userEntity.setFirstname(userDTO.getFirstname());
 		userEntity.setLastname(userDTO.getLastname());
+		userEntity.setUsername(userDTO.getUsername());
+		userEntity.setPassword(userDTO.getPassword());
+		userEntity.setEmail(userDTO.getEmail());
+		userEntity.setPhoneNumber(userDTO.getPhoneNumber());
+		userEntity.setActive(userDTO.isActive());
 	}
 
 }
