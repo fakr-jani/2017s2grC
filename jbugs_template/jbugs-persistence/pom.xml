@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>edu.msg.ro</groupId>
+		<groupId>ro.msg.edu</groupId>
 		<artifactId>jbugs</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
@@ -11,12 +11,5 @@
 	<name>JBugs Persistence</name>
 	<description>Persistence layer</description>
 	<packaging>jar</packaging>
-	
-	<dependencies>
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-		</dependency>
-	</dependencies>	
 	
 </project>

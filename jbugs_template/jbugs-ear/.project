@@ -3,6 +3,7 @@
 	<name>jbugs-ear</name>
 	<comment></comment>
 	<projects>
+		<project>jbugs-client</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
