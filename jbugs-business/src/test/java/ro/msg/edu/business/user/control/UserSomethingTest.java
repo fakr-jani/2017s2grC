@@ -7,13 +7,13 @@ import org.junit.Test;
 
 import ro.msg.edu.business.AbstractIntegrationTest;
 import ro.msg.edu.business.common.exception.BusinessException;
-import ro.msg.edu.business.user.control.UserSomething;
+import ro.msg.edu.business.user.control.UserCRUDControl;
 import ro.msg.edu.business.user.dto.UserDTO;
 
 public class UserSomethingTest extends AbstractIntegrationTest {
 
 	@EJB
-	private UserSomething sut;
+	private UserCRUDControl sut;
 
 	@Test
 	public void createUser_EmailValidationFail() throws BusinessException {

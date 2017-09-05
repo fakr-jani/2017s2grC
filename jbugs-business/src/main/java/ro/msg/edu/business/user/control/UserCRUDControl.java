@@ -17,7 +17,7 @@ import ro.msg.edu.persistence.user.entity.User;
  *
  */
 @Stateless
-public class UserSomething {
+public class UserCRUDControl {
 
 	@Inject
 	private UserDTOMapper userDTOMapper;

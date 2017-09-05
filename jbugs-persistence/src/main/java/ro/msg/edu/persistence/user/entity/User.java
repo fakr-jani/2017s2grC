@@ -1,11 +1,18 @@
 package ro.msg.edu.persistence.user.entity;
 
+import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 /**
  * Entity for the User.
@@ -15,13 +22,18 @@ import javax.persistence.NamedQuery;
  */
 @NamedQuery(name = User.FIND_USER_BY_EMAIL, query = "SELECT u from User u WHERE u.email = :email")
 @Entity
-public class User extends AbstractEntity {
+public class User extends AbstractEntity implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public static final String FIND_USER_BY_EMAIL = "User.findUserByEmail";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long idUser;
 
 	@Column
 	private String firstname;
@@ -44,20 +56,23 @@ public class User extends AbstractEntity {
 	@Column
 	private boolean active;
 
-	public String getPassword() {
-		return password;
-	}
+	@ManyToMany
+	@JoinTable(name = "User_Role", joinColumns = @JoinColumn(name = "idUser"), inverseJoinColumns = @JoinColumn(name = "idRole"))
+	private List<Role> roles;
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+	@OneToMany(mappedBy = "assignedTo")
+	private List<Bug> assignedBugs;
 
+	@OneToMany(mappedBy = "createdBy")
+	private List<Bug> createdBugs;
+
+	@Override
 	public Long getId() {
-		return id;
+		return idUser;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public String getFirstname() {
@@ -92,6 +107,14 @@ public class User extends AbstractEntity {
 		this.username = username;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -108,9 +131,33 @@ public class User extends AbstractEntity {
 		this.active = active;
 	}
 
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
+	public List<Bug> getAssignedBugs() {
+		return assignedBugs;
+	}
+
+	public void setAssignedBugs(List<Bug> assignedBugs) {
+		this.assignedBugs = assignedBugs;
+	}
+
+	public List<Bug> getCreatedBugs() {
+		return createdBugs;
+	}
+
+	public void setCreatedBugs(List<Bug> createdBugs) {
+		this.createdBugs = createdBugs;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + "]";
+		return "User [id=" + idUser + ", username=" + username + "]";
 	}
 
 }
