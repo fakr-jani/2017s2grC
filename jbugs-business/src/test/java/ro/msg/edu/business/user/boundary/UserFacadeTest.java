@@ -19,7 +19,7 @@ public class UserFacadeTest extends AbstractIntegrationTest {
 		UserDTO testUser = new UserDTO();
 		testUser.setFirstname("John");
 		testUser.setLastname("Doe");
-		testUser.setEmail("llalala@msggroup.com");
+		testUser.setEmail("llalaldadaa@msggroup.com");
 
 		UserDTO createdUser = sut.createUser(testUser);
 
@@ -48,14 +48,13 @@ public class UserFacadeTest extends AbstractIntegrationTest {
 	@Test
 	public void updateUser_test() throws BusinessException {
 		UserDTO testUser = new UserDTO();
-
 		testUser.setId(5L);
-		testUser.setFirstname("firstname");
-		testUser.setLastname("lastname");
-		testUser.setEmail("email@yahoo.com");
-		testUser.setPassword("pass");
+		testUser.setFirstname("Some firstname");
+		testUser.setLastname("Some last name");
+		testUser.setEmail("haoosao@yahoo.com");
+		testUser.setPassword("password");
 		testUser.setPhoneNumber("0788888888");
-		testUser.setUsername("user1");
+		testUser.setUsername("user2");
 
 		UserDTO updatedUser = sut.updateUser(testUser);
 		Assert.assertEquals("firstname did not change", testUser.getFirstname(), updatedUser.getFirstname());
@@ -72,13 +71,14 @@ public class UserFacadeTest extends AbstractIntegrationTest {
 		testUser.setEmail("email@yahoo.com");
 		testUser.setPassword("1234");
 		testUser.setPhoneNumber("44444");
-		testUser.setUsername("user2");
+		testUser.setUsername("user1");
 		try {
 			UserDTO updatedUser = sut.updateUser(testUser);
 		} catch (BusinessException e) {
 			Assert.assertEquals("User already exists with given email@yahoo.com", e.getMessage());
 			return;
 		}
+		Assert.fail("Update user should fail!");
 
 	}
 

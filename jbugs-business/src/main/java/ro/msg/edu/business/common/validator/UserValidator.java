@@ -1,12 +1,14 @@
 package ro.msg.edu.business.common.validator;
 
 import javax.ejb.EJB;
+import javax.enterprise.context.Dependent;
 
 import ro.msg.edu.business.common.exception.BusinessException;
 import ro.msg.edu.business.user.dao.UserDAO;
 import ro.msg.edu.business.user.dto.UserDTO;
 import ro.msg.edu.persistence.user.entity.User;
 
+@Dependent
 public class UserValidator {
 
 	@EJB

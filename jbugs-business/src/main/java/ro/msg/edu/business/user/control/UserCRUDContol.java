@@ -25,7 +25,8 @@ public class UserCRUDContol {
 	@EJB
 	private UserDAO userDAO;
 
-	UserValidator userValidator = new UserValidator();
+	@Inject
+	UserValidator userValidator;
 
 	public UserDTO createUser(UserDTO user) throws BusinessException {
 		userValidator.validateUserData(user);
@@ -42,8 +43,7 @@ public class UserCRUDContol {
 
 	public UserDTO deleteUser(UserDTO user) throws BusinessException {
 
-		User userEntity = new User();
-		userEntity = userDAO.findEntity(user.getId());
+		User userEntity = userDAO.findEntity(user.getId());
 
 		if (userValidator.checkIfUserHasActiveTasks(userEntity) == false) {
 
