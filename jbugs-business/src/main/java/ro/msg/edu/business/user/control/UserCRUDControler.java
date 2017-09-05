@@ -46,6 +46,20 @@ public class UserCRUDControler {
 		return persistedUser;
 	}
 
+	public User updateUser(String username, String firstname, String lastname, String email, String password,
+			String phoneNumber) {
+		User userEntity = userDAO.findUserByUsername(username);
+		userEntity.setFirstname(firstname);
+		userEntity.setLastname(lastname);
+		userEntity.setEmail(email);
+		userEntity.setPassword(password);
+		userEntity.setPhoneNumber(phoneNumber);
+		userDAO.update(userEntity);
+		User persistedUser = userDAO.findEntity(userEntity.getId());
+		return persistedUser;
+
+	}
+
 	private void validateUserData(UserDTO user) throws BusinessException {
 		User existingUserWithSameEmail = userDAO.findUserByEmail(user.getEmail());
 		if (existingUserWithSameEmail != null) {

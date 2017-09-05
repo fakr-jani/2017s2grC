@@ -36,14 +36,26 @@ public class UserCRUDTest extends AbstractIntegrationTest {
 	// }
 	// Assert.fail("Email validation should fail!");
 	// }
+	//
+	// @Test
+	// public void deleteUser_ValidCase() {
+	// String username = "janem";
+	// User testUser = sut.deleteUser(username);
+	//
+	// Assert.assertEquals(testUser.isActive(), false);
+	//
+	// }
 
 	@Test
-	public void deleteUser_ValidCase() {
-		String username = "janem";
-		User testUser = sut.deleteUser(username);
-
-		Assert.assertEquals(testUser.isActive(), false);
-
+	public void updateUser_ValidCase() {
+		String username = "mustm";
+		String firstname = "Nimrod";
+		String lastname = "Foldvari";
+		String email = "nim@gmail.com";
+		String password = "nim";
+		String phoneNumber = "0764681743";
+		User testUser = sut.updateUser(username, firstname, lastname, email, password, phoneNumber);
+		Assert.assertEquals(testUser.getFirstname(), firstname);
 	}
 
 }
