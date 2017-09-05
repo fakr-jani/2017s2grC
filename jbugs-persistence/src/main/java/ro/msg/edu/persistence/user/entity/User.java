@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 /**
  * Entity for the User.
@@ -18,18 +20,23 @@ import javax.persistence.NamedQuery;
 public class User extends AbstractEntity {
 
 	public static final String FIND_USER_BY_EMAIL = "User.findUserByEmail";
+	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "msggroup.com$";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column
+	@NotNull
 	private String firstname;
 
 	@Column
+	@NotNull
 	private String lastname;
 
 	@Column
+	@NotNull
+	@Pattern(regexp = EMAIL_PATTERN)
 	private String email;
 
 	@Column
