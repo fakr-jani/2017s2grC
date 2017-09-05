@@ -19,10 +19,18 @@ import ro.msg.edu.business.user.dto.UserDTO;
 public class UserFacade {
 
 	@EJB
-	private UserCRUDContol userSomething;
+	private UserCRUDContol userCRUDControl;
 
 	public UserDTO createUser(UserDTO user) throws BusinessException {
-		return userSomething.createUser(user);
+		return userCRUDControl.createUser(user);
+	}
+
+	public UserDTO deleteUser(UserDTO user) throws BusinessException {
+		return userCRUDControl.deleteUser(user);
+	}
+
+	public UserDTO updateUser(UserDTO user) throws BusinessException {
+		return userCRUDControl.updateUser(user);
 	}
 
 }

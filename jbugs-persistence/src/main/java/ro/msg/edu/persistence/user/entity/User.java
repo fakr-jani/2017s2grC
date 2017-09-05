@@ -1,22 +1,33 @@
 package ro.msg.edu.persistence.user.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 /**
  * 
  * @author maresb
  *
  */
-@NamedQuery(name = User.FIND_USER_BY_EMAIL, query = "SELECT u from User u WHERE u.email = :email")
+@NamedQueries({ @NamedQuery(name = User.FIND_USER_BY_EMAIL, query = "SELECT u from User u WHERE u.email = :email"),
+		@NamedQuery(name = User.FIND_USER_BY_USERNAME, query = "SELECT u from User u WHERE u.username = :username"),
+
+})
 @Entity
 public class User extends AbstractEntity {
 
 	public static final String FIND_USER_BY_EMAIL = "User.findUserByEmail";
+	public static final String FIND_USER_BY_USERNAME = "User.findUserByUsername";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +53,16 @@ public class User extends AbstractEntity {
 
 	@Column
 	private boolean active;
+
+	@ManyToMany
+	@JoinTable(name = "User_Role", joinColumns = @JoinColumn(name = "idUser"), inverseJoinColumns = @JoinColumn(name = "idRole"))
+	private List<Role> roles;
+
+	@OneToMany(mappedBy = "assignedTo")
+	private List<Bug> assignedBugs;
+
+	@OneToMany(mappedBy = "createdBy")
+	private List<Bug> createdBugs;
 
 	public String getPassword() {
 		return password;
