@@ -6,7 +6,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 import ro.msg.edu.business.common.exception.BusinessException;
-import ro.msg.edu.business.user.control.UserSomething;
+import ro.msg.edu.business.user.control.UserCRUDControler;
 import ro.msg.edu.business.user.dto.UserDTO;
 
 /**
@@ -20,7 +20,7 @@ import ro.msg.edu.business.user.dto.UserDTO;
 public class UserFacade {
 
 	@EJB
-	private UserSomething userSomething;
+	private UserCRUDControler userSomething;
 
 	public UserDTO createUser(UserDTO user) throws BusinessException {
 		return userSomething.createUser(user);

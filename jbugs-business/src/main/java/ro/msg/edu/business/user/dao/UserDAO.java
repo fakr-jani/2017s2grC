@@ -1,6 +1,7 @@
 package ro.msg.edu.business.user.dao;
 
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import ro.msg.edu.business.common.dao.AbstractDao;
@@ -25,6 +26,12 @@ public class UserDAO extends AbstractDao<User> {
 		query.setParameter("email", email);
 
 		return getSingleResult(query);
+	}
+
+	public User findUserByUsername(String username) {
+		Query query = em.createQuery("SELECT u FROM User u WHERE u.username = :username");
+		query.setParameter("username", username);
+		return (User) query.getSingleResult();
 	}
 
 }

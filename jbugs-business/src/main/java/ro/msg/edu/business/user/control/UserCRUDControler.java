@@ -17,7 +17,7 @@ import ro.msg.edu.persistence.user.entity.User;
  *
  */
 @Stateless
-public class UserSomething {
+public class UserCRUDControler {
 
 	@Inject
 	private UserDTOMapper userDTOMapper;
@@ -36,6 +36,14 @@ public class UserSomething {
 		userDAO.persistEntity(userEntity);
 		User persistedUser = userDAO.findEntity(userEntity.getId());
 		return userDTOMapper.mapToDTO(persistedUser);
+	}
+
+	public User deleteUser(String username) {
+		User userEntity = userDAO.findUserByUsername(username);
+		userEntity.setActive(false);
+		userDAO.update(userEntity);
+		User persistedUser = userDAO.findEntity(userEntity.getId());
+		return persistedUser;
 	}
 
 	private void validateUserData(UserDTO user) throws BusinessException {
