@@ -6,9 +6,8 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 import ro.msg.edu.business.common.exception.BusinessException;
-import ro.msg.edu.business.user.control.UserCRUDControler;
+import ro.msg.edu.business.user.control.UserCRUDControl;
 import ro.msg.edu.business.user.dto.UserDTO;
-import ro.msg.edu.persistence.user.entity.User;
 
 /**
  * Boundary for user component.
@@ -21,20 +20,19 @@ import ro.msg.edu.persistence.user.entity.User;
 public class UserFacade {
 
 	@EJB
-	private UserCRUDControler userCRUD;
+	private UserCRUDControl userCRUDControl;
 
 	public UserDTO createUser(UserDTO user) throws BusinessException {
-		return userCRUD.createUser(user);
+		return userCRUDControl.createUser(user);
 	}
 
-	public User deleteUser(String username) {
-		return userCRUD.deleteUser(username);
+	public UserDTO deleteUser(String username) {
+		return userCRUDControl.deleteUser(username);
 
 	}
 
-	public User updateUser(String username, String firstname, String lastname, String email, String password,
-			String phoneNumber) {
-		return userCRUD.updateUser(username, firstname, lastname, email, password, phoneNumber);
+	public UserDTO updateUser(UserDTO userDTO) throws BusinessException {
+		return userCRUDControl.updateUser(userDTO);
 	}
 
 }

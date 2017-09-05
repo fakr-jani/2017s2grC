@@ -4,6 +4,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import ro.msg.business.common.validator.UserValidator;
 import ro.msg.edu.business.common.exception.BusinessException;
 import ro.msg.edu.business.user.dao.UserDAO;
 import ro.msg.edu.business.user.dto.UserDTO;
@@ -17,13 +18,16 @@ import ro.msg.edu.persistence.user.entity.User;
  *
  */
 @Stateless
-public class UserCRUDControler {
+public class UserCRUDControl {
 
 	@Inject
 	private UserDTOMapper userDTOMapper;
 
 	@EJB
 	private UserDAO userDAO;
+
+	@Inject
+	UserValidator userValidator;
 
 	public UserDTO createUser(UserDTO user) throws BusinessException {
 		validateUserData(user);
@@ -38,26 +42,33 @@ public class UserCRUDControler {
 		return userDTOMapper.mapToDTO(persistedUser);
 	}
 
-	public User deleteUser(String username) {
+	public UserDTO deleteUser(String username) {
 		User userEntity = userDAO.findUserByUsername(username);
-		userEntity.setActive(false);
-		userDAO.update(userEntity);
-		User persistedUser = userDAO.findEntity(userEntity.getId());
-		return persistedUser;
+		if (userValidator.checkIfUserHasActiveTasks(userEntity) == false) {
+			userEntity.setActive(false);
+		}
+		return userDTOMapper.mapToDTO(userEntity);
 	}
 
-	public User updateUser(String username, String firstname, String lastname, String email, String password,
-			String phoneNumber) {
-		User userEntity = userDAO.findUserByUsername(username);
-		userEntity.setFirstname(firstname);
-		userEntity.setLastname(lastname);
-		userEntity.setEmail(email);
-		userEntity.setPassword(password);
-		userEntity.setPhoneNumber(phoneNumber);
-		userDAO.update(userEntity);
-		User persistedUser = userDAO.findEntity(userEntity.getId());
-		return persistedUser;
+	public UserDTO updateUser(UserDTO userToUpdate) throws BusinessException {
+		User entity = userDAO.findUserByUsername(userToUpdate.getUsername());
 
+		if (userToUpdate.getEmail() != null && userValidator.validateEmail(userToUpdate.getEmail()))
+			entity.setEmail(userToUpdate.getEmail());
+
+		if (userToUpdate.getFirstname() != null)
+			entity.setFirstname(userToUpdate.getFirstname());
+
+		if (userToUpdate.getLastname() != null)
+			entity.setLastname(userToUpdate.getLastname());
+
+		if (userToUpdate.getPassword() != null)
+			entity.setPassword(userToUpdate.getPassword());
+
+		if (userToUpdate.getPhoneNumber() != null)
+			entity.setPhoneNumber(userToUpdate.getPhoneNumber());
+
+		return userDTOMapper.mapToDTO(entity);
 	}
 
 	private void validateUserData(UserDTO user) throws BusinessException {
@@ -66,5 +77,4 @@ public class UserCRUDControler {
 			throw new BusinessException("User already exists with given email " + user.getEmail());
 		}
 	}
-
 }
