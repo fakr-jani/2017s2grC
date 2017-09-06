@@ -1,10 +1,12 @@
 package ro.msg.edu.business.user.dto;
 
 import ro.msg.edu.business.common.dto.AbstractDTO;
+import ro.msg.edu.persistence.user.entity.User;
 
 /**
+ * DTO for {@link User} entity.
  * 
- * @author maresb
+ * @author Andrei Floricel, msg systems ag
  *
  */
 public class UserDTO extends AbstractDTO {

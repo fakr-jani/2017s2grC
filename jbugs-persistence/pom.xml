@@ -12,5 +12,4 @@
 	<description>Persistence layer</description>
 	<packaging>jar</packaging>
 	
-	<groupId>ro.msg.edu</groupId>
 </project>

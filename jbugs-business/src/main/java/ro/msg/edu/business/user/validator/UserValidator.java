@@ -1,4 +1,4 @@
-package ro.msg.edu.business.common.validator;
+package ro.msg.edu.business.user.validator;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;

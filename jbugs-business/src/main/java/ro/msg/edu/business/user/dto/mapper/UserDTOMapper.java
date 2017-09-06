@@ -7,8 +7,9 @@ import ro.msg.edu.business.user.dto.UserDTO;
 import ro.msg.edu.persistence.user.entity.User;
 
 /**
+ * Mapper for {@link User} and {@link UserDTO}.
  * 
- * @author maresb
+ * @author Andrei Floricel, msg systems ag
  *
  */
 @Dependent

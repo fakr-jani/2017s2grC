@@ -11,19 +11,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import ro.msg.edu.persistence.bug.entity.Bug;
+import ro.msg.edu.persistence.common.entity.AbstractEntity;
+
 /**
+ * Entity for the User.
  * 
- * @author maresb
+ * @author Patricia
  *
  */
-@NamedQueries({ @NamedQuery(name = User.FIND_USER_BY_EMAIL, query = "SELECT u from User u WHERE u.email = :email"),
-		@NamedQuery(name = User.FIND_USER_BY_USERNAME, query = "SELECT u from User u WHERE u.username = :username"),
-
-})
+@NamedQuery(name = User.FIND_USER_BY_EMAIL, query = "SELECT u from User u WHERE u.email = :email")
 @Entity
 public class User extends AbstractEntity implements Serializable {
 
@@ -33,7 +33,6 @@ public class User extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String FIND_USER_BY_EMAIL = "User.findUserByEmail";
-	public static final String FIND_USER_BY_USERNAME = "User.findUserByUsername";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

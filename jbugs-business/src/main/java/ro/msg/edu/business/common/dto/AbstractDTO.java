@@ -1,8 +1,9 @@
 package ro.msg.edu.business.common.dto;
 
 /**
+ * Abstract common class for DTO objects.
  * 
- * @author maresb
+ * @author Andrei Floricel, msg systems ag
  *
  */
 public abstract class AbstractDTO {

@@ -5,19 +5,20 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import ro.msg.edu.business.common.exception.BusinessException;
-import ro.msg.edu.business.common.validator.UserValidator;
 import ro.msg.edu.business.user.dao.UserDAO;
 import ro.msg.edu.business.user.dto.UserDTO;
 import ro.msg.edu.business.user.dto.mapper.UserDTOMapper;
+import ro.msg.edu.business.user.validator.UserValidator;
 import ro.msg.edu.persistence.user.entity.User;
 
 /**
+ * Controller for User component.
  * 
- * @author maresb
+ * @author Andrei Floricel, msg systems ag
  *
  */
 @Stateless
-public class UserCRUDContol {
+public class UserCRUDControl {
 
 	@Inject
 	private UserDTOMapper userDTOMapper;
@@ -29,11 +30,11 @@ public class UserCRUDContol {
 	UserValidator userValidator;
 
 	public UserDTO createUser(UserDTO user) throws BusinessException {
-		userValidator.validateUserData(user);
+		validateUserData(user);
+
 		User userEntity = new User();
 		userDTOMapper.mapToEntity(user, userEntity);
 
-		userEntity.setUsername(generateUsername(user.getFirstname(), user.getLastname()));
 		userEntity.setActive(true);
 
 		userDAO.persistEntity(userEntity);
@@ -41,22 +42,15 @@ public class UserCRUDContol {
 		return userDTOMapper.mapToDTO(persistedUser);
 	}
 
-	public UserDTO deleteUser(UserDTO user) throws BusinessException {
-
-		User userEntity = userDAO.findEntity(user.getId());
-
+	public UserDTO deleteUser(UserDTO userDTO) {
+		User userEntity = userDAO.findUserByUsername(userDTO.getUsername());
 		if (userValidator.checkIfUserHasActiveTasks(userEntity) == false) {
-
 			userEntity.setActive(false);
-			return userDTOMapper.mapToDTO(userEntity);
-
-		} else
-			throw new BusinessException("User has not finished tasks");
-
+		}
+		return userDTOMapper.mapToDTO(userEntity);
 	}
 
 	public UserDTO updateUser(UserDTO userToUpdate) throws BusinessException {
-
 		User entity = userDAO.findUserByUsername(userToUpdate.getUsername());
 
 		if (userToUpdate.getEmail() != null && userValidator.validateEmail(userToUpdate.getEmail()))
@@ -77,16 +71,10 @@ public class UserCRUDContol {
 		return userDTOMapper.mapToDTO(entity);
 	}
 
-	private String generateUsername(String lastname, String firstname) {
-		StringBuilder username = new StringBuilder(6);
-
-		// init i=5 j=1
-		// get the first i letters from lastname get j letters form firstname
-		// verify
-		// if exist i--, j++
-
-		return null;
-
+	private void validateUserData(UserDTO user) throws BusinessException {
+		User existingUserWithSameEmail = userDAO.findUserByEmail(user.getEmail());
+		if (existingUserWithSameEmail != null) {
+			throw new BusinessException("User already exists with given email " + user.getEmail());
+		}
 	}
-
 }

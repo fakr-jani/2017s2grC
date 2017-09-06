@@ -1,14 +1,16 @@
 package ro.msg.edu.business.user.dao;
 
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import ro.msg.edu.business.common.dao.AbstractDao;
 import ro.msg.edu.persistence.user.entity.User;
 
 /**
+ * DAO for {@link User} entity.
  * 
- * @author maresb
+ * @author Andrei Floricel, msg systems ag
  *
  */
 @Stateless
@@ -27,9 +29,9 @@ public class UserDAO extends AbstractDao<User> {
 	}
 
 	public User findUserByUsername(String username) {
-		TypedQuery<User> query = this.em.createNamedQuery(User.FIND_USER_BY_USERNAME, User.class);
+		Query query = em.createQuery("SELECT u FROM User u WHERE u.username = :username");
 		query.setParameter("username", username);
-		return getSingleResult(query);
+		return (User) query.getSingleResult();
 	}
 
 }

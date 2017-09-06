@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import ro.msg.edu.persistence.common.entity.AbstractEntity;
+
 @Entity
 public class Role extends AbstractEntity implements Serializable {
 	/**
