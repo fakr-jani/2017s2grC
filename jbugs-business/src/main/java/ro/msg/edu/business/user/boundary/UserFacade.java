@@ -6,7 +6,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 import ro.msg.edu.business.common.exception.BusinessException;
-import ro.msg.edu.business.user.control.UserCRUDControler;
+import ro.msg.edu.business.user.control.UserCRUDControl;
 import ro.msg.edu.business.user.dto.UserDTO;
 
 /**
@@ -20,10 +20,19 @@ import ro.msg.edu.business.user.dto.UserDTO;
 public class UserFacade {
 
 	@EJB
-	private UserCRUDControler userSomething;
+	private UserCRUDControl userCRUDControl;
 
 	public UserDTO createUser(UserDTO user) throws BusinessException {
-		return userSomething.createUser(user);
+		return userCRUDControl.createUser(user);
+	}
+
+	public UserDTO deleteUser(UserDTO userDTO) {
+		return userCRUDControl.deleteUser(userDTO);
+
+	}
+
+	public UserDTO updateUser(UserDTO userDTO) throws BusinessException {
+		return userCRUDControl.updateUser(userDTO);
 	}
 
 }
