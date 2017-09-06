@@ -11,12 +11,6 @@ import ro.msg.edu.business.user.dto.mapper.UserDTOMapper;
 import ro.msg.edu.business.user.validator.UserValidator;
 import ro.msg.edu.persistence.user.entity.User;
 
-/**
- * Controller for User component.
- * 
- * @author Andrei Floricel, msg systems ag
- *
- */
 @Stateless
 public class UserCRUDControl {
 
@@ -30,7 +24,7 @@ public class UserCRUDControl {
 	UserValidator userValidator;
 
 	public UserDTO createUser(UserDTO user) throws BusinessException {
-		validateUserData(user);
+		userValidator.validateUserData(user);
 
 		User userEntity = new User();
 		userDTOMapper.mapToEntity(user, userEntity);
@@ -69,12 +63,5 @@ public class UserCRUDControl {
 			entity.setPhoneNumber(userToUpdate.getPhoneNumber());
 
 		return userDTOMapper.mapToDTO(entity);
-	}
-
-	private void validateUserData(UserDTO user) throws BusinessException {
-		User existingUserWithSameEmail = userDAO.findUserByEmail(user.getEmail());
-		if (existingUserWithSameEmail != null) {
-			throw new BusinessException("User already exists with given email " + user.getEmail());
-		}
 	}
 }

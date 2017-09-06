@@ -2,6 +2,7 @@ package ro.msg.edu.business.user.control;
 
 import javax.ejb.EJB;
 
+import org.jboss.arquillian.junit.InSequence;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,6 +16,7 @@ public class UserCRUDTest extends AbstractIntegrationTest {
 	private UserCRUDControl sut;
 
 	@Test
+	@InSequence(1)
 	public void createUser_EmailValidationFail() throws BusinessException {
 		UserDTO testUser = new UserDTO();
 		testUser.setFirstname("John");
@@ -42,6 +44,7 @@ public class UserCRUDTest extends AbstractIntegrationTest {
 	}
 
 	@Test
+	@InSequence(2)
 	public void deleteUser_Validation() {
 		UserDTO userTest = new UserDTO();
 		UserDTO userTest2 = new UserDTO();
@@ -56,6 +59,7 @@ public class UserCRUDTest extends AbstractIntegrationTest {
 	}
 
 	@Test
+	@InSequence(3)
 	public void updateUser_Validation() {
 		UserDTO testUser = new UserDTO();
 		String username = "foldn";
