@@ -4,11 +4,11 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import ro.msg.business.common.validator.UserValidator;
 import ro.msg.edu.business.common.exception.BusinessException;
 import ro.msg.edu.business.user.dao.UserDAO;
 import ro.msg.edu.business.user.dto.UserDTO;
 import ro.msg.edu.business.user.dto.mapper.UserDTOMapper;
+import ro.msg.edu.business.user.validator.UserValidator;
 import ro.msg.edu.persistence.user.entity.User;
 
 /**

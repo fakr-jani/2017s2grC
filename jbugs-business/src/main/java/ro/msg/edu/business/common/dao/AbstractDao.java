@@ -5,7 +5,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import ro.msg.edu.persistence.user.entity.AbstractEntity;
+import ro.msg.edu.persistence.common.entity.AbstractEntity;
 
 public abstract class AbstractDao<E extends AbstractEntity> {
 
