@@ -26,4 +26,13 @@ public class UserFacade {
 		return userCRUDControl.createUser(user);
 	}
 
+	public UserDTO deleteUser(UserDTO userDTO) {
+		return userCRUDControl.deleteUser(userDTO);
+
+	}
+
+	public UserDTO updateUser(UserDTO userDTO) throws BusinessException {
+		return userCRUDControl.updateUser(userDTO);
+	}
+
 }

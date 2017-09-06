@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import ro.msg.edu.persistence.common.entity.AbstractEntity;
+
 @Entity
 public class Permission extends AbstractEntity implements Serializable {
 	/**

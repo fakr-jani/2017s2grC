@@ -14,10 +14,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import ro.msg.edu.persistence.bug.entity.Bug;
+import ro.msg.edu.persistence.common.entity.AbstractEntity;
+
 /**
  * Entity for the User.
  * 
- * @author Andrei Floricel, msg systems ag
+ * @author Patricia
  *
  */
 @NamedQuery(name = User.FIND_USER_BY_EMAIL, query = "SELECT u from User u WHERE u.email = :email")

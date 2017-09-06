@@ -2,7 +2,6 @@ package ro.msg.edu.business.user.dto.mapper;
 
 import javax.inject.Inject;
 
-
 import org.junit.Assert;
 import org.junit.Test;
 

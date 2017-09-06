@@ -1,4 +1,4 @@
-package ro.msg.edu.persistence.user.entity;
+package ro.msg.edu.persistence.bug.entity;
 
 import java.io.Serializable;
 
@@ -8,6 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import ro.msg.edu.persistence.common.entity.AbstractEntity;
+import ro.msg.edu.persistence.user.entity.User;
 
 @Entity
 public class Bug extends AbstractEntity implements Serializable {
