@@ -26,8 +26,8 @@ public class UserFacade {
 		return userCRUDControl.createUser(user);
 	}
 
-	public UserDTO deleteUser(String username) {
-		return userCRUDControl.deleteUser(username);
+	public UserDTO deleteUser(UserDTO userDTO) {
+		return userCRUDControl.deleteUser(userDTO);
 
 	}
 

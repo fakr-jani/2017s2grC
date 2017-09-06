@@ -42,8 +42,8 @@ public class UserCRUDControl {
 		return userDTOMapper.mapToDTO(persistedUser);
 	}
 
-	public UserDTO deleteUser(String username) {
-		User userEntity = userDAO.findUserByUsername(username);
+	public UserDTO deleteUser(UserDTO userDTO) {
+		User userEntity = userDAO.findUserByUsername(userDTO.getUsername());
 		if (userValidator.checkIfUserHasActiveTasks(userEntity) == false) {
 			userEntity.setActive(false);
 		}
