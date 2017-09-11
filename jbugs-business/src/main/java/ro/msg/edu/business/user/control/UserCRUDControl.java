@@ -47,6 +47,14 @@ public class UserCRUDControl {
 		return userDTOMapper.mapToDTO(userEntity);
 	}
 
+	public UserDTO reactiveUser(UserDTO userDTO) {
+		User userEntity = userDAO.findUserByUsername(userDTO.getUsername());
+		if (userValidator.checkIfUserHasActiveTasks(userEntity) == false) {
+			userEntity.setActive(true);
+		}
+		return userDTOMapper.mapToDTO(userEntity);
+	}
+
 	public UserDTO findUserByUsername(String username) {
 		return userDTOMapper.mapToDTO(userDAO.findUserByUsername(username));
 	}

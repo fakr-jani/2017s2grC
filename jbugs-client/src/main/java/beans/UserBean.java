@@ -51,7 +51,15 @@ public class UserBean {
 	public String deleteUser(UserDTO user) {
 		userFacade.deleteUser(user);
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage("Userul " + newUser.getFirstname() + " a fost sters!"));
+				new FacesMessage("Userul " + newUser.getFirstname() + " a fost inactivat!"));
+		return "users";
+
+	}
+
+	public String reactiveUser(UserDTO user) {
+		userFacade.reactiveUser(user);
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage("Userul " + newUser.getFirstname() + " a fost activat!"));
 		return "users";
 
 	}

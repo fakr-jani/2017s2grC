@@ -33,6 +33,11 @@ public class UserFacade {
 
 	}
 
+	public UserDTO reactiveUser(UserDTO userDTO) {
+		return userCRUDControl.reactiveUser(userDTO);
+
+	}
+
 	public UserDTO updateUser(UserDTO userDTO) throws BusinessException {
 		return userCRUDControl.updateUser(userDTO);
 	}
