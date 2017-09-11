@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title><h:outputText value="#{msg['login.title']}" /></title>
+</h:head>
+<h:body>
+	<f:view>
+
+		<h:form id="loginForm">
+
+			<p:panel id="loginPanel" header="#{msg['login.header']}"
+				style="margin-bottom:10px;">
+				<p:messages autoUpdate="true" />
+
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:outputLabel for="username" value="#{msg['login.username']}" />
+					<p:inputText id="username" value="#{loginBean.user.username}">
+						<f:validator validatorId="validationView" />
+					</p:inputText>
+
+					<p:outputLabel for="password" value="#{msg['login.password']}" />
+					<p:password id="password" value="#{loginBean.user.password}" />
+					<p:message for="username" />
+				</h:panelGrid>
+			</p:panel>
+			<p:commandButton id="submit" value="#{msg['login.loginButton']}"
+				action="#{loginBean.processLogin}" validateClient="true" />
+
+		</h:form>
+
+	</f:view>
+</h:body>
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+    version="2.2">
+
+<application>
+		<resource-bundle>
+			<base-name>jsf01.messages_ro_RO</base-name>
+			<var>msg</var>
+		</resource-bundle>
+		<locale-config>
+			<default-locale>ro</default-locale>
+		</locale-config>
+		
+	</application>
+
+	<navigation-rule>
+		<from-view-id>login.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{loginBean.processLogin}</from-action>
+			<from-outcome>users</from-outcome>
+			<to-view-id>users.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{loginBean.processLogin}</from-action>
+			<from-outcome>loginFailed</from-outcome>
+			<to-view-id>login.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+</faces-config>

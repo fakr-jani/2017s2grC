@@ -1,5 +1,8 @@
 package ro.msg.edu.business.user.control;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -44,6 +47,14 @@ public class UserCRUDControl {
 		return userDTOMapper.mapToDTO(userEntity);
 	}
 
+	public UserDTO findUserByUsername(String username) {
+		return userDTOMapper.mapToDTO(userDAO.findUserByUsername(username));
+	}
+
+	public boolean verifyUserExists(UserDTO user) {
+		return userDAO.verifyUserExists(user.getUsername(), user.getPassword());
+	}
+
 	public UserDTO updateUser(UserDTO userToUpdate) throws BusinessException {
 		User entity = userDAO.findUserByUsername(userToUpdate.getUsername());
 
@@ -63,5 +74,15 @@ public class UserCRUDControl {
 			entity.setPhoneNumber(userToUpdate.getPhoneNumber());
 
 		return userDTOMapper.mapToDTO(entity);
+	}
+
+	public List<UserDTO> getAll() {
+		List<User> users = userDAO.getAll();
+		List<UserDTO> listUserDTO = new ArrayList<>();
+		for (User u : users) {
+			listUserDTO.add(userDTOMapper.mapToDTO(u));
+		}
+		return listUserDTO;
+
 	}
 }

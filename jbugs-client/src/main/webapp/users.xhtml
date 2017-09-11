@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title><h:outputText value="#{msg['login.title']}" /></title>
+</h:head>
+<h:body>
+	<f:view>
+
+		<h:form id="userForm">
+			<p:messages autoUpdate="true" />
+			<h:dataTable value="#{userBean.allUsers}" var="user">
+			<f:facet name="header">
+			
+			</f:facet>
+				<h:column >
+					<f:facet name="header">
+						Firstname
+						<br/>
+						<h:inputText value="#{userBean.newUser.firstname}"></h:inputText>
+					</f:facet>
+					<h:outputText value="#{user.firstname}"></h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						Lastname
+						<br/>
+						<h:inputText value="#{userBean.newUser.lastname}"></h:inputText>
+					</f:facet>
+					<h:outputText value="#{user.lastname}"></h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						Action
+						<br />
+						<h:commandButton value="Create" action="#{userBean.createNewUser}"></h:commandButton>
+					</f:facet>
+					<h:commandButton value="delete" action="#{userBean.deleteUser(user)}"></h:commandButton>
+				</h:column>
+				
+			</h:dataTable>
+			<p:commandLink action="#{loginBean.processLogout}"
+				value="#{msg['general.logout']}"></p:commandLink>
+		</h:form>
+
+	</f:view>
+</h:body>
+</html>
