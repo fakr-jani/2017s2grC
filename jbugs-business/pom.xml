@@ -28,4 +28,6 @@
 			</plugin>
 		</plugins>
 	</build>
+	<groupId>ro.msg.edu</groupId>
+	<version>1.0.0-SNAPSHOT</version>
 </project>

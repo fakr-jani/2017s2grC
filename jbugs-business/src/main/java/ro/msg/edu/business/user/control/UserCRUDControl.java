@@ -1,5 +1,7 @@
 package ro.msg.edu.business.user.control;
 
+import java.util.Optional;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -30,7 +32,7 @@ public class UserCRUDControl {
 	UserValidator userValidator;
 
 	public UserDTO createUser(UserDTO user) throws BusinessException {
-		validateUserData(user);
+		userValidator.validateUserData(user);
 
 		User userEntity = new User();
 		userDTOMapper.mapToEntity(user, userEntity);
@@ -43,7 +45,8 @@ public class UserCRUDControl {
 	}
 
 	public UserDTO deleteUser(UserDTO userDTO) {
-		User userEntity = userDAO.findUserByUsername(userDTO.getUsername());
+		Optional<User> userOptional = userDAO.findUserByUsername(userDTO.getUsername());
+		User userEntity = userOptional.get();
 		if (userValidator.checkIfUserHasActiveTasks(userEntity) == false) {
 			userEntity.setActive(false);
 		}
@@ -51,7 +54,8 @@ public class UserCRUDControl {
 	}
 
 	public UserDTO updateUser(UserDTO userToUpdate) throws BusinessException {
-		User entity = userDAO.findUserByUsername(userToUpdate.getUsername());
+		Optional<User> userOptional = userDAO.findUserByUsername(userToUpdate.getUsername());
+		User entity = userOptional.get();
 
 		if (userToUpdate.getEmail() != null && userValidator.validateEmail(userToUpdate.getEmail()))
 			entity.setEmail(userToUpdate.getEmail());
@@ -71,10 +75,14 @@ public class UserCRUDControl {
 		return userDTOMapper.mapToDTO(entity);
 	}
 
-	private void validateUserData(UserDTO user) throws BusinessException {
-		User existingUserWithSameEmail = userDAO.findUserByEmail(user.getEmail());
-		if (existingUserWithSameEmail != null) {
-			throw new BusinessException("User already exists with given email " + user.getEmail());
-		}
+	public UserDTO findUserbyUsername(String username) {
+		Optional<User> entity = userDAO.findUserByUsername(username);
+
+		if (entity.isPresent()) {
+			return userDTOMapper.mapToDTO(entity.get());
+		} else
+			return null;
+
 	}
+
 }

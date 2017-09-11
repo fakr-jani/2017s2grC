@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title><h:outputText value="#{msg['login.title']}" /></title>
+</h:head>
+<h:body>
+	<f:view>
+	
+		<h:outputText value="#{initParam['hello_world']}"></h:outputText>
+		<br />
+		<h:outputText value="Ola, #{initParam['hello_world']}"></h:outputText>
+
+		<h:form id="loginForm">
+		
+			<h:messages />
+			
+		
+			<h:panelGrid id="loginPanel" columns="3" cellpadding="5"
+				cellspacing="5">
+				<f:facet name="header">
+					<h:outputText value="#{msg['login.header']}" />
+				</f:facet>
+
+				<h:outputLabel for="username" value="#{msg['login.username']}" />
+				<h:inputText id="username" value="#{loginBean.user.userName}">
+					<f:validateLength minimum="3" maximum="10" />
+				</h:inputText>
+				<h:message for="username" />
+
+				<h:outputLabel for="password" value="#{msg['login.password']}" />
+				<h:inputText id="password" value="#{loginBean.user.password}">
+					<f:validator validatorId="passwordValidator" />
+				</h:inputText>
+				<h:message for="password" />
+				
+				<f:facet name="footer">
+					<h:panelGroup style="display:block; text-align:center">
+						<h:commandButton id="submit" value="#{msg['login.loginButton']}" action="#{loginBean.processLogin}" actionListener="#{loginBean.loginActionListener}"/>
+					</h:panelGroup>
+				</f:facet>
+
+			</h:panelGrid>
+			
+			<p:calendar value="#{loginBean.date}"></p:calendar>
+			
+			<p:editor></p:editor>
+
+		</h:form>
+
+	</f:view>
+</h:body>
+</html>
