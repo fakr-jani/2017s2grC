@@ -1,5 +1,7 @@
 package ro.msg.edu.client.beans;
 
+import java.util.Locale;
+
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -41,7 +43,14 @@ public class LoginBean {
 		if (userFacade.verifyLoggedInUser(user)) {
 			HttpSession session = (HttpSession) getFacesContext().getExternalContext().getSession(false);
 			session.setAttribute("username", user.getUsername());
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Welcome " + user.getUsername() + "!"));
+			Locale locale = new Locale("de");
+			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
+			FacesContext context = FacesContext.getCurrentInstance();
+			String message = context.getApplication().evaluateExpressionGet(context, "#{msg['login.title']}",
+					String.class);
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(message + " " + user.getUsername() + "!"));
+
 			return "users";
 		} else
 

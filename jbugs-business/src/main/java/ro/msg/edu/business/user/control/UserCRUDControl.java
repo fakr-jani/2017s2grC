@@ -1,12 +1,13 @@
 package ro.msg.edu.business.user.control;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 
-import ro.msg.edu.business.common.exception.BusinessException;
+import ro.msg.edu.business.common.exception.TechnicalException;
 import ro.msg.edu.business.user.dao.UserDAO;
 import ro.msg.edu.business.user.dto.UserDTO;
 import ro.msg.edu.business.user.dto.mapper.UserDTOMapper;
@@ -22,16 +23,16 @@ import ro.msg.edu.persistence.user.entity.User;
 @Stateless
 public class UserCRUDControl {
 
-	@Inject
+	@EJB
 	private UserDTOMapper userDTOMapper;
 
 	@EJB
 	private UserDAO userDAO;
 
-	@Inject
+	@EJB
 	UserValidator userValidator;
 
-	public UserDTO createUser(UserDTO user) throws BusinessException {
+	public UserDTO createUser(UserDTO user) throws TechnicalException {
 		userValidator.validateUserData(user);
 
 		User userEntity = new User();
@@ -39,6 +40,7 @@ public class UserCRUDControl {
 
 		userEntity.setActive(true);
 
+		userEntity.setUsername(generateUsername(user.getFirstname(), user.getLastname()));
 		userDAO.persistEntity(userEntity);
 		User persistedUser = userDAO.findEntity(userEntity.getId());
 		return userDTOMapper.mapToDTO(persistedUser);
@@ -53,7 +55,14 @@ public class UserCRUDControl {
 		return userDTOMapper.mapToDTO(userEntity);
 	}
 
-	public UserDTO updateUser(UserDTO userToUpdate) throws BusinessException {
+	public UserDTO activateUser(UserDTO userDTO) {
+		Optional<User> userOptional = userDAO.findUserByUsername(userDTO.getUsername());
+		User userEntity = userOptional.get();
+		userEntity.setActive(true);
+		return userDTOMapper.mapToDTO(userEntity);
+	}
+
+	public UserDTO updateUser(UserDTO userToUpdate) throws TechnicalException {
 		Optional<User> userOptional = userDAO.findUserByUsername(userToUpdate.getUsername());
 		User entity = userOptional.get();
 
@@ -87,6 +96,42 @@ public class UserCRUDControl {
 
 	public boolean verifyUserExists(UserDTO user) {
 		return userDAO.verifyUserExists(user.getUsername(), user.getPassword());
+	}
+
+	public List<UserDTO> findAllUser() {
+		List<User> users = userDAO.getAllUser();
+		List<UserDTO> usersDTO = new ArrayList<UserDTO>();
+		for (User u : users) {
+			usersDTO.add(userDTOMapper.mapToDTO(u));
+		}
+		return usersDTO;
+	}
+
+	public String generateUsername(String firstname, String lastname) {
+
+		StringBuilder username = new StringBuilder();
+		int ok = 0;
+		int i = 5;
+		int j = 1;
+
+		if (lastname.length() < 5) {
+			i = lastname.length();
+			j = 6 - i;
+		}
+		while (ok == 0) {
+
+			username.append(lastname, 0, i);
+			username.append(firstname, 0, j);
+			if (userValidator.verifyUsernameExists(username) == false) {
+				ok = 1;
+			} else {
+				username.delete(0, 6);
+				i--;
+				j++;
+			}
+
+		}
+		return username.toString();
 	}
 
 }

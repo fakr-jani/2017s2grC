@@ -1,6 +1,6 @@
 package ro.msg.edu.business.user.dto.mapper;
 
-import javax.enterprise.context.Dependent;
+import javax.ejb.Stateless;
 
 import ro.msg.edu.business.common.dto.mapper.AbstractDTOMapper;
 import ro.msg.edu.business.user.dto.UserDTO;
@@ -12,7 +12,7 @@ import ro.msg.edu.persistence.user.entity.User;
  * @author Andrei Floricel, msg systems ag
  *
  */
-@Dependent
+@Stateless
 public class UserDTOMapper extends AbstractDTOMapper<User, UserDTO> {
 
 	@Override

@@ -9,12 +9,13 @@
 <h:head>
 	<title><h:outputText value="#{msg['login.title']}" /></title>
 
-<style>
+	<style>
 html {
 	width: 100%;
 	height: 100%;
-	overflow: hidden;
+	overflow: scroll;
 }
+
 body {
 	width: 500%;
 	height: 500%;
@@ -51,30 +52,133 @@ body {
 
 .helloWorld {
 	position: absolute;
-	top: 50%;
-	left: 50%;
-	background:rgba(255, 255, 255, 0.5);
+	top: 20%;
+	left: 20%;
+	background: rgba(255, 255, 255, 0.5);
 	margin: -150px 0 0 -150px;
-	width: 350px;
-	height: 300px;
-	}
-	</style>
-	</h:head>
+	width: 1250px;
+	height: 700px;
+}
+</style>
+</h:head>
 <h:body>
 	<f:view>
-	<div class="helloWorld">
-
-
-		<h:form id="usersForm">
-		
-			<h:messages />
-			
-			<h:commandLink value="#{msg['general.logout']}"
-				action="#{loginBean.processLogout}" />
-			
+		<div class="helloWorld">
 	
-		</h:form>
-	</div>
+			<h:form id="usersForm">
+
+				<p:messages />
+				<p:dataTable value="#{userBean.allUsers}" var="user">
+					<f:facet name="header"></f:facet>
+					<p:column>
+						<f:facet name="header">
+							Firstname							
+						     <br />
+							<h:inputText value="#{userBean.newUser.firstname}">
+							</h:inputText>
+						</f:facet>
+						 	<h:outputText value="#{user.firstname}">
+							</h:outputText>
+							<h:inputText value="#{userBean.selectedUser.firstname}" rendered="#{userBean.verifyUserRendered(user)}"></h:inputText>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							Lastname								
+					<br />
+							<h:inputText value="#{userBean.newUser.lastname}">
+							</h:inputText>
+						</f:facet>
+						<h:outputText value="#{user.lastname}">
+						</h:outputText>
+						<h:inputText value="#{userBean.selectedUser.lastname}" rendered="#{userBean.verifyUserRendered(user)}"></h:inputText>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+						<h:outputLabel for="username" value="#{msg['login.username']}" />
+								<br />
+							<h:inputText value="#{userBean.newUser.username}">
+							</h:inputText>
+						</f:facet>
+						<h:outputText value="#{user.username}">
+						</h:outputText>
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							Email
+	  						<br />
+							<h:inputText value="#{userBean.newUser.email}">
+							</h:inputText>
+						</f:facet>
+						<h:outputText value="#{user.email}">
+						</h:outputText>
+						<h:inputText value="#{userBean.selectedUser.email}" rendered="#{userBean.verifyUserRendered(user)}"></h:inputText>
+					</p:column>					
+
+					<p:column>
+						<f:facet name="header">
+							Phone number
+													<br />
+							<h:inputText value="#{userBean.newUser.phoneNumber}">
+							</h:inputText>
+						</f:facet>
+							<h:outputText value="#{user.phoneNumber}">
+							</h:outputText>
+							<h:inputText value="#{userBean.selectedUser.phoneNumber}" rendered="#{userBean.verifyUserRendered(user)}"></h:inputText>
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							Active
+					       <br />
+						</f:facet>
+
+						<h:outputText value="#{user.active}">
+						</h:outputText>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+						Action
+							<br />
+							<h:commandButton value="Create"
+								action="#{userBean.createNewUser}">
+							</h:commandButton>
+						</f:facet>
+
+
+
+						<h:commandButton value="Delete"
+							action="#{userBean.deleteUser(user)}" rendered="#{!userBean.verifyUserRendered(user)}">
+						</h:commandButton>
+
+
+						<h:commandButton value="Activate"
+							action="#{userBean.activateUser(user)}" rendered="#{!userBean.verifyUserRendered(user)}"></h:commandButton>
+
+						<h:commandButton value="Update"
+							action="#{userBean.enterUpdateMode(user)}" rendered="#{!userBean.verifyUserRendered(user)}"></h:commandButton>
+							
+							<h:commandButton value="Leave update mode"
+							action="#{userBean.leaveUpdateMode}" rendered="#{userBean.verifyUserRendered(user)}"></h:commandButton>
+							
+							<h:commandButton value="Edit user"
+							action="#{userBean.editUser}" rendered="#{userBean.verifyUserRendered(user)}"></h:commandButton>
+					</p:column>
+
+				</p:dataTable>
+
+
+				
+				
+				
+				<h:commandLink value="#{msg['general.logout']}"
+					action="#{loginBean.processLogout}" />
+
+
+			</h:form>
+		</div>
 	</f:view>
 
 </h:body>

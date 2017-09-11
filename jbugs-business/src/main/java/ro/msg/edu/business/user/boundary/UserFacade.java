@@ -1,12 +1,14 @@
 package ro.msg.edu.business.user.boundary;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
-import ro.msg.edu.business.common.exception.BusinessException;
+import ro.msg.edu.business.common.exception.TechnicalException;
 import ro.msg.edu.business.user.control.UserCRUDControl;
 import ro.msg.edu.business.user.dao.UserDAO;
 import ro.msg.edu.business.user.dto.UserDTO;
@@ -31,7 +33,7 @@ public class UserFacade {
 	@EJB
 	private UserDAO userDAO;
 
-	public UserDTO createUser(UserDTO user) throws BusinessException {
+	public UserDTO createUser(UserDTO user) throws TechnicalException {
 		return userCRUDControl.createUser(user);
 	}
 
@@ -40,7 +42,12 @@ public class UserFacade {
 
 	}
 
-	public UserDTO updateUser(UserDTO userDTO) throws BusinessException {
+	public UserDTO activateUser(UserDTO userDTO) {
+		return userCRUDControl.activateUser(userDTO);
+
+	}
+
+	public UserDTO updateUser(UserDTO userDTO) throws TechnicalException {
 		return userCRUDControl.updateUser(userDTO);
 	}
 
@@ -53,6 +60,10 @@ public class UserFacade {
 	public boolean verifyLoggedInUser(UserDTO user) {
 		return userCRUDControl.verifyUserExists(user);
 
+	}
+
+	public List<UserDTO> findAllUsers() {
+		return userCRUDControl.findAllUser();
 	}
 
 }

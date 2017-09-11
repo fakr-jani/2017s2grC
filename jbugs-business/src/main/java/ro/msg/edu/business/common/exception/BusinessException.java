@@ -1,18 +1,20 @@
 package ro.msg.edu.business.common.exception;
 
-public class BusinessException extends Exception {
+/**
+ * 
+ * @author maresb
+ *
+ */
+public class BusinessException extends JBugsException {
 
-	private static final long serialVersionUID = -5628141671921410481L;
-
-	private String message;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public BusinessException(String message) {
-		super();
-		this.message = message;
-	}
+		super(message);
 
-	public String getMessage() {
-		return message;
 	}
 
 }
