@@ -1,4 +1,4 @@
-package edu.msg.ro.user.validator;
+package ro.msg.edu.client.validators;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -8,7 +8,7 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 @FacesValidator("usernameValidator")
-public class UsernameValidator implements Validator {
+public class LoginValidator implements Validator {
 
 	@Override
 	public void validate(FacesContext arg0, UIComponent arg1, Object arg2) throws ValidatorException {

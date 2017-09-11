@@ -63,42 +63,16 @@ body {
 <h:body>
 	<f:view>
 	<div class="helloWorld">
-		<h:outputText value="#{initParam['hello_world']}" ></h:outputText>
-		<br />
-		<h:outputText value=" #{initParam['hello_world']}" ></h:outputText>
 
-		<h:form id="loginForm">
+
+		<h:form id="usersForm">
 		
 			<h:messages />
 			
-		
-			<h:panelGrid id="loginPanel" columns="3" cellpadding="5"
-				cellspacing="5">
-				<f:facet name="header">
-					<h:outputText value="#{msg['login.header']}" />
-				</f:facet>
-
-				<h:outputLabel for="username" value="#{msg['login.username']}" />
-				<p:inputText id="username" value="#{loginBean.user.username}">
-						<f:validator validatorId="usernameValidator" />
-				</p:inputText>
-				<h:message for="username" />
-
-				<h:outputLabel for="password" value="#{msg['login.password']}" />
-				<p:password id="password" value="#{loginBean.user.password}">
-				
-				</p:password>
-				<h:message for="password" />
-				
-				<f:facet name="footer">
-					<h:panelGroup style="display:block; text-align:center">
-						<h:commandButton id="submit" value="#{msg['login.loginButton']}" action="#{loginBean.processLogin}" actionListener="#{loginBean.loginActionListener}"/>
-					</h:panelGroup>
-				</f:facet>
-
-			</h:panelGrid>
-
-
+			<h:commandLink value="#{msg['general.logout']}"
+				action="#{loginBean.processLogout}" />
+			
+	
 		</h:form>
 	</div>
 	</f:view>

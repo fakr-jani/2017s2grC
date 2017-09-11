@@ -85,4 +85,8 @@ public class UserCRUDControl {
 
 	}
 
+	public boolean verifyUserExists(UserDTO user) {
+		return userDAO.verifyUserExists(user.getUsername(), user.getPassword());
+	}
+
 }

@@ -1,5 +1,6 @@
 package ro.msg.edu.business.user.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.ejb.Stateless;
@@ -40,6 +41,15 @@ public class UserDAO extends AbstractDao<User> {
 			e.printStackTrace();
 		}
 		return Optional.ofNullable(new User());
+	}
+
+	public boolean verifyUserExists(String username, String password) {
+		Query query = em.createQuery("SELECT u FROM User u WHERE u.username = :username and u.password= :password");
+		query.setParameter("username", username);
+		query.setParameter("password", password);
+		List<User> userList = query.getResultList();
+		return userList.isEmpty() == false;
+
 	}
 
 }

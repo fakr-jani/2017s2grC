@@ -1,29 +1,27 @@
-package edu.msg.ro.user.bean;
+package ro.msg.edu.client.beans;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.inject.Named;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 
 import ro.msg.edu.business.user.boundary.UserFacade;
 import ro.msg.edu.business.user.dto.UserDTO;
 
-@Named
+@ManagedBean
 @RequestScoped
-public class LoginBean extends HttpServlet {
+public class LoginBean {
 
 	@EJB
 	UserFacade userFacade;
 
-	UserDTO u = new UserDTO();
+	UserDTO user = new UserDTO();
 
 	public UserDTO getUser() {
-		return u;
+		return user;
 	}
 
 	/**
@@ -31,7 +29,7 @@ public class LoginBean extends HttpServlet {
 	 *            the user to set
 	 */
 	public void setUser(UserDTO user) {
-		this.u = user;
+		this.user = user;
 	}
 
 	public void loginActionListener(ActionEvent event) {
@@ -40,14 +38,14 @@ public class LoginBean extends HttpServlet {
 
 	public String processLogin() {
 
-		HttpSession session = (HttpSession) getFacesContext().getExternalContext().getSession(false);
+		if (userFacade.verifyLoggedInUser(user)) {
+			HttpSession session = (HttpSession) getFacesContext().getExternalContext().getSession(false);
+			session.setAttribute("username", user.getUsername());
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Welcome " + user.getUsername() + "!"));
+			return "users";
+		} else
 
-		UserDTO loggedUser;
-
-		loggedUser = userFacade.findUserbyUsername(u.getUsername());
-		if (loggedUser != null && u.getPassword().equals(loggedUser.getPassword())) {
-			return "success";
-		} else {
+		{
 			FacesContext.getCurrentInstance().addMessage("loginForm:username",
 					new FacesMessage("Password or Username wrong!"));
 			return "login";
@@ -55,8 +53,6 @@ public class LoginBean extends HttpServlet {
 
 	}
 
-	@Produces
-	@RequestScoped
 	public FacesContext getFacesContext() {
 		return FacesContext.getCurrentInstance();
 	}

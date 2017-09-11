@@ -50,4 +50,9 @@ public class UserFacade {
 
 	}
 
+	public boolean verifyLoggedInUser(UserDTO user) {
+		return userCRUDControl.verifyUserExists(user);
+
+	}
+
 }
