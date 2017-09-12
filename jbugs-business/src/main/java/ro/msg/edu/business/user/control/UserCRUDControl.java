@@ -32,28 +32,33 @@ public class UserCRUDControl {
 	@EJB
 	UserValidator userValidator;
 
+
 	public UserDTO createUser(UserDTO user) throws TechnicalException {
 		userValidator.validateUserData(user);
-
 		User userEntity = new User();
 		userDTOMapper.mapToEntity(user, userEntity);
 
 		userEntity.setActive(true);
-
 		userEntity.setUsername(generateUsername(user.getFirstname(), user.getLastname()));
+
 		userDAO.persistEntity(userEntity);
 		User persistedUser = userDAO.findEntity(userEntity.getId());
+
 		return userDTOMapper.mapToDTO(persistedUser);
 	}
 
-	public UserDTO deleteUser(UserDTO userDTO) {
+
+	public UserDTO deleteUser(UserDTO userDTO) throws TechnicalException {
 		Optional<User> userOptional = userDAO.findUserByUsername(userDTO.getUsername());
 		User userEntity = userOptional.get();
-		if (userValidator.checkIfUserHasActiveTasks(userEntity) == false) {
+		if (userEntity == null)
+			throw new TechnicalException("User not found!");
+		if (!userDAO.hasActiveTasks(userEntity)) {
 			userEntity.setActive(false);
 		}
 		return userDTOMapper.mapToDTO(userEntity);
 	}
+
 
 	public UserDTO activateUser(UserDTO userDTO) {
 		Optional<User> userOptional = userDAO.findUserByUsername(userDTO.getUsername());
@@ -62,27 +67,22 @@ public class UserCRUDControl {
 		return userDTOMapper.mapToDTO(userEntity);
 	}
 
+
 	public UserDTO updateUser(UserDTO userToUpdate) throws TechnicalException {
 		Optional<User> userOptional = userDAO.findUserByUsername(userToUpdate.getUsername());
 		User entity = userOptional.get();
+		userValidator.validateUserData(userToUpdate);
 
-		if (userToUpdate.getEmail() != null && userValidator.validateEmail(userToUpdate.getEmail()))
-			entity.setEmail(userToUpdate.getEmail());
-
-		if (userToUpdate.getFirstname() != null)
-			entity.setFirstname(userToUpdate.getFirstname());
-
-		if (userToUpdate.getLastname() != null)
-			entity.setLastname(userToUpdate.getLastname());
-
-		if (userToUpdate.getPassword() != null)
-			entity.setPassword(userToUpdate.getPassword());
-
-		if (userToUpdate.getPhoneNumber() != null)
-			entity.setPhoneNumber(userToUpdate.getPhoneNumber());
+		entity.setEmail(userToUpdate.getEmail());
+		entity.setFirstname(userToUpdate.getFirstname());
+		entity.setLastname(userToUpdate.getLastname());
+		entity.setPassword(userToUpdate.getPassword());
+		entity.setPhoneNumber(userToUpdate.getPhoneNumber());
+		entity.setActive(userToUpdate.isActive());
 
 		return userDTOMapper.mapToDTO(entity);
 	}
+
 
 	public UserDTO findUserbyUsername(String username) {
 		Optional<User> entity = userDAO.findUserByUsername(username);
@@ -94,9 +94,11 @@ public class UserCRUDControl {
 
 	}
 
+
 	public boolean verifyUserExists(UserDTO user) {
 		return userDAO.verifyUserExists(user.getUsername(), user.getPassword());
 	}
+
 
 	public List<UserDTO> findAllUser() {
 		List<User> users = userDAO.getAllUser();
@@ -106,6 +108,7 @@ public class UserCRUDControl {
 		}
 		return usersDTO;
 	}
+
 
 	public String generateUsername(String firstname, String lastname) {
 
@@ -122,7 +125,7 @@ public class UserCRUDControl {
 
 			username.append(lastname, 0, i);
 			username.append(firstname, 0, j);
-			if (userValidator.verifyUsernameExists(username) == false) {
+			if (userValidator.uniqueUsername(username) == false) {
 				ok = 1;
 			} else {
 				username.delete(0, 6);

@@ -33,8 +33,6 @@ public abstract class AbstractDTOMapper<E extends AbstractEntity, DTO extends Ab
 	}
 
 	public List<DTO> mapToDTOs(List<E> entities) {
-		// TODO refactor with Java8 map()
-
 		List<DTO> dtos = new ArrayList<>();
 		for (E entity : entities) {
 			dtos.add(mapToDTO(entity));

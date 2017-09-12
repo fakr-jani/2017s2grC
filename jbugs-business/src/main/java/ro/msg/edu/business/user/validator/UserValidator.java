@@ -16,36 +16,46 @@ public class UserValidator {
 	@EJB
 	private UserDAO userDAO;
 
-	public boolean checkIfUserHasActiveTasks(User entity) {
 
-		// get list of users bugs
-		// if null return false
-		// else check for every bug if status not equals CLOSED then return true
-		return false;
+	public void validateUserData(UserDTO userDTO) throws TechnicalException {
+		validateEmail(userDTO);
+		validateFirstName(userDTO);
+		validateLastName(userDTO);
 	}
 
-	public void validateUserData(UserDTO user) throws TechnicalException {
-		User existingUserWithSameEmail = userDAO.findUserByEmail(user.getEmail());
-		if (existingUserWithSameEmail != null) {
-			throw new TechnicalException("User already exists with given email " + user.getEmail());
+
+	public void validateEmail(UserDTO userDTO) throws TechnicalException {
+		User existingUserWithSameEmail = userDAO.findUserByEmail(userDTO.getEmail());
+		if (existingUserWithSameEmail != null && existingUserWithSameEmail.getId() != userDTO.getId()) {
+			throw new TechnicalException("User already exists with given email " + userDTO.getEmail());
+		} else if (userDTO.getEmail().endsWith("@msggroup.com") == false) {
+			throw new TechnicalException("Email does not have the standard format " + userDTO.getEmail());
 		}
-		if (user.getEmail().endsWith("@msggroup.com") == false) {
-			throw new TechnicalException("Email does not have the standard format " + user.getEmail());
-		}
+
 	}
 
-	public boolean validateEmail(String email) throws TechnicalException {
-		User existingUserWithSameEmail = userDAO.findUserByEmail(email);
-		if (existingUserWithSameEmail != null) {
-			throw new TechnicalException("User already exists with given email " + email);
-		}
-		if (email.endsWith("@msggroup.com") == false) {
-			throw new TechnicalException("Email does not have the standard format " + email);
-		}
-		return true;
+
+	public void validateFirstName(UserDTO userDTO) throws TechnicalException {
+		if (userDTO.getFirstname() == null)
+			throw new TechnicalException("Firstname cannot be null!");
 	}
 
-	public boolean verifyUsernameExists(StringBuilder username) {
+
+	public void validateLastName(UserDTO userDTO) throws TechnicalException {
+		if (userDTO.getLastname() == null)
+			throw new TechnicalException("Lastname cannot be null!");
+	}
+
+
+	public void validatePhoneNumber(UserDTO userDTO) throws TechnicalException {
+		if (!(userDTO.getPhoneNumber().startsWith("+40") || userDTO.getPhoneNumber().startsWith("+49"))) {
+			throw new TechnicalException("Not a valid phone number");
+		}
+
+	}
+
+
+	public boolean uniqueUsername(StringBuilder username) {
 		Optional<User> user = userDAO.findUserByUsername(username.toString());
 		if (user.get().getId() == null) {
 			return false;
