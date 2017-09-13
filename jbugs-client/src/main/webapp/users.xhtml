@@ -2,132 +2,96 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title><h:outputText value="#{msg['login.title']}" /></title>
-	<!-- <h:outputStylesheet library="css" name="style.css" /> -->
+<title><h:outputText value="#{msg['login.title']}" /></title>
+
+<style>
+
+.helloWorld {
+position: absolute;
+top: 30%;
+left: 30%;
+background: rgba(0, 0, 0, 0.5);
+margin: -0 0 0 -0;
+width: 500px;
+height: 500px;
+}
+</style>
 </h:head>
 <h:body>
-	<f:view contentType="text/html">
-		<div>
-	
-			<h:form id="usersForm">
-				<p:messages />
-				<p:dataTable value="#{userBean.allUsers}" var="user">
-					<f:facet name="header"></f:facet>
-					<p:column>
-						<f:facet name="header">
-							Firstname							
-						     <br />
-							<h:inputText value="#{userBean.newUser.firstname}">
-							</h:inputText>
-						</f:facet>
-						 	<h:outputText value="#{user.firstname}">
-							</h:outputText>
-							<h:inputText value="#{userBean.selectedUser.firstname}" rendered="#{userBean.verifyUserRendered(user)}"></h:inputText>
-					</p:column>
-					<p:column>
-						<f:facet name="header">
-							Lastname								
-					<br />
-							<h:inputText value="#{userBean.newUser.lastname}">
-							</h:inputText>
-						</f:facet>
-						<h:outputText value="#{user.lastname}">
-						</h:outputText>
-						<h:inputText value="#{userBean.selectedUser.lastname}" rendered="#{userBean.verifyUserRendered(user)}"></h:inputText>
-					</p:column>
+<f:view>
+<div class="helloWorld">
 
-					<p:column>
-						<f:facet name="header">
-						<h:outputLabel for="username" value="#{msg['login.username']}" />
-								<br />
-							<h:inputText value="#{userBean.newUser.username}">
-							</h:inputText>
-						</f:facet>
-						<h:outputText value="#{user.username}">
-						</h:outputText>
-					</p:column>
-					
-					<p:column>
-						<f:facet name="header">
-							Email
-	  						<br />
-							<h:inputText value="#{userBean.newUser.email}">
-							</h:inputText>
-						</f:facet>
-						<h:outputText value="#{user.email}">
-						</h:outputText>
-						<h:inputText value="#{userBean.selectedUser.email}" rendered="#{userBean.verifyUserRendered(user)}"></h:inputText>
-					</p:column>					
+<h:form id="addUser">
 
-					<p:column>
-						<f:facet name="header">
-							Phone number
-							<br />
-							<h:inputText value="#{userBean.newUser.phoneNumber}">
-							</h:inputText>
-						</f:facet>
-							<h:outputText value="#{user.phoneNumber}">
-							</h:outputText>
-							<h:inputText value="#{userBean.selectedUser.phoneNumber}" rendered="#{userBean.verifyUserRendered(user)}"></h:inputText>
-					</p:column>
-					
-					<p:column>
-						<f:facet name="header">
-							Active
-					       <br />
-						</f:facet>
+<h:outputLabel for="firstname" value="#{msg['firstname']}" />
+<h:outputText value="#{user.firstname}">
+</h:outputText>
 
-						<h:outputText value="#{user.active}">
-						</h:outputText>
-					</p:column>
+<h:inputText value="#{userBean.newUser.firstname}">
+</h:inputText>
+<br />
 
-					<p:column>
-						<f:facet name="header">
-						Action
-							<br />
-							<h:commandButton value="Create"
-								action="#{userBean.createNewUser}">
-							</h:commandButton>
-						</f:facet>
+
+<h:outputLabel for="lastname" value="#{msg['lastname']}" />
+<h:inputText value="#{userBean.newUser.lastname}">
+</h:inputText>
+
+<h:outputText value="#{user.lastname}">
+</h:outputText>
+
+
+<br />
+<h:outputLabel for="password" value="#{msg['password']}" />
+
+<h:inputText value="#{userBean.newUser.password}">
+</h:inputText>
+
+<h:outputText value="#{user.password}">
+</h:outputText>
+
+ 	<br />
+<h:outputLabel for="phoneNumber" value="#{msg['phoneNumber']}" />
+
+<h:inputText value="#{userBean.newUser.phoneNumber}">
+</h:inputText>
+
+<h:outputText value="#{user.phoneNumber}">
+</h:outputText>
+
+<br />
+<h:outputLabel for="email" value="#{msg['email']}" />
+
+<h:inputText value="#{userBean.newUser.email}">
+</h:inputText>
+
+<h:outputText value="#{user.email}">
+</h:outputText>
+<br/>
+
+<h:outputLabel for="role" value="#{msg['role']}" />
+
+<p:selectManyCheckbox id="grid"
+value="#{userBean.selectedRoles}" layout="grid" columns="3">
+
+<f:selectItems value="#{roleBean.allRoles}"
+var="role" itemLabel="#{role.roleName}"
+itemValue="#{role.roleName}" />
+</p:selectManyCheckbox>
+
+<br />
+<h:commandButton value="Create" action="#{userBean.createNewUser}">
+</h:commandButton>
 
 
 
-						<h:commandButton value="Delete"
-							action="#{userBean.deleteUser(user)}" rendered="#{!userBean.verifyUserRendered(user)}">
-						</h:commandButton>
-
-
-						<h:commandButton value="Activate"
-							action="#{userBean.activateUser(user)}" rendered="#{!userBean.verifyUserRendered(user)}"></h:commandButton>
-
-						<h:commandButton value="Update"
-							action="#{userBean.enterUpdateMode(user)}" rendered="#{!userBean.verifyUserRendered(user)}"></h:commandButton>
-							
-							<h:commandButton value="Leave update mode"
-							action="#{userBean.leaveUpdateMode}" rendered="#{userBean.verifyUserRendered(user)}"></h:commandButton>
-							
-							<h:commandButton value="Edit user"
-							action="#{userBean.editUser}" rendered="#{userBean.verifyUserRendered(user)}"></h:commandButton>
-					</p:column>
-
-				</p:dataTable>
-
-
-				
-				
-				<br/>
-				<h:commandButton id="logout" value="#{msg['general.logout']}"
-				 action="#{loginBean.processLogout}" />
-
-
-			</h:form>
-		</div>
-	</f:view>
+</h:form>
+</div>
+</f:view>
 
 </h:body>
 </html>

@@ -23,6 +23,18 @@ public class UserBean extends AbstractBean {
 	private UserDTO newUser = new UserDTO();
 
 	private UserDTO selectedUser = new UserDTO();
+	
+	private String[] selectedRoles;
+
+
+	public String[] getSelectedRoles() {
+		return selectedRoles;
+	}
+
+
+	public void setSelectedRoles(String[] selectedRoles) {
+		this.selectedRoles = selectedRoles;
+	}
 
 	private String[] selectedRoles;
 

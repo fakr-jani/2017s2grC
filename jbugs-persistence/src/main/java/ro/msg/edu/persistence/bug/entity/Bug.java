@@ -27,7 +27,6 @@ public class Bug extends AbstractEntity {
 	/**
 	 * 
 	 */
-
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -56,6 +55,7 @@ public class Bug extends AbstractEntity {
 
 	@NotNull
 	@Column
+	@Enumerated(EnumType.STRING)
 	private BugSeverityType severity;
 
 	@NotNull
