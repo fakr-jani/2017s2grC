@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 import javax.persistence.OneToMany;
 
 import ro.msg.edu.persistence.common.entity.AbstractEntity;
-import ro.msg.edu.persistence.notification.Notification;
+import ro.msg.edu.persistence.notification.entity.Notification;
 import ro.msg.edu.persistence.user.entity.User;
 
 @Entity

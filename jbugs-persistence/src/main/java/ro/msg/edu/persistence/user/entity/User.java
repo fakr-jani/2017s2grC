@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 import ro.msg.edu.persistence.bug.entity.Bug;
 import ro.msg.edu.persistence.bug.entity.History;
 import ro.msg.edu.persistence.common.entity.AbstractEntity;
-import ro.msg.edu.persistence.notification.Notification;
+import ro.msg.edu.persistence.notification.entity.Notification;
 
 /**
  * Entity for the User.

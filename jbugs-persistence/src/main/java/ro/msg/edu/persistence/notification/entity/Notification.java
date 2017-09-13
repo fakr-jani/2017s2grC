@@ -1,4 +1,4 @@
-package ro.msg.edu.persistence.notification;
+package ro.msg.edu.persistence.notification.entity;
 
 import java.sql.Timestamp;
 import java.util.List;
