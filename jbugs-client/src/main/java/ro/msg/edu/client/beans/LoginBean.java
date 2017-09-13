@@ -1,11 +1,12 @@
 package ro.msg.edu.client.beans;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
@@ -14,8 +15,8 @@ import ro.msg.edu.business.user.boundary.UserFacade;
 import ro.msg.edu.business.user.dto.UserDTO;
 
 @ManagedBean
-@RequestScoped
-public class LoginBean {
+@ViewScoped
+public class LoginBean implements Serializable {
 
 	@EJB
 	UserFacade userFacade;

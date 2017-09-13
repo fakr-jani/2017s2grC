@@ -8,100 +8,30 @@
 
 <h:head>
 	<title><h:outputText value="#{msg['login.title']}" /></title>
-
-<style>
-html {
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
-}
-body {
-	width: 500%;
-	height: 500%;
-	font-family: 'Open Sans', sans-serif;
-	background: #092756;
-	background: -moz-radial-gradient(0% 100%, ellipse cover, rgba(104, 128, 138, .4)
-		10%, rgba(138, 114, 76, 0) 40%),
-		-moz-linear-gradient(top, rgba(57, 173, 219, .25) 0%,
-		rgba(42, 60, 87, .4) 100%),
-		-moz-linear-gradient(-45deg, #670d10 0%, #092756 100%);
-	background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104, 128, 138, .4)
-		10%, rgba(138, 114, 76, 0) 40%),
-		-webkit-linear-gradient(top, rgba(57, 173, 219, .25) 0%,
-		rgba(42, 60, 87, .4) 100%),
-		-webkit-linear-gradient(-45deg, #670d10 0%, #092756 100%);
-	background: -o-radial-gradient(0% 100%, ellipse cover, rgba(104, 128, 138, .4)
-		10%, rgba(138, 114, 76, 0) 40%),
-		-o-linear-gradient(top, rgba(57, 173, 219, .25) 0%,
-		rgba(42, 60, 87, .4) 100%),
-		-o-linear-gradient(-45deg, #670d10 0%, #092756 100%);
-	background: -ms-radial-gradient(0% 100%, ellipse cover, rgba(104, 128, 138, .4)
-		10%, rgba(138, 114, 76, 0) 40%),
-		-ms-linear-gradient(top, rgba(57, 173, 219, .25) 0%,
-		rgba(42, 60, 87, .4) 100%),
-		-ms-linear-gradient(-45deg, #670d10 0%, #092756 100%);
-	background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104, 128, 138, .4)
-		10%, rgba(138, 114, 76, 0) 40%),
-		linear-gradient(to bottom, rgba(57, 173, 219, .25) 0%,
-		rgba(42, 60, 87, .4) 100%),
-		linear-gradient(135deg, #670d10 0%, #092756 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3E1D6D',
-		endColorstr='#092756', GradientType=1);
-}
-
-.helloWorld {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	background:rgba(255, 255, 255, 0.5);
-	margin: -150px 0 0 -150px;
-	width: 350px;
-	height: 300px;
-	}
-	</style>
-	</h:head>
+</h:head>
 <h:body>
-	<f:view>
-	<div class="helloWorld">
-		<h:outputText value="#{initParam['hello_world']}" ></h:outputText>
-		<br />
-		<h:outputText value=" #{initParam['hello_world']}" ></h:outputText>
+	<f:view contentType="text/html">
 
 		<h:form id="loginForm">
-		
-			<h:messages />
-			
-		
-			<h:panelGrid id="loginPanel" columns="3" cellpadding="5"
-				cellspacing="5">
-				<f:facet name="header">
-					<h:outputText value="#{msg['login.header']}" />
-				</f:facet>
+			<p:panel id="loginPanel" header="#{msg['login.header']}"
+				style="margin-bottom:10px;">
+				<p:messages autoUpdate="true" />
 
-				<h:outputLabel for="username" value="#{msg['login.username']}" />
-				<p:inputText id="username" value="#{loginBean.user.username}">
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:outputLabel for="username" value="#{msg['login.username']}" />
+					<p:inputText id="username" value="#{loginBean.user.username}">
 						<f:validator validatorId="usernameValidator" />
-				</p:inputText>
-				<h:message for="username" />
+					</p:inputText>
 
-				<h:outputLabel for="password" value="#{msg['login.password']}" />
-				<p:password id="password" value="#{loginBean.user.password}">
-				
-				</p:password>
-				<h:message for="password" />
-				
-				<f:facet name="footer">
-					<h:panelGroup style="display:block; text-align:center">
-						<h:commandButton id="submit" value="#{msg['login.loginButton']}" action="#{loginBean.processLogin}" actionListener="#{loginBean.loginActionListener}"/>
-					</h:panelGroup>
-				</f:facet>
-
-			</h:panelGrid>
-
+					<p:outputLabel for="password" value="#{msg['login.password']}" />
+					<p:password id="password" value="#{loginBean.user.password}" />
+				</h:panelGrid>
+			</p:panel>
+			<p:commandButton id="submit" value="#{msg['login.loginButton']}"
+			 action="#{loginBean.processLogin}" validateClient="true" />
 
 		</h:form>
-	</div>
-	</f:view>
 
+	</f:view>
 </h:body>
 </html>

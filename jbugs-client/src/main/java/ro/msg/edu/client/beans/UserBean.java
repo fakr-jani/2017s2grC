@@ -1,20 +1,22 @@
 package ro.msg.edu.client.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import ro.msg.edu.business.common.exception.JBugsException;
+import ro.msg.edu.business.common.exception.TechnicalException;
 import ro.msg.edu.business.user.boundary.UserFacade;
 import ro.msg.edu.business.user.dto.UserDTO;
 
 @ManagedBean
-@SessionScoped
-public class UserBean extends AbstractBean {
+@ViewScoped
+public class UserBean extends AbstractBean implements Serializable {
 
 	@EJB
 	UserFacade userFacade;
@@ -54,7 +56,7 @@ public class UserBean extends AbstractBean {
 		return "users";
 	}
 
-	public String deleteUser(UserDTO user) {
+	public String deleteUser(UserDTO user) throws TechnicalException {
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage("Userul " + user.getUsername() + " a fost sters"));
 		userFacade.deleteUser(user);

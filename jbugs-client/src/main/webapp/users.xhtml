@@ -8,65 +8,13 @@
 
 <h:head>
 	<title><h:outputText value="#{msg['login.title']}" /></title>
-
-	<style>
-html {
-	width: 100%;
-	height: 100%;
-	overflow: scroll;
-}
-
-body {
-	width: 500%;
-	height: 500%;
-	font-family: 'Open Sans', sans-serif;
-	background: #092756;
-	background: -moz-radial-gradient(0% 100%, ellipse cover, rgba(104, 128, 138, .4)
-		10%, rgba(138, 114, 76, 0) 40%),
-		-moz-linear-gradient(top, rgba(57, 173, 219, .25) 0%,
-		rgba(42, 60, 87, .4) 100%),
-		-moz-linear-gradient(-45deg, #670d10 0%, #092756 100%);
-	background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104, 128, 138, .4)
-		10%, rgba(138, 114, 76, 0) 40%),
-		-webkit-linear-gradient(top, rgba(57, 173, 219, .25) 0%,
-		rgba(42, 60, 87, .4) 100%),
-		-webkit-linear-gradient(-45deg, #670d10 0%, #092756 100%);
-	background: -o-radial-gradient(0% 100%, ellipse cover, rgba(104, 128, 138, .4)
-		10%, rgba(138, 114, 76, 0) 40%),
-		-o-linear-gradient(top, rgba(57, 173, 219, .25) 0%,
-		rgba(42, 60, 87, .4) 100%),
-		-o-linear-gradient(-45deg, #670d10 0%, #092756 100%);
-	background: -ms-radial-gradient(0% 100%, ellipse cover, rgba(104, 128, 138, .4)
-		10%, rgba(138, 114, 76, 0) 40%),
-		-ms-linear-gradient(top, rgba(57, 173, 219, .25) 0%,
-		rgba(42, 60, 87, .4) 100%),
-		-ms-linear-gradient(-45deg, #670d10 0%, #092756 100%);
-	background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104, 128, 138, .4)
-		10%, rgba(138, 114, 76, 0) 40%),
-		linear-gradient(to bottom, rgba(57, 173, 219, .25) 0%,
-		rgba(42, 60, 87, .4) 100%),
-		linear-gradient(135deg, #670d10 0%, #092756 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3E1D6D',
-		endColorstr='#092756', GradientType=1);
-}
-
-.helloWorld {
-	position: absolute;
-	top: 20%;
-	left: 20%;
-	background: rgba(255, 255, 255, 0.5);
-	margin: -150px 0 0 -150px;
-	width: 1250px;
-	height: 700px;
-}
-</style>
+	<!-- <h:outputStylesheet library="css" name="style.css" /> -->
 </h:head>
 <h:body>
-	<f:view>
-		<div class="helloWorld">
+	<f:view contentType="text/html">
+		<div>
 	
 			<h:form id="usersForm">
-
 				<p:messages />
 				<p:dataTable value="#{userBean.allUsers}" var="user">
 					<f:facet name="header"></f:facet>
@@ -79,7 +27,7 @@ body {
 						</f:facet>
 						 	<h:outputText value="#{user.firstname}">
 							</h:outputText>
-							<p:inputText required="true" value="#{userBean.selectedUser.firstname}" rendered="#{userBean.verifyUserRendered(user)}"></p:inputText>
+							<h:inputText value="#{userBean.selectedUser.firstname}" rendered="#{userBean.verifyUserRendered(user)}"></h:inputText>
 					</p:column>
 					<p:column>
 						<f:facet name="header">
@@ -119,7 +67,7 @@ body {
 					<p:column>
 						<f:facet name="header">
 							Phone number
-													<br />
+							<br />
 							<h:inputText value="#{userBean.newUser.phoneNumber}">
 							</h:inputText>
 						</f:facet>
@@ -172,9 +120,9 @@ body {
 
 				
 				
-				
-				<h:commandLink value="#{msg['general.logout']}"
-					action="#{loginBean.processLogout}" />
+				<br/>
+				<h:commandButton id="logout" value="#{msg['general.logout']}"
+				 action="#{loginBean.processLogout}" />
 
 
 			</h:form>

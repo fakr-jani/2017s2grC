@@ -27,7 +27,6 @@ public class BugDTOMapper extends AbstractDTOMapper<Bug, BugDTO> {
 		dto.setVersion(entity.getVersion());
 		dto.setVersionFixed(entity.getVersionFixed());
 		dto.setTargetDate(entity.getTargetDate());
-		dto.setSeverity(entity.getSeverity());
 		dto.setCreatedBy(entity.getCreatedBy());
 		dto.setStatus(entity.getStatus());
 		dto.setAssignedTo(entity.getAssignedTo());
@@ -41,7 +40,6 @@ public class BugDTOMapper extends AbstractDTOMapper<Bug, BugDTO> {
 		entity.setVersion(dto.getVersion());
 		entity.setVersionFixed(dto.getVersionFixed());
 		entity.setTargetDate(dto.getTargetDate());
-		entity.setSeverity(dto.getSeverity());
 		entity.setCreatedBy(dto.getCreatedBy());
 		entity.setStatus(dto.getStatus());
 		entity.setAssignedTo(dto.getAssignedTo());
