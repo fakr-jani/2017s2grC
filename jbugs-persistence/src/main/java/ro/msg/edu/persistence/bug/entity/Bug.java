@@ -8,6 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import ro.msg.edu.persistence.common.entity.AbstractEntity;
 import ro.msg.edu.persistence.user.entity.User;
@@ -18,24 +21,33 @@ public class Bug extends AbstractEntity implements Serializable {
 	/**
 	 * 
 	 */
+	public enum bugStatus {
+		OPEN, REJECTED, IN_PROGRESS, INFO_NEEDED, FIXED, CLOSED
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idBug;
 
+	@NotNull
 	@Column
 	private String titleBug;
 
+	@NotNull
+	@Size(min = 250)
 	@Column
 	private String descriptionBug;
 
+	@NotNull
 	@Column
-	private Long version;
+	private String version;
 
 	@Column
-	private Long versionFixed;
+	private String versionFixed;
 
+	@Future
 	@Column
 	private String targetDate;
 
@@ -46,7 +58,7 @@ public class Bug extends AbstractEntity implements Serializable {
 	private User createdBy;
 
 	@Column
-	private String status;
+	private bugStatus status;
 
 	@ManyToOne
 	private User assignedTo;
@@ -76,19 +88,19 @@ public class Bug extends AbstractEntity implements Serializable {
 		this.descriptionBug = descriptionBug;
 	}
 
-	public Long getVersion() {
+	public String getVersion() {
 		return version;
 	}
 
-	public void setVersion(Long version) {
+	public void setVersion(String version) {
 		this.version = version;
 	}
 
-	public Long getVersionFixed() {
+	public String getVersionFixed() {
 		return versionFixed;
 	}
 
-	public void setVersionFixed(Long versionFixed) {
+	public void setVersionFixed(String versionFixed) {
 		this.versionFixed = versionFixed;
 	}
 
@@ -116,11 +128,11 @@ public class Bug extends AbstractEntity implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public String getStatus() {
+	public bugStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(bugStatus status) {
 		this.status = status;
 	}
 
