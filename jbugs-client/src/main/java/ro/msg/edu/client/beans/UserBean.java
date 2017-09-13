@@ -1,12 +1,11 @@
 package ro.msg.edu.client.beans;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import ro.msg.edu.business.common.exception.JBugsException;
@@ -15,8 +14,8 @@ import ro.msg.edu.business.user.boundary.UserFacade;
 import ro.msg.edu.business.user.dto.UserDTO;
 
 @ManagedBean
-@ViewScoped
-public class UserBean extends AbstractBean implements Serializable {
+@SessionScoped
+public class UserBean extends AbstractBean {
 
 	@EJB
 	UserFacade userFacade;
@@ -25,25 +24,31 @@ public class UserBean extends AbstractBean implements Serializable {
 
 	private UserDTO selectedUser = new UserDTO();
 
+
 	public UserDTO getSelectedUser() {
 		return selectedUser;
 	}
+
 
 	public void setSelectedUser(UserDTO selectedUser) {
 		this.selectedUser = selectedUser;
 	}
 
+
 	public List<UserDTO> getAllUsers() {
 		return userFacade.findAllUsers();
 	}
+
 
 	public UserDTO getNewUser() {
 		return newUser;
 	}
 
+
 	public void setNewUser(UserDTO newUser) {
 		this.newUser = newUser;
 	}
+
 
 	public String createNewUser() {
 		try {
@@ -56,12 +61,14 @@ public class UserBean extends AbstractBean implements Serializable {
 		return "users";
 	}
 
+
 	public String deleteUser(UserDTO user) throws TechnicalException {
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage("Userul " + user.getUsername() + " a fost sters"));
 		userFacade.deleteUser(user);
 		return "users";
 	}
+
 
 	public String activateUser(UserDTO user) {
 		FacesContext.getCurrentInstance().addMessage(null,
@@ -70,11 +77,13 @@ public class UserBean extends AbstractBean implements Serializable {
 		return "users";
 	}
 
+
 	public String enterUpdateMode(UserDTO user) {
 
 		this.selectedUser = user;
 		return "users";
 	}
+
 
 	public String leaveUpdateMode() {
 
@@ -82,9 +91,11 @@ public class UserBean extends AbstractBean implements Serializable {
 		return "users";
 	}
 
+
 	public boolean verifyUserRendered(UserDTO user) {
 		return (selectedUser != null && user.getId().equals(selectedUser.getId()));
 	}
+
 
 	public String editUser() {
 		try {

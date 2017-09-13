@@ -1,0 +1,32 @@
+package ro.msg.edu.business.permission.control;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
+import ro.msg.edu.business.permission.dao.PermissionDAO;
+import ro.msg.edu.business.permission.dto.PermissionDTO;
+import ro.msg.edu.business.permission.dto.mapper.PermissionDTOMapper;
+import ro.msg.edu.persistence.user.entity.Permission;
+
+@Stateless
+public class PermissionControl {
+
+	@EJB
+	private PermissionDAO permissionDAO;
+
+	@EJB
+	private PermissionDTOMapper permissionDTOMapper;
+
+	public List<PermissionDTO> findAllPermission() {
+		List<Permission> permissions = permissionDAO.getAllPermissions();
+		List<PermissionDTO> permissionsDTO = new ArrayList<PermissionDTO>();
+		for (Permission p : permissions) {
+			permissionsDTO.add(permissionDTOMapper.mapToDTO(p));
+		}
+		return permissionsDTO;
+	}
+
+}
