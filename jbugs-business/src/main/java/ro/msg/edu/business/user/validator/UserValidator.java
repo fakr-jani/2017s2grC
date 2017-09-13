@@ -21,6 +21,7 @@ public class UserValidator {
 		validateEmail(userDTO);
 		validateFirstName(userDTO);
 		validateLastName(userDTO);
+		validatePhoneNumber(userDTO);
 	}
 
 
