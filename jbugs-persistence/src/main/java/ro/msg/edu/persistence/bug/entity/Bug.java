@@ -4,17 +4,19 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.persistence.OneToMany;
 
 import ro.msg.edu.persistence.common.entity.AbstractEntity;
-import ro.msg.edu.persistence.notification.Notification;
+import ro.msg.edu.persistence.notification.entity.Notification;
 import ro.msg.edu.persistence.user.entity.User;
 
 @Entity
@@ -23,7 +25,8 @@ public class Bug extends AbstractEntity {
 	/**
 	 * 
 	 */
-	public enum bugStatus {
+
+	public enum BugStatus {
 		OPEN, REJECTED, IN_PROGRESS, INFO_NEEDED, FIXED, CLOSED
 	}
 
@@ -61,8 +64,9 @@ public class Bug extends AbstractEntity {
 	@ManyToOne
 	private User createdBy;
 
-	@Column
-	private bugStatus status;
+	@Column(name = "status", length = 25, nullable = false)
+	@Enumerated(EnumType.STRING)
+	private BugStatus status;
 
 	@ManyToOne
 	private User assignedTo;
@@ -141,11 +145,11 @@ public class Bug extends AbstractEntity {
 		this.createdBy = createdBy;
 	}
 
-	public bugStatus getStatus() {
-		return status;
+	public BugStatus getStatus() {
+		return this.status;
 	}
 
-	public void setStatus(bugStatus status) {
+	public void setStatus(BugStatus status) {
 		this.status = status;
 	}
 

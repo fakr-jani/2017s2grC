@@ -1,7 +1,8 @@
 package ro.msg.edu.business.bug.dto;
 
 import ro.msg.edu.business.common.dto.AbstractDTO;
-import ro.msg.edu.persistence.bug.entity.Bug.bugStatus;
+import ro.msg.edu.persistence.bug.entity.Bug;
+import ro.msg.edu.persistence.bug.entity.Bug.BugStatus;
 import ro.msg.edu.persistence.user.entity.User;
 
 /**
@@ -19,14 +20,14 @@ public class BugDTO extends AbstractDTO {
 	private String version;
 
 	private String versionFixed;
-	
+
 	private String targetDate;
 
 	private Long severity;
 
 	private User createdBy;
 
-	private bugStatus status;
+	private BugStatus status;
 
 	private User assignedTo;
 
@@ -78,11 +79,11 @@ public class BugDTO extends AbstractDTO {
 		this.createdBy = createdBy;
 	}
 
-	public bugStatus getStatus() {
+	public BugStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(bugStatus status) {
+	public void setStatus(BugStatus status) {
 		this.status = status;
 	}
 

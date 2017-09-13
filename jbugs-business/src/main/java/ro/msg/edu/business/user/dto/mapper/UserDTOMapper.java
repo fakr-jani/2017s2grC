@@ -29,6 +29,7 @@ public class UserDTOMapper extends AbstractDTOMapper<User, UserDTO> {
 		dto.setPhoneNumber(entity.getPhoneNumber());
 		dto.setUsername(entity.getUsername());
 		dto.setActive(entity.isActive());
+		dto.setRoles(entity.getRoles());
 	}
 
 	@Override
@@ -41,6 +42,7 @@ public class UserDTOMapper extends AbstractDTOMapper<User, UserDTO> {
 		entity.setPhoneNumber(dto.getPhoneNumber());
 		entity.setUsername(dto.getUsername());
 		entity.setActive(dto.isActive());
+		entity.setRoles(dto.getRoles());
 	}
 
 }

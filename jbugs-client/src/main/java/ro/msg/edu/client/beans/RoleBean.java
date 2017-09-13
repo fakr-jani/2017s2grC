@@ -13,10 +13,12 @@ import ro.msg.edu.business.role.dto.RoleDTO;
 @ManagedBean
 @ViewScoped
 public class RoleBean implements Serializable {
+
 	@EJB
 	private RoleFacade roleFacade;
 
 	public List<RoleDTO> getAllRoles() {
 		return roleFacade.findAllRoles();
 	}
+
 }

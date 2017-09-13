@@ -10,20 +10,15 @@
 	<title><h:outputText value="#{msg['login.title']}" /></title>
 
 	<style>
-html {
-	width: 100%;
-	height: 100%;
-	overflow: scroll;
-}
 
 .helloWorld {
 	position: absolute;
-	top: 20%;
-	left: 20%;
-	background: rgba(255, 255, 255, 0.5);
-	margin: -150px 0 0 -150px;
-	width: 1250px;
-	height: 700px;
+	top: 30%;
+	left: 30%;
+	background: rgba(0, 0, 0, 0.5);
+	margin: -0 0 0 -0;
+	width: 500px;
+	height: 500px;
 }
 </style>
 </h:head>
@@ -32,15 +27,68 @@ html {
 		<div class="helloWorld">
 	
 			<h:form id="addUser">
-		<f:facet name="header">
-							Firstname							
-						     <br />
+				
+						<h:outputLabel for="firstname" value="#{msg['firstname']}" />
+									<h:outputText value="#{user.firstname}">
+						</h:outputText>
+						
 							<h:inputText value="#{userBean.newUser.firstname}">
 							</h:inputText>
-						</f:facet>
+							<br />
 						
-
-
+			
+						<h:outputLabel for="lastname" value="#{msg['lastname']}" />
+									<h:inputText value="#{userBean.newUser.lastname}">
+							</h:inputText>
+				
+						<h:outputText value="#{user.lastname}">
+						</h:outputText>
+						
+											
+					<br />
+						<h:outputLabel for="password" value="#{msg['password']}" />
+						
+							<h:inputText value="#{userBean.newUser.password}">
+							</h:inputText>
+				
+						<h:outputText value="#{user.password}">
+						</h:outputText>
+						
+				  	<br />
+						<h:outputLabel for="phoneNumber" value="#{msg['phoneNumber']}" />
+							
+							<h:inputText value="#{userBean.newUser.phoneNumber}">
+							</h:inputText>
+					
+						<h:outputText value="#{user.phoneNumber}">
+						</h:outputText>
+						
+						<br />
+						<h:outputLabel for="email" value="#{msg['email']}" />
+							
+							<h:inputText value="#{userBean.newUser.email}">
+							</h:inputText>
+				
+						<h:outputText value="#{user.email}">
+						</h:outputText>
+						<br/>
+						
+						<h:outputLabel for="role" value="#{msg['role']}" />
+		
+		<p:selectManyCheckbox id="grid"
+			value="#{userBean.selectedRoles}" layout="grid" columns="3">
+			
+			<f:selectItems value="#{roleBean.allRoles}"
+				var="role" itemLabel="#{role.roleName}"
+				itemValue="#{role.roleName}" />
+		</p:selectManyCheckbox>
+			
+							<br />
+		<h:commandButton value="Create" action="#{userBean.createNewUser}">
+		</h:commandButton>
+					
+			<h:commandButton id="logout" value="#{msg['general.logout']}"
+				 action="#{loginBean.processLogout}" />
 
 			</h:form>
 		</div>
