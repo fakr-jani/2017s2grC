@@ -1,11 +1,12 @@
 package ro.msg.edu.business.permission.dto;
 
 import ro.msg.edu.business.common.dto.AbstractDTO;
+import ro.msg.edu.persistence.user.entity.enums.PermissionType;
 
 public class PermissionDTO extends AbstractDTO {
 
 	private Long idPermission;
-	private String namePermission;
+	private PermissionType namePermission;
 	private String detailPermission;
 
 	public Long getIdPermission() {
@@ -16,11 +17,11 @@ public class PermissionDTO extends AbstractDTO {
 		this.idPermission = idPermission;
 	}
 
-	public String getNamePermission() {
+	public PermissionType getNamePermission() {
 		return namePermission;
 	}
 
-	public void setNamePermission(String namePermission) {
+	public void setNamePermission(PermissionType namePermission) {
 		this.namePermission = namePermission;
 	}
 
@@ -34,8 +35,7 @@ public class PermissionDTO extends AbstractDTO {
 
 	@Override
 	public String toString() {
-		return "PermissionDTO [idPermission=" + idPermission + ", namePermission=" + namePermission
-				+ ", detailPermission=" + detailPermission + "]";
+		return "PermissionName: " + namePermission;
 	}
 
 }
