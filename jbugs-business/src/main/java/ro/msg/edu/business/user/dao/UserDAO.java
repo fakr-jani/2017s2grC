@@ -25,6 +25,7 @@ public class UserDAO extends AbstractDao<User> {
 		return User.class;
 	}
 
+
 	public User findUserByEmail(String email) throws TechnicalException {
 		TypedQuery<User> query = this.em.createNamedQuery(User.FIND_USER_BY_EMAIL, User.class);
 		query.setParameter("email", email);
@@ -36,6 +37,7 @@ public class UserDAO extends AbstractDao<User> {
 			throw new TechnicalException("Zero or more results", e.getCause());
 		}
 	}
+
 
 	public Optional<User> findUserByUsername(String username) {
 		Query query = em.createQuery("SELECT u FROM User u WHERE u.username = :username");
@@ -49,6 +51,7 @@ public class UserDAO extends AbstractDao<User> {
 		return Optional.ofNullable(new User());
 	}
 
+
 	public boolean verifyUserExists(String username, String password) {
 		Query query = em.createQuery("SELECT u FROM User u WHERE u.username = :username and u.password= :password");
 		query.setParameter("username", username);
@@ -58,9 +61,21 @@ public class UserDAO extends AbstractDao<User> {
 
 	}
 
+
 	public List<User> getAllUser() {
 		Query query = em.createQuery("SELECT u FROM User u ");
 		return query.getResultList();
+	}
+
+
+	public boolean hasActiveTasks(User entity) {
+		Query query = em.createQuery(
+				"SELECT u FROM User u join Bug b on u.idUser = :b.idUser where b.status!='CLOSED' and u.username=:username");
+		query.setParameter("username", entity.getUsername());
+
+		List<User> userList = query.getResultList();
+
+		return userList.isEmpty();
 	}
 
 }

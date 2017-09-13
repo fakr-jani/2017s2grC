@@ -33,23 +33,28 @@ public class UserFacade {
 	@EJB
 	private UserDAO userDAO;
 
+
 	public UserDTO createUser(UserDTO user) throws TechnicalException {
 		return userCRUDControl.createUser(user);
 	}
 
-	public UserDTO deleteUser(UserDTO userDTO) {
+
+	public UserDTO deleteUser(UserDTO userDTO) throws TechnicalException {
 		return userCRUDControl.deleteUser(userDTO);
 
 	}
+
 
 	public UserDTO activateUser(UserDTO userDTO) {
 		return userCRUDControl.activateUser(userDTO);
 
 	}
 
+
 	public UserDTO updateUser(UserDTO userDTO) throws TechnicalException {
 		return userCRUDControl.updateUser(userDTO);
 	}
+
 
 	public UserDTO findUserbyUsername(String username) {
 
@@ -57,10 +62,12 @@ public class UserFacade {
 
 	}
 
+
 	public boolean verifyLoggedInUser(UserDTO user) {
 		return userCRUDControl.verifyUserExists(user);
 
 	}
+
 
 	public List<UserDTO> findAllUsers() {
 		return userCRUDControl.findAllUser();

@@ -1,6 +1,5 @@
 package ro.msg.edu.persistence.user.entity;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,11 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotNull;
 
 import ro.msg.edu.persistence.common.entity.AbstractEntity;
 
 @Entity
-public class Role extends AbstractEntity implements Serializable {
+public class Role extends AbstractEntity {
 	/**
 	 * 
 	 */
@@ -25,6 +25,7 @@ public class Role extends AbstractEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idRole;
 
+	@NotNull
 	@Column
 	private String roleName;
 
