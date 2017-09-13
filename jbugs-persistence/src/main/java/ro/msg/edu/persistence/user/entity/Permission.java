@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,6 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
 import ro.msg.edu.persistence.common.entity.AbstractEntity;
+import ro.msg.edu.persistence.user.entity.enums.PermissionType;
 
 @Entity
 public class Permission extends AbstractEntity {
@@ -25,7 +28,8 @@ public class Permission extends AbstractEntity {
 
 	@NotNull
 	@Column
-	private String namePermission;
+	@Enumerated(EnumType.STRING)
+	private PermissionType namePermission;
 
 	@Column
 	private String detailPermission;
@@ -42,11 +46,11 @@ public class Permission extends AbstractEntity {
 		return serialVersionUID;
 	}
 
-	public String getNamePermission() {
+	public PermissionType getNamePermission() {
 		return namePermission;
 	}
 
-	public void setNamePermission(String namePermission) {
+	public void setNamePermission(PermissionType namePermission) {
 		this.namePermission = namePermission;
 	}
 

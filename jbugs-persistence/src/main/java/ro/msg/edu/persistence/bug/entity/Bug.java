@@ -15,6 +15,8 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import ro.msg.edu.persistence.bug.entity.enums.BugSeverityType;
+import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
 import ro.msg.edu.persistence.common.entity.AbstractEntity;
 import ro.msg.edu.persistence.notification.entity.Notification;
 import ro.msg.edu.persistence.user.entity.User;
@@ -25,10 +27,6 @@ public class Bug extends AbstractEntity {
 	/**
 	 * 
 	 */
-
-	public enum BugStatus {
-		OPEN, REJECTED, IN_PROGRESS, INFO_NEEDED, FIXED, CLOSED
-	}
 
 	private static final long serialVersionUID = 1L;
 
@@ -58,15 +56,15 @@ public class Bug extends AbstractEntity {
 
 	@NotNull
 	@Column
-	private String severity;
+	private BugSeverityType severity;
 
 	@NotNull
 	@ManyToOne
 	private User createdBy;
 
-	@Column(name = "status", length = 25, nullable = false)
+	@Column
 	@Enumerated(EnumType.STRING)
-	private BugStatus status;
+	private BugStatusType status;
 
 	@ManyToOne
 	private User assignedTo;
@@ -129,11 +127,11 @@ public class Bug extends AbstractEntity {
 		this.targetDate = targetDate;
 	}
 
-	public String getSeverity() {
+	public BugSeverityType getSeverity() {
 		return severity;
 	}
 
-	public void setSeverity(String severity) {
+	public void setSeverity(BugSeverityType severity) {
 		this.severity = severity;
 	}
 
@@ -145,11 +143,11 @@ public class Bug extends AbstractEntity {
 		this.createdBy = createdBy;
 	}
 
-	public BugStatus getStatus() {
+	public BugStatusType getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(BugStatus status) {
+	public void setStatus(BugStatusType status) {
 		this.status = status;
 	}
 

@@ -24,6 +24,7 @@ public class Attachment extends AbstractEntity {
 	@NotNull
 	@Column
 	private Long fileDescriptor;
+	//
 
 	@ManyToOne
 	private Bug bug;
