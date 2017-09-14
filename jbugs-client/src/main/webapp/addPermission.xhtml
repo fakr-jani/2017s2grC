@@ -19,14 +19,14 @@
 			<br />
 			<br />
 
-			<p:outputLabel value="Roles:" />
+			<p:outputLabel value="#{msg['roles.label']}"/>
 			<p:selectOneMenu value="#{roleBean.selectedRole}">
 				<f:selectItems value="#{roleBean.allRoles}" var="role"
 					itemValue="#{role.roleName}" />
 			</p:selectOneMenu>
 			<br />
 			<br />
-			<p:outputLabel value="Permissions:" />
+			<p:outputLabel value="#{msg['permissions.label']}" />
 			<p:selectManyCheckbox id="grid"
 				value="#{roleBean.selectedPermission}" layout="grid" columns="3">
 				<f:selectItems value="#{permissionBean.allPermissions}"
@@ -35,7 +35,7 @@
 			</p:selectManyCheckbox>
 			<br />
 
-			<h:commandButton value="Add" action="#{roleBean.addPermissions}">
+			<h:commandButton value="#{msg['add.button']}" action="#{roleBean.addPermissions}">
 			</h:commandButton>
 		</h:form>
 	</f:view>
