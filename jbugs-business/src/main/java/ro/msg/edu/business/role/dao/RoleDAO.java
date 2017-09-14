@@ -7,6 +7,7 @@ import javax.persistence.Query;
 
 import ro.msg.edu.business.common.dao.AbstractDao;
 import ro.msg.edu.persistence.user.entity.Role;
+import ro.msg.edu.persistence.user.entity.enums.RoleType;
 
 @Stateless
 public class RoleDAO extends AbstractDao<Role> {
@@ -22,9 +23,9 @@ public class RoleDAO extends AbstractDao<Role> {
 		return query.getResultList();
 	}
 
-	public Role findRoleByName(String roleName) {
-		Query query = em.createQuery("SELECT r FROM Role r WHERE r.roleName = :role");
-		query.setParameter("role", roleName);
-		return (Role) query.getSingleResult();
+	public List<Role> getRoleByName(RoleType roleName) {
+		Query query = em.createQuery("Select r from Role r where  r.roleName = :roleName");
+		query.setParameter("roleName", roleName);
+		return query.getResultList();
 	}
 }

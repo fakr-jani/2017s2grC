@@ -1,5 +1,6 @@
 package ro.msg.edu.client.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -14,7 +15,7 @@ import ro.msg.edu.business.role.dto.RoleDTO;
 
 @ManagedBean
 @ViewScoped
-public class RoleBean extends AbstractBean {
+public class RoleBean implements Serializable {
 	@EJB
 	private RoleFacade roleFacade;
 

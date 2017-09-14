@@ -4,17 +4,21 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.persistence.OneToMany;
 
+import ro.msg.edu.persistence.bug.entity.enums.BugSeverityType;
+import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
 import ro.msg.edu.persistence.common.entity.AbstractEntity;
-import ro.msg.edu.persistence.notification.Notification;
+import ro.msg.edu.persistence.notification.entity.Notification;
 import ro.msg.edu.persistence.user.entity.User;
 
 @Entity
@@ -23,9 +27,6 @@ public class Bug extends AbstractEntity {
 	/**
 	 * 
 	 */
-	public enum bugStatus {
-		OPEN, REJECTED, IN_PROGRESS, INFO_NEEDED, FIXED, CLOSED
-	}
 
 	private static final long serialVersionUID = 1L;
 
@@ -55,14 +56,15 @@ public class Bug extends AbstractEntity {
 
 	@NotNull
 	@Column
-	private String severity;
+	private BugSeverityType severity;
 
 	@NotNull
 	@ManyToOne
 	private User createdBy;
 
 	@Column
-	private bugStatus status;
+	@Enumerated(EnumType.STRING)
+	private BugStatusType status;
 
 	@ManyToOne
 	private User assignedTo;
@@ -125,11 +127,11 @@ public class Bug extends AbstractEntity {
 		this.targetDate = targetDate;
 	}
 
-	public String getSeverity() {
+	public BugSeverityType getSeverity() {
 		return severity;
 	}
 
-	public void setSeverity(String severity) {
+	public void setSeverity(BugSeverityType severity) {
 		this.severity = severity;
 	}
 
@@ -141,11 +143,11 @@ public class Bug extends AbstractEntity {
 		this.createdBy = createdBy;
 	}
 
-	public bugStatus getStatus() {
-		return status;
+	public BugStatusType getStatus() {
+		return this.status;
 	}
 
-	public void setStatus(bugStatus status) {
+	public void setStatus(BugStatusType status) {
 		this.status = status;
 	}
 

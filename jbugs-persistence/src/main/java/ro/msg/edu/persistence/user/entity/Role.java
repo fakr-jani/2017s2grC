@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
 import ro.msg.edu.persistence.common.entity.AbstractEntity;
+import ro.msg.edu.persistence.user.entity.enums.RoleType;
 
 @Entity
 public class Role extends AbstractEntity {
@@ -27,7 +30,8 @@ public class Role extends AbstractEntity {
 
 	@NotNull
 	@Column
-	private String roleName;
+	@Enumerated(EnumType.STRING)
+	private RoleType roleName;
 
 	@ManyToMany(mappedBy = "roles")
 	private List<User> users;
@@ -53,11 +57,11 @@ public class Role extends AbstractEntity {
 		this.users = users;
 	}
 
-	public String getRoleName() {
+	public RoleType getRoleName() {
 		return roleName;
 	}
 
-	public void setRoleName(String roleName) {
+	public void setRoleName(RoleType roleName) {
 		this.roleName = roleName;
 	}
 

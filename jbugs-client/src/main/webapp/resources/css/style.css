@@ -39,6 +39,15 @@ body {
 }
 
 .helloWorld {
+position: absolute;
+top: 30%;
+left: 30%;
+background: rgba(0, 0, 0, 0.5);
+margin: -0 0 0 -0;
+width: 500px;
+height: 500px;
+}
+.helloWorld {
 	color:white
 	position: absolute;
 	top: 20%;

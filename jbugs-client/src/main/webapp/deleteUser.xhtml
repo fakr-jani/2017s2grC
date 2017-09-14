@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title><h:outputText value="#{msg['login.title']}" /></title>
+	<!-- <h:outputStylesheet library="css" name="style.css" /> -->
+</h:head>
+<h:body>
+	<f:view contentType="text/html">
+		<div>
+
+			<h:form id="deleteUser">
+				<p:messages />
+				<p:dataTable value="#{userBean.allUsers}" var="user">
+					<f:facet name="header"></f:facet>
+					<p:column>
+						<f:facet name="header">
+							<h:outputLabel for="firstname" value="#{msg['firstname']}" />					
+						     <br />
+						</f:facet>
+						
+						<h:outputText value="#{user.firstname}">
+						</h:outputText>
+				
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputLabel for="firstname" value="#{msg['lastname']}" />							
+								<br />
+						</f:facet>
+						<h:outputText value="#{user.lastname}">
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputLabel for="username" value="#{msg['login.username']}" />
+							<br />
+							<h:inputText value="#{userBean.newUser.username}">
+							</h:inputText>
+						</f:facet>
+						<h:outputText value="#{user.username}">
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputLabel for="firstname" value="#{msg['email']}" />
+	  						<br />
+						</f:facet>
+						<h:outputText value="#{user.email}">
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputLabel for="firstname" value="#{msg['phoneNumber']}" />
+							<br />
+						</f:facet>
+						<h:outputText value="#{user.phoneNumber}">
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+								<h:outputLabel for="firstname" value="#{msg['active']}" />
+					       <br />
+						</f:facet>
+						<h:outputText value="#{user.active}">
+						</h:outputText>
+					</p:column>
+					
+					<p:column>
+								<f:facet name="header">
+						Action
+							<br />
+						
+						</f:facet>
+							<h:commandButton value="Delete"
+								action="#{userBean.deleteUser(user)}"
+								>
+							</h:commandButton>
+						
+					</p:column>
+				</p:dataTable>
+			
+	
+			<h:commandButton id="logout" value="#{msg['general.logout']}"
+				 action="#{loginBean.processLogout}" />
+
+			</h:form>
+		</div>
+	</f:view>
+
+</h:body>
+</html>

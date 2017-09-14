@@ -14,6 +14,8 @@ import ro.msg.edu.business.role.dto.RoleDTO;
 import ro.msg.edu.business.role.dto.mapper.RoleDTOMApper;
 import ro.msg.edu.persistence.user.entity.Permission;
 import ro.msg.edu.persistence.user.entity.Role;
+import ro.msg.edu.persistence.user.entity.enums.PermissionType;
+import ro.msg.edu.persistence.user.entity.enums.RoleType;
 
 @Stateless
 public class RoleControl {
@@ -39,27 +41,27 @@ public class RoleControl {
 	}
 
 	public RoleDTO addPermissions(String selectedRole, String[] selectedPermissions) {
-		Role role = roleDAO.findRoleByName(selectedRole);
+		List<Role> role = roleDAO.getRoleByName(RoleType.valueOf(selectedRole));
 		List<Permission> permissionList = new ArrayList<>();
 
 		for (String permissionName : selectedPermissions) {
-			permissionList.add(permissionDAO.findPermissionByName(permissionName));
+			permissionList.add(permissionDAO.findPermissionByName(PermissionType.valueOf(permissionName)));
 		}
-		role.setPermissions(permissionList);
-		roleDAO.persistEntity(role);
-		Role persistedRole = roleDAO.findEntity(role.getId());
+		role.get(0).setPermissions(permissionList);
+		roleDAO.persistEntity(role.get(0));
+		Role persistedRole = roleDAO.findEntity(role.get(0).getId());
 		return roleDTOMapper.mapToDTO(persistedRole);
 	}
 
 	public List<PermissionDTO> viewPermissions(String roleName) {
-		Role role;
+		List<Role> role;
 		if (roleName == null) {
-			role = roleDAO.findRoleByName("ADMINISTRATOR");
+			role = roleDAO.getRoleByName(RoleType.ADMINISTRATOR);
 		} else {
-			role = roleDAO.findRoleByName(roleName);
+			role = roleDAO.getRoleByName(RoleType.valueOf(roleName));
 		}
 
-		List<Permission> permissionList = role.getPermissions();
+		List<Permission> permissionList = role.get(0).getPermissions();
 		List<PermissionDTO> permissionListDTO = new ArrayList<>();
 		for (Permission permission : permissionList) {
 			permissionListDTO.add(permissionDTOMapper.mapToDTO(permission));

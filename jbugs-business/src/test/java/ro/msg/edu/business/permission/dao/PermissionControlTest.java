@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import ro.msg.edu.business.AbstractIntegrationTest;
 import ro.msg.edu.persistence.user.entity.Permission;
+import ro.msg.edu.persistence.user.entity.enums.PermissionType;
 
 public class PermissionControlTest extends AbstractIntegrationTest {
 
@@ -15,8 +16,7 @@ public class PermissionControlTest extends AbstractIntegrationTest {
 
 	@Test
 	public void findPermissionByName_Success() {
-		String testPermissionName = "PERMISSION_MANAGMENT";
-		Permission permission = permissionDAO.findPermissionByName(testPermissionName);
-		Assert.assertEquals(permission.getNamePermission(), testPermissionName);
+		Permission permission = permissionDAO.findPermissionByName(PermissionType.BUG_CLOSE);
+		Assert.assertEquals(permission.getNamePermission(), PermissionType.BUG_CLOSE);
 	}
 }
