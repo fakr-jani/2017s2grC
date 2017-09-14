@@ -1,5 +1,7 @@
 package ro.msg.edu.business.bug.dao;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
@@ -32,10 +34,18 @@ public class BugDAO extends AbstractDao<Bug> {
 			bug = query.getSingleResult();
 		} catch (NoResultException e) {
 			throw new TechnicalException("There is no Bug with the given title!", e.getCause());
-		} catch(NonUniqueResultException e1){
+		} catch (NonUniqueResultException e1) {
 			throw new TechnicalException("More Bugs found with the given title!", e1.getCause());
 		}
 		return bug;
+	}
+
+	public List<Bug> findAllBugs() {
+		TypedQuery<Bug> query = this.em.createNamedQuery(Bug.FIND_ALL_BUGS, Bug.class);
+
+		List<Bug> bugs = query.getResultList();
+
+		return bugs;
 	}
 
 }

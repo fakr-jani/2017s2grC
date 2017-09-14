@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -87,4 +88,12 @@ public class BugControl {
 		return bugDTOMapper.mapToDTO(persistedBug);
 	}
 
+	public List<BugDTO> findAllBugs() {
+
+		List<Bug> bugEnitites = bugDAO.findAllBugs();
+
+		List<BugDTO> bugDTOs = bugEnitites.stream().map(e -> bugDTOMapper.mapToDTO(e)).collect(Collectors.toList());
+
+		return bugDTOs;
+	}
 }

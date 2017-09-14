@@ -5,7 +5,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import ro.msg.edu.business.common.exception.JBugsException;
 import ro.msg.edu.persistence.common.entity.AbstractEntity;
 
 public abstract class AbstractDao<E extends AbstractEntity> {
@@ -28,7 +27,7 @@ public abstract class AbstractDao<E extends AbstractEntity> {
 		return em.find(getEntityClass(), id);
 	}
 
-	public E getSingleResult(TypedQuery<E> query) throws JBugsException {
+	public E getSingleResult(TypedQuery<E> query) {
 		try {
 			return query.getSingleResult();
 		} catch (NoResultException e) {
