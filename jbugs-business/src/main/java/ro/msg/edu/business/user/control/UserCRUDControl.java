@@ -8,11 +8,14 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import ro.msg.edu.business.common.exception.TechnicalException;
+import ro.msg.edu.business.role.dao.RoleDAO;
 import ro.msg.edu.business.user.dao.UserDAO;
 import ro.msg.edu.business.user.dto.UserDTO;
 import ro.msg.edu.business.user.dto.mapper.UserDTOMapper;
 import ro.msg.edu.business.user.validator.UserValidator;
+import ro.msg.edu.persistence.user.entity.Role;
 import ro.msg.edu.persistence.user.entity.User;
+import ro.msg.edu.persistence.user.entity.enums.RoleType;
 
 /**
  * Controller for User component.
@@ -28,25 +31,32 @@ public class UserCRUDControl {
 
 	@EJB
 	private UserDAO userDAO;
+	@EJB
+	private RoleDAO roleDAO;
 
 	@EJB
 	UserValidator userValidator;
 
-
-	public UserDTO createUser(UserDTO user) throws TechnicalException {
+	public UserDTO createUser(UserDTO user, String[] selectedRoles) throws TechnicalException {
 		userValidator.validateUserData(user);
 		User userEntity = new User();
 		userDTOMapper.mapToEntity(user, userEntity);
 
 		userEntity.setActive(true);
 		userEntity.setUsername(generateUsername(user.getFirstname(), user.getLastname()));
+		List<Role> roles = new ArrayList<Role>();
 
+		for (String role : selectedRoles) {
+
+			roles.add(roleDAO.getRoleByName(RoleType.valueOf(role)).get(0));
+		}
+		userEntity.setRoles(roles);
 		userDAO.persistEntity(userEntity);
+
 		User persistedUser = userDAO.findEntity(userEntity.getId());
 
 		return userDTOMapper.mapToDTO(persistedUser);
 	}
-
 
 	public UserDTO deleteUser(UserDTO userDTO) throws TechnicalException {
 		Optional<User> userOptional = userDAO.findUserByUsername(userDTO.getUsername());
@@ -55,10 +65,11 @@ public class UserCRUDControl {
 			throw new TechnicalException("User not found!");
 		if (!userDAO.hasActiveTasks(userEntity)) {
 			userEntity.setActive(false);
-		}
-		return userDTOMapper.mapToDTO(userEntity);
-	}
+			return userDTOMapper.mapToDTO(userEntity);
+		} else
+			throw new TechnicalException("User has tasks assigned");
 
+	}
 
 	public UserDTO activateUser(UserDTO userDTO) {
 		Optional<User> userOptional = userDAO.findUserByUsername(userDTO.getUsername());
@@ -66,7 +77,6 @@ public class UserCRUDControl {
 		userEntity.setActive(true);
 		return userDTOMapper.mapToDTO(userEntity);
 	}
-
 
 	public UserDTO updateUser(UserDTO userToUpdate) throws TechnicalException {
 		Optional<User> userOptional = userDAO.findUserByUsername(userToUpdate.getUsername());
@@ -79,10 +89,8 @@ public class UserCRUDControl {
 		entity.setPassword(userToUpdate.getPassword());
 		entity.setPhoneNumber(userToUpdate.getPhoneNumber());
 		entity.setActive(userToUpdate.isActive());
-
 		return userDTOMapper.mapToDTO(entity);
 	}
-
 
 	public UserDTO findUserbyUsername(String username) {
 		Optional<User> entity = userDAO.findUserByUsername(username);
@@ -94,11 +102,9 @@ public class UserCRUDControl {
 
 	}
 
-
 	public boolean verifyUserExists(UserDTO user) {
 		return userDAO.verifyUserExists(user.getUsername(), user.getPassword());
 	}
-
 
 	public List<UserDTO> findAllUser() {
 		List<User> users = userDAO.getAllUser();
@@ -108,7 +114,6 @@ public class UserCRUDControl {
 		}
 		return usersDTO;
 	}
-
 
 	public String generateUsername(String firstname, String lastname) {
 
@@ -135,6 +140,33 @@ public class UserCRUDControl {
 
 		}
 		return username.toString();
+	}
+
+	public boolean hasActiveTasks(UserDTO userDTO) {
+		Optional<User> userOptional = userDAO.findUserByUsername(userDTO.getUsername());
+		User entity = userOptional.get();
+
+		return userDAO.hasActiveTasks(entity);
+	}
+
+	public UserDTO setStatus(UserDTO userDTO) {
+
+		Optional<User> entity = userDAO.findUserByUsername(userDTO.getUsername());
+		User userEntity = entity.get();
+		userEntity.setCounter(userEntity.getCounter() + 1);
+		if (userEntity.getCounter() > 4) {
+			userEntity.setActive(false);
+		}
+		return userDTOMapper.mapToDTO(userEntity);
+	}
+
+	public UserDTO resetStatus(UserDTO userDTO) {
+
+		Optional<User> entity = userDAO.findUserByUsername(userDTO.getUsername());
+		User userEntity = entity.get();
+		userEntity.setCounter(0);
+
+		return userDTOMapper.mapToDTO(userEntity);
 	}
 
 }

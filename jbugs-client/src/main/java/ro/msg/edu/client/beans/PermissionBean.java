@@ -1,6 +1,5 @@
 package ro.msg.edu.client.beans;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -12,8 +11,12 @@ import ro.msg.edu.business.permission.dto.PermissionDTO;
 
 @ManagedBean
 @ViewScoped
-public class PermissionBean implements Serializable {
+public class PermissionBean extends AbstractBean {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@EJB
 	PermissionFacade permissionFacade;
 

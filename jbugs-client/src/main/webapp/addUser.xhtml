@@ -4,43 +4,70 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
 	<title><h:outputText value="#{msg['login.title']}" /></title>
-
-	<style>
-html {
-	width: 100%;
-	height: 100%;
-	overflow: scroll;
-}
-
-.helloWorld {
-	position: absolute;
-	top: 20%;
-	left: 20%;
-	background: rgba(255, 255, 255, 0.5);
-	margin: -150px 0 0 -150px;
-	width: 1250px;
-	height: 700px;
-}
-</style>
+	<h:outputStylesheet library="css" name="addUserStyle.css" />
 </h:head>
 <h:body>
 	<f:view>
-		<div class="helloWorld">
-	
+
+		<div>
+
+			<h1 style="text-align: center; font-weight: bold; font-size: 60">Add
+				users</h1>
+			<ui:include src="menu.xhtml" />
+			<br /> <br />
 			<h:form id="addUser">
-		<f:facet name="header">
-							Firstname							
-						     <br />
-							<h:inputText value="#{userBean.newUser.firstname}">
-							</h:inputText>
-						</f:facet>
-						
+				<p:outputLabel value="#{msg['firstname']}" />
+				<p:outputLabel value="#{user.firstname}" />
+				<p:inputText value="#{userBean.newUser.firstname}" required="true" />
+				
+				<br />
+				<br />
+				<p:outputLabel value="#{msg['lastname']}" />
+				<p:inputText value="#{userBean.newUser.lastname}" required="true" />
+				<p:outputLabel value="#{user.lastname}" />
 
+				<br />
+				<br />
+				<p:outputLabel value="#{msg['password']}" />
+				<h:inputSecret value="#{userBean.newUser.password}" required="true" />
+				<p:outputLabel value="#{user.password}" />
 
+				<br />
+				<br />
+				<p:outputLabel value="#{msg['phoneNumber']}" />
+				<p:inputText value="#{userBean.newUser.phoneNumber}" required="true">
+					<f:validator validatorId="phoneNumberValidator" />
+				</p:inputText>
+
+				<p:outputLabel value="#{user.phoneNumber}" />
+
+				<br />
+				<br />
+				<p:outputLabel value="#{msg['email']}" />
+				<p:inputText value="#{userBean.newUser.email}" required="true">
+					<f:validator validatorId="emailValidator" />
+				</p:inputText>
+				<p:outputLabel value="#{user.email}" />
+				<br />
+				<br />
+
+				<p:outputLabel value="#{msg['role']}" />
+				<p:selectManyCheckbox id="grid" value="#{userBean.selectedRoles}"
+					layout="grid" columns="3">
+					<f:selectItems value="#{roleBean.allRoles}" var="role"
+						itemLabel="#{role.roleName}" itemValue="#{role.roleName}" />
+				</p:selectManyCheckbox>
+
+				<br />
+				<br />
+
+				<p:commandButton value="#{msg['create.button']}" action="#{userBean.createNewUser}">
+				</p:commandButton>
 
 			</h:form>
 		</div>

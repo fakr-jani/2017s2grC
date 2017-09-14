@@ -9,6 +9,8 @@ import javax.persistence.TypedQuery;
 
 import ro.msg.edu.business.common.dao.AbstractDao;
 import ro.msg.edu.business.common.exception.TechnicalException;
+import ro.msg.edu.persistence.bug.entity.Bug;
+import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
 import ro.msg.edu.persistence.user.entity.User;
 
 /**
@@ -25,19 +27,13 @@ public class UserDAO extends AbstractDao<User> {
 		return User.class;
 	}
 
-
 	public User findUserByEmail(String email) throws TechnicalException {
 		TypedQuery<User> query = this.em.createNamedQuery(User.FIND_USER_BY_EMAIL, User.class);
 		query.setParameter("email", email);
 
-		try {
-			return getSingleResult(query);
+		return getSingleResult(query);
 
-		} catch (Exception e) {
-			throw new TechnicalException("Zero or more results", e.getCause());
-		}
 	}
-
 
 	public Optional<User> findUserByUsername(String username) {
 		Query query = em.createQuery("SELECT u FROM User u WHERE u.username = :username");
@@ -51,7 +47,6 @@ public class UserDAO extends AbstractDao<User> {
 		return Optional.ofNullable(new User());
 	}
 
-
 	public boolean verifyUserExists(String username, String password) {
 		Query query = em.createQuery("SELECT u FROM User u WHERE u.username = :username and u.password= :password");
 		query.setParameter("username", username);
@@ -61,21 +56,24 @@ public class UserDAO extends AbstractDao<User> {
 
 	}
 
-
 	public List<User> getAllUser() {
 		Query query = em.createQuery("SELECT u FROM User u ");
 		return query.getResultList();
 	}
 
-
 	public boolean hasActiveTasks(User entity) {
-		Query query = em.createQuery(
-				"SELECT u FROM User u join Bug b on u.idUser = :b.idUser where b.status!='CLOSED' and u.username=:username");
-		query.setParameter("username", entity.getUsername());
+		Query query = em.createQuery("SELECT B FROM Bug b where b.assignedTo= :entity");
+		query.setParameter("entity", entity);
 
-		List<User> userList = query.getResultList();
+		List<Bug> bugList = query.getResultList();
+		for (int i = 0; i < bugList.size(); i++) {
 
-		return userList.isEmpty();
+			if (!(bugList.get(i).getStatus() == BugStatusType.CLOSED)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }

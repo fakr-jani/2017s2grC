@@ -16,6 +16,7 @@ import ro.msg.edu.business.bug.dto.mapper.BugDTOMapper;
 import ro.msg.edu.business.bug.validator.BugValidator;
 import ro.msg.edu.business.common.exception.TechnicalException;
 import ro.msg.edu.persistence.bug.entity.Bug;
+import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
 
 @Stateless
 public class BugControl {
@@ -71,13 +72,17 @@ public class BugControl {
 		return bugDTOMapper.mapToDTO(entity);
 	}
 
-	public BugDTO createBug(BugDTO bugDTO) throws TechnicalException {
-		bugValidator.validateBugData(bugDTO);
-		Bug entity = new Bug();
-		bugDTOMapper.mapToEntity(bugDTO, entity);
+	public BugDTO createBug(BugDTO bug) throws TechnicalException {
 
-		bugDAO.persistEntity(entity);
-		Bug persistedBug = bugDAO.findEntity(entity.getId());
+		bugValidator.validateBugData(bug);
+
+		Bug bugEntity = new Bug();
+		bugDTOMapper.mapToEntity(bug, bugEntity);
+
+		bugEntity.setStatus(BugStatusType.OPEN);
+
+		bugDAO.persistEntity(bugEntity);
+		Bug persistedBug = bugDAO.findEntity(bugEntity.getId());
 
 		return bugDTOMapper.mapToDTO(persistedBug);
 	}

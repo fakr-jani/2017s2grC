@@ -18,10 +18,15 @@ import ro.msg.edu.business.user.dto.UserDTO;
 @ViewScoped
 public class LoginBean implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@EJB
 	UserFacade userFacade;
 
-	UserDTO user = new UserDTO();
+	private UserDTO user = new UserDTO();
 
 	public UserDTO getUser() {
 		return user;
@@ -42,9 +47,11 @@ public class LoginBean implements Serializable {
 	public String processLogin() {
 
 		if (userFacade.verifyLoggedInUser(user)) {
+
+			userFacade.resetStatus(user);
 			HttpSession session = (HttpSession) getFacesContext().getExternalContext().getSession(false);
 			session.setAttribute("username", user.getUsername());
-			Locale locale = new Locale("de");
+			Locale locale = new Locale("");
 			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
 			FacesContext context = FacesContext.getCurrentInstance();
 			String message = context.getApplication().evaluateExpressionGet(context, "#{msg['login.title']}",
@@ -52,10 +59,17 @@ public class LoginBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(message + " " + user.getUsername() + "!"));
 
-			return "users";
+			return "menu";
 		} else
 
 		{
+
+			UserDTO userUpdated = userFacade.setStatus(user);
+			if (userUpdated.getCounter() > 4) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("User deactivated"));
+
+			}
+
 			FacesContext.getCurrentInstance().addMessage("loginForm:username",
 					new FacesMessage("Password or Username wrong!"));
 			return "login";

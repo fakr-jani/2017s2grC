@@ -9,7 +9,6 @@ import javax.ejb.TransactionAttributeType;
 
 import ro.msg.edu.business.common.exception.TechnicalException;
 import ro.msg.edu.business.user.control.UserCRUDControl;
-import ro.msg.edu.business.user.dao.UserDAO;
 import ro.msg.edu.business.user.dto.UserDTO;
 import ro.msg.edu.business.user.dto.mapper.UserDTOMapper;
 
@@ -29,11 +28,8 @@ public class UserFacade {
 	@EJB
 	private UserDTOMapper userDTOMapper;
 
-	@EJB
-	private UserDAO userDAO;
-
-	public UserDTO createUser(UserDTO user) throws TechnicalException {
-		return userCRUDControl.createUser(user);
+	public UserDTO createUser(UserDTO user, String[] selectedRoles) throws TechnicalException {
+		return userCRUDControl.createUser(user, selectedRoles);
 	}
 
 	public UserDTO deleteUser(UserDTO userDTO) throws TechnicalException {
@@ -61,8 +57,22 @@ public class UserFacade {
 
 	}
 
+	public UserDTO setStatus(UserDTO user) {
+		return userCRUDControl.setStatus(user);
+
+	}
+
+	public UserDTO resetStatus(UserDTO user) {
+		return userCRUDControl.resetStatus(user);
+
+	}
+
 	public List<UserDTO> findAllUsers() {
 		return userCRUDControl.findAllUser();
+	}
+
+	public boolean hasActiveTasks(UserDTO userDTO) {
+		return userCRUDControl.hasActiveTasks(userDTO);
 	}
 
 }

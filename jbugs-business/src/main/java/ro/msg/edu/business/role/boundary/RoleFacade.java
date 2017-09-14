@@ -20,4 +20,12 @@ public class RoleFacade {
 	public List<RoleDTO> findAllRoles() {
 		return roleControl.findAllRoles();
 	}
+
+	public RoleDTO addPermissions(String selectedRole, String[] selectedPermissions) {
+		return roleControl.addPermissions(selectedRole, selectedPermissions);
+	}
+
+	public List<String> viewPermissions(String selectedRole) {
+		return roleControl.viewPermissions(selectedRole);
+	}
 }

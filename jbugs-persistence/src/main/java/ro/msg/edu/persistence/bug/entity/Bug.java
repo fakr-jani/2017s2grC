@@ -147,7 +147,7 @@ public class Bug extends AbstractEntity {
 	}
 
 	public BugStatusType getStatus() {
-		return status;
+		return this.status;
 	}
 
 	public void setStatus(BugStatusType status) {

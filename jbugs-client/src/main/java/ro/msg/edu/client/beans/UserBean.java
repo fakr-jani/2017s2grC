@@ -17,98 +17,115 @@ import ro.msg.edu.business.user.dto.UserDTO;
 @SessionScoped
 public class UserBean extends AbstractBean {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@EJB
 	UserFacade userFacade;
 
 	private UserDTO newUser = new UserDTO();
 
 	private UserDTO selectedUser = new UserDTO();
+	
+	private String[] selectedRoles;
 
+
+	public String[] getSelectedRoles() {
+		return selectedRoles;
+	}
+
+
+	public void setSelectedRoles(String[] selectedRoles) {
+		this.selectedRoles = selectedRoles;
+	}
+
+	private String[] selectedRoles;
 
 	public UserDTO getSelectedUser() {
 		return selectedUser;
 	}
 
-
 	public void setSelectedUser(UserDTO selectedUser) {
 		this.selectedUser = selectedUser;
 	}
-
 
 	public List<UserDTO> getAllUsers() {
 		return userFacade.findAllUsers();
 	}
 
-
 	public UserDTO getNewUser() {
 		return newUser;
 	}
 
-
 	public void setNewUser(UserDTO newUser) {
 		this.newUser = newUser;
 	}
-
-
+	
 	public String createNewUser() {
 		try {
-			userFacade.createUser(newUser);
+			userFacade.createUser(newUser, selectedRoles);
 		} catch (JBugsException e) {
-
 			handleExceptioni18n(e);
-
 		}
-		return "users";
+		return "addUser";
 	}
 
+	public String deleteUser(UserDTO user) {
+		try {
 
-	public String deleteUser(UserDTO user) throws TechnicalException {
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage("Userul " + user.getUsername() + " a fost sters"));
-		userFacade.deleteUser(user);
-		return "users";
+			userFacade.deleteUser(user);
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage("Userul " + user.getUsername() + " a fost sters"));
+		} catch (TechnicalException e) {
+
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+		}
+		return "deleteUser";
 	}
-
 
 	public String activateUser(UserDTO user) {
+		userFacade.activateUser(user);
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage("Userul " + user.getUsername() + " a fost activat"));
-		userFacade.activateUser(user);
-		return "users";
+		return "editUsers";
 	}
-
 
 	public String enterUpdateMode(UserDTO user) {
-
 		this.selectedUser = user;
-		return "users";
+		return "editUsers";
 	}
-
 
 	public String leaveUpdateMode() {
 
 		selectedUser = new UserDTO();
-		return "users";
+		return "editUsers";
 	}
-
 
 	public boolean verifyUserRendered(UserDTO user) {
-		return (selectedUser != null && user.getId().equals(selectedUser.getId()));
+		return userFacade.hasActiveTasks(user);
 	}
 
-
-	public String editUser() {
+	public String updateUser() {
 		try {
-
 			userFacade.updateUser(selectedUser);
-			addMessage(selectedUser.getUsername() + " a fost editat");
-		} catch (JBugsException e) {
-
-			handleExceptioni18n(e);
-
+		} catch (TechnicalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		addMessage(selectedUser.getUsername() + " a fost editat");
 
-		return "users";
+		return "editUsers";
 	}
+
+	public String[] getSelectedRoles() {
+		return selectedRoles;
+	}
+
+	public void setSelectedRoles(String[] selectedRoles) {
+		this.selectedRoles = selectedRoles;
+	}
+
 
 }

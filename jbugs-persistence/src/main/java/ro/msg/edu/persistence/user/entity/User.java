@@ -63,6 +63,9 @@ public class User extends AbstractEntity {
 	private String phoneNumber;
 
 	@Column
+	private int counter;
+
+	@Column
 	private boolean active;
 
 	@ManyToMany
@@ -82,137 +85,118 @@ public class User extends AbstractEntity {
 	@OneToMany(mappedBy = "modifiedBy")
 	private List<History> history;
 
-
 	@Override
 	public Long getId() {
 		return idUser;
 	}
 
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 
 	public String getFirstname() {
 		return firstname;
 	}
 
-
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
-
 
 	public String getLastname() {
 		return lastname;
 	}
 
-
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
-
 
 	public String getEmail() {
 		return email;
 	}
 
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 
 	public String getUsername() {
 		return username;
 	}
 
-
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
 
 	public String getPassword() {
 		return password;
 	}
 
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-
 
 	public boolean isActive() {
 		return active;
 	}
 
-
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-
 
 	public List<Role> getRoles() {
 		return roles;
 	}
 
-
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
-
 
 	public List<Bug> getAssignedBugs() {
 		return assignedBugs;
 	}
 
-
 	public void setAssignedBugs(List<Bug> assignedBugs) {
 		this.assignedBugs = assignedBugs;
 	}
-
 
 	public List<Bug> getCreatedBugs() {
 		return createdBugs;
 	}
 
-
 	public void setCreatedBugs(List<Bug> createdBugs) {
 		this.createdBugs = createdBugs;
 	}
-
 
 	public List<Notification> getNotifications() {
 		return notifications;
 	}
 
-
 	public void setNotifications(List<Notification> notifications) {
 		this.notifications = notifications;
 	}
-
 
 	public List<History> getHistory() {
 		return history;
 	}
 
-
 	public void setHistory(List<History> history) {
 		this.history = history;
 	}
 
+	public int getCounter() {
+		return counter;
+	}
+
+	public void setCounter(int counter) {
+		this.counter = counter;
+	}
 
 	@Override
 	public String toString() {
