@@ -17,6 +17,11 @@ import ro.msg.edu.business.user.dto.UserDTO;
 @SessionScoped
 public class UserBean extends AbstractBean {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@EJB
 	UserFacade userFacade;
 

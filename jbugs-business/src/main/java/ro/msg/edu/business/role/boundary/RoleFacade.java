@@ -7,7 +7,6 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
-import ro.msg.edu.business.permission.dto.PermissionDTO;
 import ro.msg.edu.business.role.control.RoleControl;
 import ro.msg.edu.business.role.dto.RoleDTO;
 
@@ -26,7 +25,7 @@ public class RoleFacade {
 		return roleControl.addPermissions(selectedRole, selectedPermissions);
 	}
 
-	public List<PermissionDTO> viewPermissions(String roleName) {
-		return roleControl.viewPermissions(roleName);
+	public List<String> viewPermissions(String selectedRole) {
+		return roleControl.viewPermissions(selectedRole);
 	}
 }
