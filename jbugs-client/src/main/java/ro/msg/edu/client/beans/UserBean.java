@@ -20,9 +20,16 @@ public class UserBean extends AbstractBean {
 	@EJB
 	UserFacade userFacade;
 
+	private UserDTO selectedUser = new UserDTO();
 	private UserDTO newUser = new UserDTO();
 
-	private UserDTO selectedUser = new UserDTO();
+	public UserDTO getNewUser() {
+		return newUser;
+	}
+
+	public void setNewUser(UserDTO newUser) {
+		this.newUser = newUser;
+	}
 
 	private String[] selectedRoles;
 
@@ -36,14 +43,6 @@ public class UserBean extends AbstractBean {
 
 	public List<UserDTO> getAllUsers() {
 		return userFacade.findAllUsers();
-	}
-
-	public UserDTO getNewUser() {
-		return newUser;
-	}
-
-	public void setNewUser(UserDTO newUser) {
-		this.newUser = newUser;
 	}
 
 	public String createNewUser() {
@@ -90,7 +89,7 @@ public class UserBean extends AbstractBean {
 	}
 
 	public boolean verifyUserRendered(UserDTO user) {
-		return (selectedUser != null && user.getId().equals(selectedUser.getId()) || userFacade.hasActiveTasks(user));
+		return userFacade.hasActiveTasks(user);
 	}
 
 	public String editUser() {
@@ -113,6 +112,14 @@ public class UserBean extends AbstractBean {
 
 	public void setSelectedRoles(String[] selectedRoles) {
 		this.selectedRoles = selectedRoles;
+	}
+
+	public UserDTO getUser() {
+		return newUser;
+	}
+
+	public void setUser(UserDTO newUser) {
+		this.newUser = newUser;
 	}
 
 }

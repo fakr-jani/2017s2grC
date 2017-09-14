@@ -55,20 +55,6 @@ public class UserCRUDControlTest extends AbstractIntegrationTest {
 
 	}
 
-	@Test(expected = TechnicalException.class)
-	public void createUser_EmailValidationFail() throws TechnicalException {
-		UserDTO testUser = new UserDTO();
-		testUser.setFirstname("John");
-		testUser.setPassword("123");
-		testUser.setLastname("Doe");
-		testUser.setEmail("doe_josh@msggroup.com");
-		testUser.setUsername("DoeJohn");
-		testUser.setPhoneNumber("+4047500437");
-		String[] nameRoles = { "ADMINISTRATOR" };
-		sut.createUser(testUser, nameRoles);
-
-	}
-
 	@Test
 	public void deleteUser_Success() throws TechnicalException, ParseException {
 		UserDTO testUser = new UserDTO();
@@ -87,7 +73,7 @@ public class UserCRUDControlTest extends AbstractIntegrationTest {
 		bug.setAssignedTo(user.get());
 		bug.setTitleBug("My not so awesome bug");
 		bug.setDescriptionBug(
-				"hjshjhsjhsjkhjsdhjhdjhdjduyeyiuuuuuuuuuuuuuuuuuuuuuuyrueyufhuhrfjfgiruiruituitruitueoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+				"500-description too long to write something interesting******************************************************8*********************************************************************************************************************************************");
 		bug.setCreatedBy(user.get());
 		bug.setSeverity(BugSeverityType.CRITICAL);
 		bug.setVersion("1.1.2");
@@ -118,7 +104,7 @@ public class UserCRUDControlTest extends AbstractIntegrationTest {
 		bug.setAssignedTo(user.get());
 		bug.setTitleBug("My awesome bug");
 		bug.setDescriptionBug(
-				"hjshjhsjhsjkhjsdhjhdjhdjduyeyiuuuuuuuuuuuuuuuuuuuuuuyrueyufhuhrfjfgiruiruituitruitueoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+				"500-description too long to write something interesting******************************************************8*********************************************************************************************************************************************");
 		bug.setStatus(BugStatusType.IN_PROGRESS);
 		bug.setCreatedBy(user.get());
 		bug.setSeverity(BugSeverityType.CRITICAL);

@@ -47,4 +47,18 @@ public class UserValidatorTest extends AbstractIntegrationTest {
 				persisted2.getUsername());
 	}
 
+	@Test(expected = TechnicalException.class)
+	public void createUser_EmailValidationFail() throws TechnicalException {
+		UserDTO testUser = new UserDTO();
+		testUser.setFirstname("John");
+		testUser.setPassword("123");
+		testUser.setLastname("Doe");
+		testUser.setEmail("john_smith@msgssds.com");
+		testUser.setUsername("DoeJohn");
+		testUser.setPhoneNumber("+4047500437");
+		String[] nameRoles = { "ADMINISTRATOR" };
+		sut.createUser(testUser, nameRoles);
+
+	}
+
 }

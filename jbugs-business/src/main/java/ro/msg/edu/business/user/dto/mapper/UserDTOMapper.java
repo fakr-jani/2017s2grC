@@ -30,6 +30,7 @@ public class UserDTOMapper extends AbstractDTOMapper<User, UserDTO> {
 		dto.setUsername(entity.getUsername());
 		dto.setActive(entity.isActive());
 		dto.setRoles(entity.getRoles());
+		dto.setCounter(entity.getCounter());
 	}
 
 	@Override
@@ -43,6 +44,7 @@ public class UserDTOMapper extends AbstractDTOMapper<User, UserDTO> {
 		entity.setUsername(dto.getUsername());
 		entity.setActive(dto.isActive());
 		entity.setRoles(dto.getRoles());
+		entity.setCounter(dto.getCounter());
 	}
 
 }

@@ -21,7 +21,7 @@ public class LoginBean implements Serializable {
 	@EJB
 	UserFacade userFacade;
 
-	UserDTO user = new UserDTO();
+	private UserDTO user = new UserDTO();
 
 	public UserDTO getUser() {
 		return user;
@@ -42,6 +42,8 @@ public class LoginBean implements Serializable {
 	public String processLogin() {
 
 		if (userFacade.verifyLoggedInUser(user)) {
+
+			userFacade.resetStatus(user);
 			HttpSession session = (HttpSession) getFacesContext().getExternalContext().getSession(false);
 			session.setAttribute("username", user.getUsername());
 			Locale locale = new Locale("");
@@ -56,6 +58,13 @@ public class LoginBean implements Serializable {
 		} else
 
 		{
+
+			UserDTO userUpdated = userFacade.setStatus(user);
+			if (userUpdated.getCounter() > 4) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("User deactivated"));
+
+			}
+
 			FacesContext.getCurrentInstance().addMessage("loginForm:username",
 					new FacesMessage("Password or Username wrong!"));
 			return "login";

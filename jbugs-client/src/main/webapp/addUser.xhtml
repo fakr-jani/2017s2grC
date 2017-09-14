@@ -13,55 +13,59 @@
 </h:head>
 <h:body>
 	<f:view>
-		<div class="helloWorld">
-			<h1 style="text-align: center; font-weight: bold; font-size: 60">Add users</h1>
+
+		<div>
+			<h1 style="text-align: center; font-weight: bold; font-size: 60">Add
+				users</h1>
+			<ui:include src="menu.xhtml" />
+			<br /> <br />
 			<h:form id="addUser">
-				<ui:include src="menu.xhtml" />
+				<p:outputLabel value="#{msg['firstname']}" />
+				<p:outputLabel value="#{user.firstname}" />
+				<p:inputText value="#{userBean.newUser.firstname}" required="true" />
+				
 				<br />
-				<h:outputLabel for="firstname" value="#{msg['firstname']}" />
-				<h:outputLabel value="#{user.firstname}" />
-
-				<h:inputText value="#{userBean.newUser.firstname}" />
 				<br />
-
-				<h:outputLabel for="lastname" value="#{msg['lastname']}" />
-				<h:inputText value="#{userBean.newUser.lastname}" />
-
-				<h:outputLabel value="#{user.lastname}" />
+				<p:outputLabel value="#{msg['lastname']}" />
+				<p:inputText value="#{userBean.newUser.lastname}" required="true" />
+				<p:outputLabel value="#{user.lastname}" />
 
 				<br />
-				<h:outputLabel for="password" value="#{msg['password']}" />
-
-				<h:inputText value="#{userBean.newUser.password}" />
-
-				<h:outputLabel value="#{user.password}" />
+				<br />
+				<p:outputLabel value="#{msg['password']}" />
+				<h:inputSecret value="#{userBean.newUser.password}" required="true" />
+				<p:outputLabel value="#{user.password}" />
 
 				<br />
-				<h:outputLabel for="phoneNumber" value="#{msg['phoneNumber']}" />
+				<br />
+				<p:outputLabel value="#{msg['phoneNumber']}" />
+				<p:inputText value="#{userBean.newUser.phoneNumber}" required="true">
+					<f:validator validatorId="phoneNumberValidator" />
+				</p:inputText>
 
-				<h:inputText value="#{userBean.newUser.phoneNumber}" />
-
-				<h:outputLabel value="#{user.phoneNumber}" />
+				<p:outputLabel value="#{user.phoneNumber}" />
 
 				<br />
-				<h:outputLabel for="email" value="#{msg['email']}" />
-
-				<h:inputText value="#{userBean.newUser.email}" />
-
-				<h:outputLabel value="#{user.email}" />
+				<br />
+				<p:outputLabel value="#{msg['email']}" />
+				<p:inputText value="#{userBean.newUser.email}" required="true">
+					<f:validator validatorId="emailValidator" />
+				</p:inputText>
+				<p:outputLabel value="#{user.email}" />
+				<br />
 				<br />
 
-				<h:outputLabel for="role" value="#{msg['role']}" />
-
+				<p:outputLabel value="#{msg['role']}" />
 				<p:selectManyCheckbox id="grid" value="#{userBean.selectedRoles}"
 					layout="grid" columns="3">
-
 					<f:selectItems value="#{roleBean.allRoles}" var="role"
 						itemLabel="#{role.roleName}" itemValue="#{role.roleName}" />
 				</p:selectManyCheckbox>
 
 				<br />
-				<h:commandButton value="Create" action="#{userBean.createNewUser}" />
+				<br />
+				<p:commandButton value="Create" action="#{userBean.createNewUser}">
+				</p:commandButton>
 
 			</h:form>
 		</div>

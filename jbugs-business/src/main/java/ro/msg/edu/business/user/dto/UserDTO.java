@@ -28,6 +28,8 @@ public class UserDTO extends AbstractDTO {
 
 	private boolean active;
 
+	private int counter;
+
 	private List<Role> roles;
 
 	public String getFirstname() {
@@ -92,6 +94,14 @@ public class UserDTO extends AbstractDTO {
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+
+	public int getCounter() {
+		return counter;
+	}
+
+	public void setCounter(int counter) {
+		this.counter = counter;
 	}
 
 	@Override
