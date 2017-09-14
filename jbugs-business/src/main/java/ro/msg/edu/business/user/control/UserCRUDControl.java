@@ -15,6 +15,7 @@ import ro.msg.edu.business.user.dto.mapper.UserDTOMapper;
 import ro.msg.edu.business.user.validator.UserValidator;
 import ro.msg.edu.persistence.user.entity.Role;
 import ro.msg.edu.persistence.user.entity.User;
+import ro.msg.edu.persistence.user.entity.enums.RoleType;
 
 /**
  * Controller for User component.
@@ -47,7 +48,7 @@ public class UserCRUDControl {
 
 		for (String role : selectedRoles) {
 
-			roles.add(roleDAO.getRoleByName(role).get(0));
+			roles.add(roleDAO.getRoleByName(RoleType.valueOf(role)).get(0));
 		}
 		userEntity.setRoles(roles);
 		userDAO.persistEntity(userEntity);

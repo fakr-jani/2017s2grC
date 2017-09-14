@@ -10,7 +10,7 @@ import javax.persistence.TypedQuery;
 import ro.msg.edu.business.common.dao.AbstractDao;
 import ro.msg.edu.business.common.exception.TechnicalException;
 import ro.msg.edu.persistence.bug.entity.Bug;
-import ro.msg.edu.persistence.bug.entity.Bug.BugStatus;
+import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
 import ro.msg.edu.persistence.user.entity.User;
 
 /**
@@ -72,7 +72,7 @@ public class UserDAO extends AbstractDao<User> {
 		List<Bug> bugList = query.getResultList();
 		for (int i = 0; i < bugList.size(); i++) {
 
-			if (!(bugList.get(i).getStatus() == BugStatus.CLOSED)) {
+			if (!(bugList.get(i).getStatus() == BugStatusType.CLOSED)) {
 				return true;
 			}
 		}

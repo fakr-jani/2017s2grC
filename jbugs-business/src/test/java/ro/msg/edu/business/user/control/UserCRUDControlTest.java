@@ -14,7 +14,7 @@ import ro.msg.edu.business.common.exception.TechnicalException;
 import ro.msg.edu.business.user.dao.UserDAO;
 import ro.msg.edu.business.user.dto.UserDTO;
 import ro.msg.edu.persistence.bug.entity.Bug;
-import ro.msg.edu.persistence.bug.entity.Bug.BugStatus;
+import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
 import ro.msg.edu.persistence.user.entity.User;
 
 public class UserCRUDControlTest extends AbstractIntegrationTest {
@@ -87,7 +87,7 @@ public class UserCRUDControlTest extends AbstractIntegrationTest {
 		bug.setAssignedTo(user.get());
 		bug.setTitleBug("My not so awesome bug");
 		bug.setDescriptionBug("404");
-		bug.setStatus(BugStatus.IN_PROGRESS);
+		bug.setStatus(BugStatusType.IN_PROGRESS);
 		bugDAO.persistEntity(bug);
 		UserDTO deletedUser = sut.deleteUser(persisted);
 		Assert.assertEquals(false, deletedUser.isActive());
