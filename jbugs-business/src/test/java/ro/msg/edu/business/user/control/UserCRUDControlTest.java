@@ -3,6 +3,7 @@ package ro.msg.edu.business.user.control;
 import javax.ejb.EJB;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import ro.msg.edu.business.AbstractIntegrationTest;
@@ -15,7 +16,7 @@ public class UserCRUDControlTest extends AbstractIntegrationTest {
 	@EJB
 	private UserCRUDControl sut;
 
-
+	@Ignore
 	@Test
 	public void createUser_EmailValidationFail() throws TechnicalException {
 		UserDTO testUser = new UserDTO();
@@ -31,7 +32,7 @@ public class UserCRUDControlTest extends AbstractIntegrationTest {
 		}
 	}
 
-
+	@Ignore
 	@Test
 	public void deleteUser_Success() {
 		UserDTO testUser = new UserDTO();
@@ -48,7 +49,7 @@ public class UserCRUDControlTest extends AbstractIntegrationTest {
 		}
 	}
 
-
+	@Ignore
 	@Test
 	public void verifyUserExists_Success() throws JBugsException {
 		UserDTO testUser = new UserDTO();

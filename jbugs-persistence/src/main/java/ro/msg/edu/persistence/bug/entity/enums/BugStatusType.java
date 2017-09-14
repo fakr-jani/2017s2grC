@@ -6,6 +6,10 @@ public enum BugStatusType {
 
 	private final String statusType;
 
+	public String getStatusType() {
+		return statusType;
+	}
+
 	private BugStatusType(String statusType) {
 		this.statusType = statusType;
 	}
