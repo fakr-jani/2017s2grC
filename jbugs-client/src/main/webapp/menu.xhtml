@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
 	<title><h:outputText value="#{msg['homepage.title']}" /></title>
@@ -12,15 +13,15 @@
 </h:head>
 <h:body>
 	<f:view>
-		<h1 style="text-align: center;font-weight: bold;font-size: 60">JBugs</h1>
 		<h:form id="menuForm">
 				<p:messages autoUpdate="true" />
 				<p:menubar>
 					<p:menuitem value="#{msg['menu.home']}" url="menu.xhtml"/>
 					
-					<p:submenu label="Users" >
+					<p:submenu label="Users"  >
 							<p:menuitem value="#{msg['menu.adduser']}" url="addUser.xhtml" />
-							<p:menuitem value="#{msg['menu.edituser']}" url="users.xhtml" />
+							<p:menuitem value="#{msg['menu.edituser']}" url="editUsers.xhtml" />
+							<p:menuitem value="#{msg['menu.deleteuser']}" url="deleteUser.xhtml" />
 					</p:submenu>
 					
 					<p:submenu label="Permissions" >

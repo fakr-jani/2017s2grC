@@ -55,9 +55,7 @@ public class UserBean extends AbstractBean {
 		try {
 			userFacade.createUser(newUser, selectedRoles);
 		} catch (JBugsException e) {
-
 			handleExceptioni18n(e);
-
 		}
 		return "addUser";
 	}
@@ -85,31 +83,24 @@ public class UserBean extends AbstractBean {
 	public String enterUpdateMode(UserDTO user) {
 
 		this.selectedUser = user;
-		return "users";
+		return "editUsers";
 	}
 
 	public String leaveUpdateMode() {
 
 		selectedUser = new UserDTO();
-		return "users";
+		return "editUsers";
 	}
 
 	public boolean verifyUserRendered(UserDTO user) {
-		return (selectedUser != null && user.getId().equals(selectedUser.getId()) || userFacade.hasActiveTasks(user));
+		return userFacade.hasActiveTasks(user);
 	}
 
-	public String editUser() {
-		try {
+	public String editUser() throws TechnicalException {
+		userFacade.updateUser(selectedUser);
+		addMessage(selectedUser.getUsername() + " a fost editat");
 
-			userFacade.updateUser(selectedUser);
-			addMessage(selectedUser.getUsername() + " a fost editat");
-		} catch (JBugsException e) {
-
-			handleExceptioni18n(e);
-
-		}
-
-		return "users";
+		return "editUsers";
 	}
 
 	public String[] getSelectedRoles() {

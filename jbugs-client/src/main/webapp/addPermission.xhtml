@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
 	<title><h:outputText value="#{msg['login.title']}" /></title>
@@ -12,38 +13,20 @@
 </h:head>
 <h:body>
 	<f:view contentType="text/html">
-		<h1 style="text-align: center; font-weight: bold; font-size: 60" >Add
+		<h1 style="text-align: center; font-weight: bold; font-size: 60">Add
 			permissions</h1>
+		<ui:include src="menu.xhtml" />
+		<br />
+		<br />
 		<h:form>
-			<p:menubar>
-					<p:menuitem value="#{msg['menu.home']}" url="menu.xhtml"/>
-					
-					<p:submenu label="Users" >
-							<p:menuitem value="#{msg['menu.adduser']}" url="addUser.xhtml" />
-							<p:menuitem value="#{msg['menu.edituser']}" url="users.xhtml" />
-					</p:submenu>
-					
-					<p:submenu label="Permissions" >
-							<p:menuitem value="#{msg['menu.addpermissions']}" url="addPermission.xhtml" />
-							<p:menuitem value="#{msg['menu.removepermissions']}" url="removePermission.xhtml" />
-					</p:submenu>
-
-					<f:facet name="options">
-						<h:commandButton id="logout" value="#{msg['general.logout']}"
-				 action="#{loginBean.processLogout}" />
-					</f:facet>
-				</p:menubar>
-			<br />
-			<br />
-
-			<p:outputLabel value="Roles:" />
+			<p:outputLabel value="#{msg['roles.label']}" />
 			<p:selectOneMenu value="#{roleBean.selectedRole}">
 				<f:selectItems value="#{roleBean.allRoles}" var="role"
 					itemValue="#{role.roleName}" />
 			</p:selectOneMenu>
 			<br />
 			<br />
-			<p:outputLabel value="Permissions:" />
+			<p:outputLabel value="#{msg['permissions.label']}" />
 			<p:selectManyCheckbox id="grid"
 				value="#{roleBean.selectedPermission}" layout="grid" columns="3">
 				<f:selectItems value="#{permissionBean.allPermissions}"
@@ -52,7 +35,8 @@
 			</p:selectManyCheckbox>
 			<br />
 
-			<h:commandButton value="Add" action="#{roleBean.addPermissionPageReturn}">
+			<h:commandButton value="#{msg['add.button']}"
+				action="#{roleBean.addPermissionPageReturn}">
 			</h:commandButton>
 		</h:form>
 	</f:view>

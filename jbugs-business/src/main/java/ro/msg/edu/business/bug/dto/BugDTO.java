@@ -1,5 +1,7 @@
 package ro.msg.edu.business.bug.dto;
 
+import java.util.Date;
+
 import ro.msg.edu.business.common.dto.AbstractDTO;
 import ro.msg.edu.persistence.bug.entity.Bug;
 import ro.msg.edu.persistence.bug.entity.enums.BugSeverityType;
@@ -22,7 +24,7 @@ public class BugDTO extends AbstractDTO {
 
 	private String versionFixed;
 
-	private String targetDate;
+	private Date targetDate;
 
 	private BugSeverityType severity;
 
@@ -96,11 +98,11 @@ public class BugDTO extends AbstractDTO {
 		this.assignedTo = assignedTo;
 	}
 
-	public String getTargetDate() {
+	public Date getTargetDate() {
 		return targetDate;
 	}
 
-	public void setTargetDate(String targetDate) {
+	public void setTargetDate(Date targetDate) {
 		this.targetDate = targetDate;
 	}
 

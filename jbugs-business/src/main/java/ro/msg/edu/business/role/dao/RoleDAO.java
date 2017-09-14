@@ -14,7 +14,6 @@ public class RoleDAO extends AbstractDao<Role> {
 
 	@Override
 	public Class<Role> getEntityClass() {
-		// TODO Auto-generated method stub
 		return Role.class;
 	}
 
