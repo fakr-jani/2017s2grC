@@ -4,18 +4,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
 	<title><h:outputText value="#{msg['login.title']}" /></title>
-	<!-- <h:outputStylesheet library="css" name="style.css" /> -->
 </h:head>
 <h:body>
 	<f:view contentType="text/html">
 		<div>
-	
+		<h1 style="text-align: center;font-weight: bold;font-size: 60">Edit users</h1>
 			<h:form id="usersForm">
 				<p:messages />
+				<ui:include src="menu.xhtml" />
+				<br/>
+				<br/>
 				<p:dataTable value="#{userBean.allUsers}" var="user">
 					<f:facet name="header"></f:facet>
 					<p:column>
@@ -116,15 +119,6 @@
 					</p:column>
 
 				</p:dataTable>
-
-
-				
-				
-				<br/>
-				<h:commandButton id="logout" value="#{msg['general.logout']}"
-				 action="#{loginBean.processLogout}" />
-
-
 			</h:form>
 		</div>
 	</f:view>

@@ -38,9 +38,7 @@ public class UserCRUDControl {
 	UserValidator userValidator;
 
 	public UserDTO createUser(UserDTO user, String[] selectedRoles) throws TechnicalException {
-
 		userValidator.validateUserData(user);
-
 		User userEntity = new User();
 		userDTOMapper.mapToEntity(user, userEntity);
 

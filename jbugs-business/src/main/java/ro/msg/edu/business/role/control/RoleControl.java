@@ -6,10 +6,16 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import ro.msg.edu.business.permission.dao.PermissionDAO;
+import ro.msg.edu.business.permission.dto.PermissionDTO;
+import ro.msg.edu.business.permission.dto.mapper.PermissionDTOMapper;
 import ro.msg.edu.business.role.dao.RoleDAO;
 import ro.msg.edu.business.role.dto.RoleDTO;
 import ro.msg.edu.business.role.dto.mapper.RoleDTOMApper;
+import ro.msg.edu.persistence.user.entity.Permission;
 import ro.msg.edu.persistence.user.entity.Role;
+import ro.msg.edu.persistence.user.entity.enums.PermissionType;
+import ro.msg.edu.persistence.user.entity.enums.RoleType;
 
 @Stateless
 public class RoleControl {
@@ -17,7 +23,13 @@ public class RoleControl {
 	private RoleDAO roleDAO;
 
 	@EJB
+	private PermissionDAO permissionDAO;
+
+	@EJB
 	private RoleDTOMApper roleDTOMapper;
+
+	@EJB
+	private PermissionDTOMapper permissionDTOMapper;
 
 	public List<RoleDTO> findAllRoles() {
 		List<Role> roles = roleDAO.getAllRoles();
@@ -27,4 +39,35 @@ public class RoleControl {
 		}
 		return rolesDTO;
 	}
+
+	public RoleDTO addPermissions(String selectedRole, String[] selectedPermissions) {
+		List<Role> role = roleDAO.getRoleByName(RoleType.valueOf(selectedRole));
+		List<Permission> permissionList = new ArrayList<>();
+
+		for (String permissionName : selectedPermissions) {
+			permissionList.add(permissionDAO.findPermissionByName(PermissionType.valueOf(permissionName)));
+		}
+		role.get(0).setPermissions(permissionList);
+		roleDAO.persistEntity(role.get(0));
+		Role persistedRole = roleDAO.findEntity(role.get(0).getId());
+		return roleDTOMapper.mapToDTO(persistedRole);
+	}
+
+	public List<PermissionDTO> viewPermissions(String roleName) {
+		List<Role> role;
+		if (roleName == null) {
+			role = roleDAO.getRoleByName(RoleType.ADMINISTRATOR);
+		} else {
+			role = roleDAO.getRoleByName(RoleType.valueOf(roleName));
+		}
+
+		List<Permission> permissionList = role.get(0).getPermissions();
+		List<PermissionDTO> permissionListDTO = new ArrayList<>();
+		for (Permission permission : permissionList) {
+			permissionListDTO.add(permissionDTOMapper.mapToDTO(permission));
+		}
+		return permissionListDTO;
+
+	}
+
 }

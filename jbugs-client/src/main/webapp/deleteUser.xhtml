@@ -4,18 +4,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
 	<title><h:outputText value="#{msg['login.title']}" /></title>
-	<!-- <h:outputStylesheet library="css" name="style.css" /> -->
 </h:head>
 <h:body>
 	<f:view contentType="text/html">
 		<div>
-
+		<h1 style="text-align: center;font-weight: bold;font-size: 60">Delete user</h1>
 			<h:form id="deleteUser">
 				<p:messages />
+				<ui:include src="menu.xhtml" />
 				<p:dataTable value="#{userBean.allUsers}" var="user">
 					<f:facet name="header"></f:facet>
 					<p:column>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title><h:outputText value="#{msg['login.title']}" /></title>
+</h:head>
+<h:body>
+	<f:view contentType="text/html">
+		<h1 style="text-align: center; font-weight: bold; font-size: 60" >Add
+			permissions</h1>
+		<h:form>
+			<ui:include src="menu.xhtml" />
+			<br />
+			<br />
+
+			<p:outputLabel value="Roles:" />
+			<p:selectOneMenu value="#{roleBean.selectedRole}">
+				<f:selectItems value="#{roleBean.allRoles}" var="role"
+					itemValue="#{role.roleName}" />
+			</p:selectOneMenu>
+			<br />
+			<br />
+			<p:outputLabel value="Permissions:" />
+			<p:selectManyCheckbox id="grid"
+				value="#{roleBean.selectedPermission}" layout="grid" columns="3">
+				<f:selectItems value="#{permissionBean.allPermissions}"
+					var="permission" itemLabel="#{permission.namePermission}"
+					itemValue="#{permission.namePermission}" />
+			</p:selectManyCheckbox>
+			<br />
+
+			<h:commandButton value="Add" action="#{roleBean.addPermissions}">
+			</h:commandButton>
+		</h:form>
+	</f:view>
+</h:body>
+</html>
