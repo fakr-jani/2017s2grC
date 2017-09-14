@@ -18,6 +18,11 @@ import ro.msg.edu.business.user.dto.UserDTO;
 @ViewScoped
 public class LoginBean implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@EJB
 	UserFacade userFacade;
 

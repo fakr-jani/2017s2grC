@@ -14,28 +14,29 @@
 	<f:view contentType="text/html">
 		<h1 style="text-align: center; font-weight: bold; font-size: 60">Remove
 			permissions</h1>
+		<ui:include src="menu.xhtml" />
+		<br />
+		<br />
 		<h:form>
-			<ui:include src="menu.xhtml" />
-			<br />
-			<br />
-			<p:outputLabel value="Roles:" />
-			<p:selectOneMenu value="#{roleBean.selectedRole}" onchange="">
+			<p:outputLabel value="#{msg['roles.label']}" />
+			<p:selectOneMenu id="Roles" value="#{roleBean.selectedRole}">
 				<f:selectItems value="#{roleBean.allRoles}" var="role"
 					itemValue="#{role.roleName}" />
+				<p:ajax update="Permissions"
+					listener="#{roleBean.getViewPermissions}" />
 			</p:selectOneMenu>
-			<br/>
 			<br />
-			<p:outputLabel value="Permissions:" />
-			<p:selectManyCheckbox id="grid"
+			<br />
+			<p:outputLabel value="#{msg['permissions.label']}" />
+			<p:selectManyCheckbox id="Permissions"
 				value="#{roleBean.selectedPermission}" layout="grid" columns="3">
-				<f:selectItems value="#{roleBean.viewPermissions}" var="permission"
-					itemLabel="#{permission.namePermission}"
-					itemValue="#{permission.namePermission}" />
+				<f:selectItems value="#{roleBean.selectedPermission}"
+					var="permission" itemLabel="#{permission}"
+					itemValue="#{permission}" />
 			</p:selectManyCheckbox>
-
-
-			<h:commandButton value="Remove"
-				action="#{roleBean.removePermissions}">
+			<br />
+			<h:commandButton value="#{msg['remove.button']}"
+				action="#{roleBean.removePermissionPageReturn}">
 			</h:commandButton>
 		</h:form>
 	</f:view>

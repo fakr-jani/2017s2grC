@@ -12,21 +12,20 @@
 </h:head>
 <h:body>
 	<f:view contentType="text/html">
-		<h1 style="text-align: center; font-weight: bold; font-size: 60" >Add
+		<h1 style="text-align: center; font-weight: bold; font-size: 60">Add
 			permissions</h1>
+		<ui:include src="menu.xhtml" />
+		<br />
+		<br />
 		<h:form>
-			<ui:include src="menu.xhtml" />
-			<br />
-			<br />
-
-			<p:outputLabel value="Roles:" />
+			<p:outputLabel value="#{msg['roles.label']}" />
 			<p:selectOneMenu value="#{roleBean.selectedRole}">
 				<f:selectItems value="#{roleBean.allRoles}" var="role"
 					itemValue="#{role.roleName}" />
 			</p:selectOneMenu>
 			<br />
 			<br />
-			<p:outputLabel value="Permissions:" />
+			<p:outputLabel value="#{msg['permissions.label']}" />
 			<p:selectManyCheckbox id="grid"
 				value="#{roleBean.selectedPermission}" layout="grid" columns="3">
 				<f:selectItems value="#{permissionBean.allPermissions}"
@@ -34,8 +33,8 @@
 					itemValue="#{permission.namePermission}" />
 			</p:selectManyCheckbox>
 			<br />
-
-			<h:commandButton value="Add" action="#{roleBean.addPermissions}">
+			<h:commandButton value="#{msg['add.button']}"
+				action="#{roleBean.addPermissionPageReturn}">
 			</h:commandButton>
 		</h:form>
 	</f:view>

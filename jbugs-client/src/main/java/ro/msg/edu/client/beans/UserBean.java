@@ -17,19 +17,17 @@ import ro.msg.edu.business.user.dto.UserDTO;
 @SessionScoped
 public class UserBean extends AbstractBean {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@EJB
 	UserFacade userFacade;
 
-	private UserDTO selectedUser = new UserDTO();
 	private UserDTO newUser = new UserDTO();
 
-	public UserDTO getNewUser() {
-		return newUser;
-	}
-
-	public void setNewUser(UserDTO newUser) {
-		this.newUser = newUser;
-	}
+	private UserDTO selectedUser = new UserDTO();
 
 	private String[] selectedRoles;
 
@@ -45,13 +43,19 @@ public class UserBean extends AbstractBean {
 		return userFacade.findAllUsers();
 	}
 
+	public UserDTO getNewUser() {
+		return newUser;
+	}
+
+	public void setNewUser(UserDTO newUser) {
+		this.newUser = newUser;
+	}
+	
 	public String createNewUser() {
 		try {
 			userFacade.createUser(newUser, selectedRoles);
 		} catch (JBugsException e) {
-
 			handleExceptioni18n(e);
-
 		}
 		return "addUser";
 	}
@@ -70,40 +74,37 @@ public class UserBean extends AbstractBean {
 	}
 
 	public String activateUser(UserDTO user) {
+		userFacade.activateUser(user);
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage("Userul " + user.getUsername() + " a fost activat"));
-		userFacade.activateUser(user);
-		return "users";
+		return "editUsers";
 	}
 
 	public String enterUpdateMode(UserDTO user) {
-
 		this.selectedUser = user;
-		return "users";
+		return "editUsers";
 	}
 
 	public String leaveUpdateMode() {
 
 		selectedUser = new UserDTO();
-		return "users";
+		return "editUsers";
 	}
 
 	public boolean verifyUserRendered(UserDTO user) {
 		return userFacade.hasActiveTasks(user);
 	}
 
-	public String editUser() {
+	public String updateUser() {
 		try {
-
 			userFacade.updateUser(selectedUser);
-			addMessage(selectedUser.getUsername() + " a fost editat");
-		} catch (JBugsException e) {
-
-			handleExceptioni18n(e);
-
+		} catch (TechnicalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		addMessage(selectedUser.getUsername() + " a fost editat");
 
-		return "users";
+		return "editUsers";
 	}
 
 	public String[] getSelectedRoles() {
@@ -114,12 +115,5 @@ public class UserBean extends AbstractBean {
 		this.selectedRoles = selectedRoles;
 	}
 
-	public UserDTO getUser() {
-		return newUser;
-	}
-
-	public void setUser(UserDTO newUser) {
-		this.newUser = newUser;
-	}
 
 }

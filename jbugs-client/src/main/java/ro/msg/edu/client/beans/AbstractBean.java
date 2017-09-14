@@ -8,6 +8,11 @@ import javax.faces.context.FacesContext;
 import ro.msg.edu.business.common.exception.JBugsException;
 
 public class AbstractBean implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public void handleExceptioni18n(JBugsException e) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String message = context.getApplication().evaluateExpressionGet(context, "#{msg['" + e.getMessage() + "']}",

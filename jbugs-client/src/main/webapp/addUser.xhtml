@@ -15,6 +15,7 @@
 	<f:view>
 
 		<div>
+
 			<h1 style="text-align: center; font-weight: bold; font-size: 60">Add
 				users</h1>
 			<ui:include src="menu.xhtml" />
@@ -64,7 +65,8 @@
 
 				<br />
 				<br />
-				<p:commandButton value="Create" action="#{userBean.createNewUser}">
+
+				<p:commandButton value="#{msg['create.button']}" action="#{userBean.createNewUser}">
 				</p:commandButton>
 
 			</h:form>
