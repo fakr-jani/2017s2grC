@@ -69,14 +69,13 @@ public class UserBean extends AbstractBean {
 	}
 
 	public String activateUser(UserDTO user) {
+		userFacade.activateUser(user);
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage("Userul " + user.getUsername() + " a fost activat"));
-		userFacade.activateUser(user);
-		return "users";
+		return "editUsers";
 	}
 
 	public String enterUpdateMode(UserDTO user) {
-
 		this.selectedUser = user;
 		return "editUsers";
 	}
@@ -91,8 +90,13 @@ public class UserBean extends AbstractBean {
 		return userFacade.hasActiveTasks(user);
 	}
 
-	public String editUser() throws TechnicalException {
-		userFacade.updateUser(selectedUser);
+	public String updateUser() {
+		try {
+			userFacade.updateUser(selectedUser);
+		} catch (TechnicalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		addMessage(selectedUser.getUsername() + " a fost editat");
 
 		return "editUsers";
