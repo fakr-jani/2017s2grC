@@ -8,6 +8,7 @@
 
 <h:head>
 	<title><h:outputText value="#{msg['login.title']}" /></title>
+	<h:outputStylesheet library="css" name="style.css" /> 
 </h:head>
 <h:body>
 	<f:view contentType="text/html">
@@ -20,7 +21,7 @@
 				<h:panelGrid columns="2" cellpadding="5">
 					<p:outputLabel for="username" value="#{msg['login.username']}" />
 					<p:inputText id="username" value="#{loginBean.user.username}">
-						<f:validator validatorId="usernameValidator" />
+						<f:validator validatorId="usernameValidator" /> 
 					</p:inputText>
 
 					<p:outputLabel for="password" value="#{msg['login.password']}" />

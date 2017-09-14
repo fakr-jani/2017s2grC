@@ -8,14 +8,34 @@
 
 <h:head>
 	<title><h:outputText value="#{msg['login.title']}" /></title>
-	<!-- <h:outputStylesheet library="css" name="style.css" /> -->
+	<h:outputStylesheet library="css" name="style.css" /> 
 </h:head>
 <h:body>
 	<f:view contentType="text/html">
 		<div>
-	
+		<h1 style="text-align: center;font-weight: bold;font-size: 60">Edit users</h1>
 			<h:form id="usersForm">
 				<p:messages />
+				<p:menubar>
+					<p:menuitem value="#{msg['menu.home']}" url="menu.xhtml"/>
+					
+					<p:submenu label="Users" >
+							<p:menuitem value="#{msg['menu.adduser']}" url="addUser.xhtml" />
+							<p:menuitem value="#{msg['menu.edituser']}" url="users.xhtml" />
+					</p:submenu>
+					
+					<p:submenu label="Permissions" >
+							<p:menuitem value="#{msg['menu.addpermissions']}" url="addPermission.xhtml" />
+							<p:menuitem value="#{msg['menu.removepermissions']}" url="removePermission.xhtml" />
+					</p:submenu>
+
+					<f:facet name="options">
+						<h:commandButton id="logout" value="#{msg['general.logout']}"
+				 action="#{loginBean.processLogout}" />
+					</f:facet>
+				</p:menubar>
+				<br/>
+				<br/>
 				<p:dataTable value="#{userBean.allUsers}" var="user">
 					<f:facet name="header"></f:facet>
 					<p:column>
@@ -116,15 +136,6 @@
 					</p:column>
 
 				</p:dataTable>
-
-
-				
-				
-				<br/>
-				<h:commandButton id="logout" value="#{msg['general.logout']}"
-				 action="#{loginBean.processLogout}" />
-
-
 			</h:form>
 		</div>
 	</f:view>

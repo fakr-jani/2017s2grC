@@ -44,7 +44,7 @@ public class LoginBean implements Serializable {
 		if (userFacade.verifyLoggedInUser(user)) {
 			HttpSession session = (HttpSession) getFacesContext().getExternalContext().getSession(false);
 			session.setAttribute("username", user.getUsername());
-			Locale locale = new Locale("de");
+			Locale locale = new Locale("");
 			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
 			FacesContext context = FacesContext.getCurrentInstance();
 			String message = context.getApplication().evaluateExpressionGet(context, "#{msg['login.title']}",
@@ -52,7 +52,7 @@ public class LoginBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(message + " " + user.getUsername() + "!"));
 
-			return "users";
+			return "menu";
 		} else
 
 		{

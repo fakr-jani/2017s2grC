@@ -22,4 +22,10 @@ public class PermissionDAO extends AbstractDao<Permission> {
 		return query.getResultList();
 	}
 
+	public Permission findPermissionByName(String namePermission) {
+		Query query = em.createQuery("SELECT p FROM Permission p WHERE p.namePermission = :namePermission");
+		query.setParameter("namePermission", namePermission);
+		return (Permission) query.getSingleResult();
+	}
+
 }

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title><h:outputText value="#{msg['login.title']}" /></title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+<h:body>
+	<f:view contentType="text/html">
+		<h1 style="text-align: center; font-weight: bold; font-size: 60">Remove
+			permissions</h1>
+		<h:form>
+			<p:menubar>
+					<p:menuitem value="#{msg['menu.home']}" url="menu.xhtml"/>
+					
+					<p:submenu label="Users" >
+							<p:menuitem value="#{msg['menu.adduser']}" url="addUser.xhtml" />
+							<p:menuitem value="#{msg['menu.edituser']}" url="users.xhtml" />
+					</p:submenu>
+					
+					<p:submenu label="Permissions" >
+							<p:menuitem value="#{msg['menu.addpermissions']}" url="addPermission.xhtml" />
+							<p:menuitem value="#{msg['menu.removepermissions']}" url="removePermission.xhtml" />
+					</p:submenu>
+
+					<f:facet name="options">
+						<h:commandButton id="logout" value="#{msg['general.logout']}"
+				 action="#{loginBean.processLogout}" />
+					</f:facet>
+				</p:menubar>
+			<br />
+			<br />
+			<p:outputLabel value="Roles:" />
+			<p:selectOneMenu value="#{roleBean.selectedRole}" onchange="">
+				<f:selectItems value="#{roleBean.allRoles}" var="role"
+					itemValue="#{role.roleName}" />
+			</p:selectOneMenu>
+			<br/>
+			<br />
+			<p:outputLabel value="Permissions:" />
+			<p:selectManyCheckbox id="grid"
+				value="#{roleBean.selectedPermission}" layout="grid" columns="3">
+				<f:selectItems value="#{roleBean.viewPermissions}" var="permission"
+					itemLabel="#{permission.namePermission}"
+					itemValue="#{permission.namePermission}" />
+			</p:selectManyCheckbox>
+
+
+			<h:commandButton value="Remove"
+				action="#{roleBean.removePermissions}">
+			</h:commandButton>
+		</h:form>
+	</f:view>
+</h:body>
+</html>
