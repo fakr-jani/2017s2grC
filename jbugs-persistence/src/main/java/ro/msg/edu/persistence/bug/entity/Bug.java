@@ -1,5 +1,6 @@
 package ro.msg.edu.persistence.bug.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -51,7 +52,7 @@ public class Bug extends AbstractEntity {
 
 	@Future
 	@Column
-	private String targetDate;
+	private Date targetDate;
 
 	@NotNull
 	@Column
@@ -119,11 +120,11 @@ public class Bug extends AbstractEntity {
 		this.versionFixed = versionFixed;
 	}
 
-	public String getTargetDate() {
+	public Date getTargetDate() {
 		return targetDate;
 	}
 
-	public void setTargetDate(String targetDate) {
+	public void setTargetDate(Date targetDate) {
 		this.targetDate = targetDate;
 	}
 

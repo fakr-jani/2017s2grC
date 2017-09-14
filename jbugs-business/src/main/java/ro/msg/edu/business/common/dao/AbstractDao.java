@@ -16,7 +16,6 @@ public abstract class AbstractDao<E extends AbstractEntity> {
 
 	public void persistEntity(E entity) {
 		em.persist(entity);
-		// TODO research if really needed
 		em.flush();
 	}
 
