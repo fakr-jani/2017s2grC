@@ -57,6 +57,16 @@ public class UserFacade {
 
 	}
 
+	public UserDTO setStatus(UserDTO user) {
+		return userCRUDControl.setStatus(user);
+
+	}
+
+	public UserDTO resetStatus(UserDTO user) {
+		return userCRUDControl.resetStatus(user);
+
+	}
+
 	public List<UserDTO> findAllUsers() {
 		return userCRUDControl.findAllUser();
 	}
@@ -64,4 +74,5 @@ public class UserFacade {
 	public boolean hasActiveTasks(UserDTO userDTO) {
 		return userCRUDControl.hasActiveTasks(userDTO);
 	}
+
 }

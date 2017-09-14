@@ -10,7 +10,7 @@ import javax.persistence.TypedQuery;
 import ro.msg.edu.business.common.dao.AbstractDao;
 import ro.msg.edu.business.common.exception.TechnicalException;
 import ro.msg.edu.persistence.bug.entity.Bug;
-import ro.msg.edu.persistence.bug.entity.Bug.BugStatus;
+import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
 import ro.msg.edu.persistence.user.entity.User;
 
 /**
@@ -31,12 +31,8 @@ public class UserDAO extends AbstractDao<User> {
 		TypedQuery<User> query = this.em.createNamedQuery(User.FIND_USER_BY_EMAIL, User.class);
 		query.setParameter("email", email);
 
-		try {
-			return getSingleResult(query);
+		return getSingleResult(query);
 
-		} catch (Exception e) {
-			throw new TechnicalException("Zero or more results", e.getCause());
-		}
 	}
 
 	public Optional<User> findUserByUsername(String username) {
@@ -72,7 +68,7 @@ public class UserDAO extends AbstractDao<User> {
 		List<Bug> bugList = query.getResultList();
 		for (int i = 0; i < bugList.size(); i++) {
 
-			if (!(bugList.get(i).getStatus() == BugStatus.CLOSED)) {
+			if (!(bugList.get(i).getStatus() == BugStatusType.CLOSED)) {
 				return true;
 			}
 		}

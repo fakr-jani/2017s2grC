@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title><h:outputText value="#{msg['login.title']}" /></title>
+</h:head>
+<h:body>
+	<f:view contentType="text/html">
+		<h1 style="text-align: center; font-weight: bold; font-size: 60">Remove
+			permissions</h1>
+		<ui:include src="menu.xhtml" />
+		<br />
+		<br />
+		<h:form>
+			<p:outputLabel value="#{msg['roles.label']}" />
+			<p:selectOneMenu id="Roles" value="#{roleBean.selectedRole}">
+				<f:selectItems value="#{roleBean.allRoles}" var="role"
+					itemValue="#{role.roleName}" />
+				<p:ajax update="Permissions"
+					listener="#{roleBean.getViewPermissions}" />
+			</p:selectOneMenu>
+			<br />
+			<br />
+			<p:outputLabel value="#{msg['permissions.label']}" />
+			<p:selectManyCheckbox id="Permissions"
+				value="#{roleBean.selectedPermission}" layout="grid" columns="3">
+				<f:selectItems value="#{roleBean.selectedPermission}"
+					var="permission" itemLabel="#{permission}"
+					itemValue="#{permission}" />
+			</p:selectManyCheckbox>
+			<br />
+			<h:commandButton value="#{msg['remove.button']}"
+				action="#{roleBean.removePermissionPageReturn}">
+			</h:commandButton>
+		</h:form>
+	</f:view>
+</h:body>
+</html>

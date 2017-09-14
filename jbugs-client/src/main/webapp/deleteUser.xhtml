@@ -4,94 +4,88 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
 	<title><h:outputText value="#{msg['login.title']}" /></title>
-	<!-- <h:outputStylesheet library="css" name="style.css" /> -->
 </h:head>
 <h:body>
 	<f:view contentType="text/html">
-		<div>
+		<h1 style="text-align: center; font-weight: bold; font-size: 60">Delete
+			user</h1>
+		<ui:include src="menu.xhtml" />
+		<br/>
+		<br/>
+		<h:form id="deleteUser">
 
-			<h:form id="deleteUser">
-				<p:messages />
-				<p:dataTable value="#{userBean.allUsers}" var="user">
-					<f:facet name="header"></f:facet>
-					<p:column>
-						<f:facet name="header">
-							<h:outputLabel for="firstname" value="#{msg['firstname']}" />					
-						     <br />
-						</f:facet>
-						
-						<h:outputText value="#{user.firstname}">
-						</h:outputText>
-				
-					</p:column>
-					
-					<p:column>
-						<f:facet name="header">
-							<h:outputLabel for="firstname" value="#{msg['lastname']}" />							
-								<br />
-						</f:facet>
-						<h:outputText value="#{user.lastname}">
-						</h:outputText>
-					</p:column>
-					<p:column>
-						<f:facet name="header">
-							<h:outputLabel for="username" value="#{msg['login.username']}" />
-							<br />
-							<h:inputText value="#{userBean.newUser.username}">
-							</h:inputText>
-						</f:facet>
-						<h:outputText value="#{user.username}">
-						</h:outputText>
-					</p:column>
-					<p:column>
-						<f:facet name="header">
-							<h:outputLabel for="firstname" value="#{msg['email']}" />
-	  						<br />
-						</f:facet>
-						<h:outputText value="#{user.email}">
-						</h:outputText>
-					</p:column>
-					<p:column>
-						<f:facet name="header">
-							<h:outputLabel for="firstname" value="#{msg['phoneNumber']}" />
-							<br />
-						</f:facet>
-						<h:outputText value="#{user.phoneNumber}">
-						</h:outputText>
-					</p:column>
-					<p:column>
-						<f:facet name="header">
-								<h:outputLabel for="firstname" value="#{msg['active']}" />
-					       <br />
-						</f:facet>
-						<h:outputText value="#{user.active}">
-						</h:outputText>
-					</p:column>
-					
-					<p:column>
-								<f:facet name="header">
-						Action
-							<br />
-						
-						</f:facet>
-							<h:commandButton value="Delete"
-								action="#{userBean.deleteUser(user)}"
-								>
-							</h:commandButton>
-						
-					</p:column>
-				</p:dataTable>
-			
-	
-			<h:commandButton id="logout" value="#{msg['general.logout']}"
-				 action="#{loginBean.processLogout}" />
+			<p:dataTable value="#{userBean.allUsers}" var="user">
+				<f:facet name="header"></f:facet>
+				<p:column>
+					<f:facet name="header">
+						<p:outputLabel value="#{msg['firstname']}" />
+						<br />
+					</f:facet>
 
-			</h:form>
-		</div>
+					<p:outputLabel value="#{user.firstname}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<p:outputLabel value="#{msg['lastname']}" />
+
+						<br />
+					</f:facet>
+					<p:outputLabel value="#{user.lastname}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<p:outputLabel value="#{msg['login.username']}" />
+						<br />
+					</f:facet>
+					<p:outputLabel value="#{user.username}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<p:outputLabel value="#{msg['email']}" />
+						<br />
+					</f:facet>
+					<p:outputLabel value="#{user.email}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<p:outputLabel value="#{msg['phoneNumber']}" />
+						<br />
+					</f:facet>
+					<p:outputLabel value="#{user.phoneNumber}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<p:outputLabel value="#{msg['active']}" />
+						<br />
+					</f:facet>
+					<p:outputLabel value="#{user.active}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<p:outputLabel value="#{msg['action']}" />
+						<br />
+					</f:facet>
+
+					<h:commandButton value="#{msg['delete.button']}" 
+						action="#{userBean.deleteUser(user)}"
+						rendered="#{!userBean.verifyUserRendered(user)}">
+					</h:commandButton>
+
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
 	</f:view>
 
 </h:body>
