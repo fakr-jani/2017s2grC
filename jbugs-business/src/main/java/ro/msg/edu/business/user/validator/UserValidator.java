@@ -16,14 +16,12 @@ public class UserValidator {
 	@EJB
 	private UserDAO userDAO;
 
-
 	public void validateUserData(UserDTO userDTO) throws TechnicalException {
 		validateEmail(userDTO);
 		validateFirstName(userDTO);
 		validateLastName(userDTO);
 		validatePhoneNumber(userDTO);
 	}
-
 
 	public void validateEmail(UserDTO userDTO) throws TechnicalException {
 		User existingUserWithSameEmail = userDAO.findUserByEmail(userDTO.getEmail());
@@ -35,18 +33,15 @@ public class UserValidator {
 
 	}
 
-
 	public void validateFirstName(UserDTO userDTO) throws TechnicalException {
 		if (userDTO.getFirstname() == null)
 			throw new TechnicalException("Firstname cannot be null!");
 	}
 
-
 	public void validateLastName(UserDTO userDTO) throws TechnicalException {
 		if (userDTO.getLastname() == null)
 			throw new TechnicalException("Lastname cannot be null!");
 	}
-
 
 	public void validatePhoneNumber(UserDTO userDTO) throws TechnicalException {
 		if (!(userDTO.getPhoneNumber().startsWith("+40") || userDTO.getPhoneNumber().startsWith("+49"))) {
@@ -54,7 +49,6 @@ public class UserValidator {
 		}
 
 	}
-
 
 	public boolean uniqueUsername(StringBuilder username) {
 		Optional<User> user = userDAO.findUserByUsername(username.toString());
