@@ -13,6 +13,10 @@ import ro.msg.edu.business.permission.dto.PermissionDTO;
 @ViewScoped
 public class PermissionBean extends AbstractBean {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@EJB
 	PermissionFacade permissionFacade;
 

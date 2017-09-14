@@ -12,7 +12,7 @@
 </h:head>
 <h:body>
 	<f:view contentType="text/html">
-		<h1 style="text-align: center; font-weight: bold; font-size: 60">Remove
+		<h1 style="text-align: center; font-weight: bold; font-size: 60" >Add
 			permissions</h1>
 		<h:form>
 			<p:menubar>
@@ -35,24 +35,24 @@
 				</p:menubar>
 			<br />
 			<br />
+
 			<p:outputLabel value="Roles:" />
-			<p:selectOneMenu value="#{roleBean.selectedRole}" onchange="">
+			<p:selectOneMenu id="Roles" value="#{roleBean.selectedRole}">
 				<f:selectItems value="#{roleBean.allRoles}" var="role"
 					itemValue="#{role.roleName}" />
+				 <p:ajax update="Permissions"  listener="#{roleBean.getViewPermissions}" />
 			</p:selectOneMenu>
-			<br/>
+			<br />
 			<br />
 			<p:outputLabel value="Permissions:" />
-			<p:selectManyCheckbox id="grid"
+			<p:selectManyCheckbox id="Permissions"
 				value="#{roleBean.selectedPermission}" layout="grid" columns="3">
-				<f:selectItems value="#{roleBean.viewPermissions}" var="permission"
-					itemLabel="#{permission.namePermission}"
-					itemValue="#{permission.namePermission}" />
+				<f:selectItems value="#{roleBean.selectedPermission}"
+					var="permission" itemLabel="#{permission}"
+					itemValue="#{permission}" />
 			</p:selectManyCheckbox>
-
-
-			<h:commandButton value="Remove"
-				action="#{roleBean.removePermissions}">
+			<br />
+			<h:commandButton value="Add" action="#{roleBean.removePermissionPageReturn}">
 			</h:commandButton>
 		</h:form>
 	</f:view>
