@@ -5,12 +5,12 @@ public class TechnicalException extends JBugsException {
 	private static final String MESSAGE_KEY = "exception.technical";
 
 	public TechnicalException(String message) {
-		super(MESSAGE_KEY);
+		super(message);
 
 	}
 
 	public TechnicalException(String message, Throwable cause) {
-		super(MESSAGE_KEY, cause);
+		super(message, cause);
 
 	}
 

@@ -31,12 +31,8 @@ public class UserDAO extends AbstractDao<User> {
 		TypedQuery<User> query = this.em.createNamedQuery(User.FIND_USER_BY_EMAIL, User.class);
 		query.setParameter("email", email);
 
-		try {
-			return getSingleResult(query);
+		return getSingleResult(query);
 
-		} catch (Exception e) {
-			throw new TechnicalException("Zero or more results", e.getCause());
-		}
 	}
 
 	public Optional<User> findUserByUsername(String username) {
