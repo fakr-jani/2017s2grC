@@ -18,16 +18,16 @@
 		<br />
 		<h:form>
 			<p:outputLabel value="#{msg['roles.label']}" />
-			<p:selectOneMenu id="Roles" value="#{roleBean.selectedRole}">
+			<p:selectOneMenu id="roles" value="#{roleBean.selectedRole}">
 				<f:selectItems value="#{roleBean.allRoles}" var="role"
 					itemValue="#{role.roleName}" />
-				<p:ajax update="Permissions"
+				<p:ajax update="permissions"
 					listener="#{roleBean.getViewPermissions}" />
 			</p:selectOneMenu>
 			<br />
 			<br />
 			<p:outputLabel value="#{msg['permissions.label']}" />
-			<p:selectManyCheckbox id="Permissions"
+			<p:selectManyCheckbox id="permissions"
 				value="#{roleBean.selectedPermission}" layout="grid" columns="3">
 				<f:selectItems value="#{roleBean.selectedPermission}"
 					var="permission" itemLabel="#{permission}"
