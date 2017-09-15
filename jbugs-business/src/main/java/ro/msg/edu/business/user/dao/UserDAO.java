@@ -53,7 +53,6 @@ public class UserDAO extends AbstractDao<User> {
 		query.setParameter("password", password);
 		List<User> userList = query.getResultList();
 		return userList.isEmpty() == false;
-
 	}
 
 	public List<User> getAllUser() {
@@ -66,9 +65,9 @@ public class UserDAO extends AbstractDao<User> {
 		query.setParameter("entity", entity);
 
 		List<Bug> bugList = query.getResultList();
-		for (int i = 0; i < bugList.size(); i++) {
+		for (Bug b : bugList) {
 
-			if (!(bugList.get(i).getStatus() == BugStatusType.CLOSED)) {
+			if (!(b.getStatus() == BugStatusType.CLOSED)) {
 				return true;
 			}
 		}

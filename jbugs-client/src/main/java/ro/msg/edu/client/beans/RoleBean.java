@@ -36,14 +36,22 @@ public class RoleBean implements Serializable {
 
 	public String addPermissionPageReturn() {
 		addPermissions();
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Permission was added!"));
+		printMessage();
 		return "addPermission";
 	}
 
 	public String removePermissionPageReturn() {
 		addPermissions();
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Permission was remove!"));
+		printMessage();
 		return "removePermission";
+	}
+
+	public void printMessage() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String message = context.getApplication().evaluateExpressionGet(context, "#{msg['permission.update']}",
+				String.class);
+		context.addMessage(null, new FacesMessage(message));
+
 	}
 
 	/**

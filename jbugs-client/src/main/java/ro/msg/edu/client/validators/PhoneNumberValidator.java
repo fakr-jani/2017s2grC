@@ -13,11 +13,11 @@ public class PhoneNumberValidator implements Validator {
 	@Override
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 		String stringValue = value.toString();
-		System.err.println(stringValue + "lkfhdkdgfkhs gbcrgubtgheehcwebgfyhh");
-
 		if (stringValue.length() < 10 && stringValue.length() > 15 && !(stringValue.startsWith("+49"))
 				&& !(stringValue.startsWith("+40"))) {
-			FacesMessage message = new FacesMessage("Not a valid phone number");
+			String phoneValidationMessage = context.getApplication().evaluateExpressionGet(context,
+					"#{msg['validator.phone]}", String.class);
+			FacesMessage message = new FacesMessage(phoneValidationMessage);
 			throw new ValidatorException(message);
 		}
 

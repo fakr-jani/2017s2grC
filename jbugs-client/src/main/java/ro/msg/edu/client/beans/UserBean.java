@@ -3,7 +3,6 @@ package ro.msg.edu.client.beans;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -53,7 +52,8 @@ public class UserBean extends AbstractBean {
 
 	public String createNewUser() {
 		try {
-			userFacade.createUser(newUser, selectedRoles);
+			UserDTO userCreated = userFacade.createUser(newUser, selectedRoles);
+			addMessage(userCreated.getUsername() + " " + getMessageFromProperty("#{msg['user.added']}"));
 		} catch (JBugsException e) {
 			handleExceptioni18n(e);
 		}
@@ -64,19 +64,16 @@ public class UserBean extends AbstractBean {
 		try {
 
 			userFacade.deleteUser(user);
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage("Userul " + user.getUsername() + " a fost sters"));
+			addMessage(user.getUsername() + " " + getMessageFromProperty("#{msg['user.deleted']}"));
 		} catch (TechnicalException e) {
-
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+			addMessage(e.getMessage());
 		}
 		return "deleteUser";
 	}
 
 	public String activateUser(UserDTO user) {
 		userFacade.activateUser(user);
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage("Userul " + user.getUsername() + " a fost activat"));
+		addMessage(user.getUsername() + " " + getMessageFromProperty("#{msg['user.activated']}"));
 		return "editUsers";
 	}
 
@@ -95,15 +92,17 @@ public class UserBean extends AbstractBean {
 		return userFacade.hasActiveTasks(user);
 	}
 
+	public boolean verifyEditRendered(UserDTO user) {
+		return (selectedUser != null && user.getId().equals(selectedUser.getId()));
+	}
+
 	public String updateUser() {
 		try {
 			userFacade.updateUser(selectedUser);
+			addMessage(selectedUser.getUsername() + " " + getMessageFromProperty("#{msg['user.updated']}"));
 		} catch (TechnicalException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			addMessage(e.getMessage());
 		}
-		addMessage(selectedUser.getUsername() + " a fost editat");
-
 		return "editUsers";
 	}
 
@@ -113,6 +112,11 @@ public class UserBean extends AbstractBean {
 
 	public void setSelectedRoles(String[] selectedRoles) {
 		this.selectedRoles = selectedRoles;
+	}
+
+	public String getMessageFromProperty(String messageProperty) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		return context.getApplication().evaluateExpressionGet(context, messageProperty, String.class);
 	}
 
 }

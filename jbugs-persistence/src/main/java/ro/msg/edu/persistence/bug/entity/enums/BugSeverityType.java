@@ -5,6 +5,10 @@ public enum BugSeverityType {
 
 	private final String severityType;
 
+	public String getSeverityType() {
+		return severityType;
+	}
+
 	private BugSeverityType(String severityType) {
 		this.severityType = severityType;
 	}

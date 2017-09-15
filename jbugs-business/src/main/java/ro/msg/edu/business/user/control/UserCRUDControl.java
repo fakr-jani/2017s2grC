@@ -37,6 +37,10 @@ public class UserCRUDControl {
 	@EJB
 	UserValidator userValidator;
 
+	private final static int MAX_NUMBER_OF_TRIES = 4;
+	private final static int MAX_CHARACTERTER_FROM_LASTNAME = 5;
+	private final static int MAX_CHARACTERS_FOR_USERNAME = 6;
+
 	public UserDTO createUser(UserDTO user, String[] selectedRoles) throws TechnicalException {
 		userValidator.validateUserData(user);
 		User userEntity = new User();
@@ -48,7 +52,7 @@ public class UserCRUDControl {
 
 		for (String role : selectedRoles) {
 
-			roles.add(roleDAO.getRoleByName(RoleType.valueOf(role)).get(0));
+			roles.add(roleDAO.getRoleByName(RoleType.valueOf(role)));
 		}
 		userEntity.setRoles(roles);
 		userDAO.persistEntity(userEntity);
@@ -94,7 +98,6 @@ public class UserCRUDControl {
 
 	public UserDTO findUserbyUsername(String username) {
 		Optional<User> entity = userDAO.findUserByUsername(username);
-
 		if (entity.isPresent()) {
 			return userDTOMapper.mapToDTO(entity.get());
 		} else
@@ -115,31 +118,39 @@ public class UserCRUDControl {
 		return usersDTO;
 	}
 
-	public String generateUsername(String firstname, String lastname) {
+	public String generateUsername(String firstname, String lastname) throws TechnicalException {
 
-		StringBuilder username = new StringBuilder();
-		int ok = 0;
-		int i = 5;
-		int j = 1;
+		int nrLastnameCharacters = calculateNrOfCharactersFromLastname(lastname);
+		int nrFirstnameCharacters = calculateNrOfCharactersFromFirstname(lastname, firstname);
 
-		if (lastname.length() < 5) {
-			i = lastname.length();
-			j = 6 - i;
-		}
-		while (ok == 0) {
-
-			username.append(lastname, 0, i);
-			username.append(firstname, 0, j);
-			if (userValidator.uniqueUsername(username) == false) {
-				ok = 1;
-			} else {
-				username.delete(0, 6);
-				i--;
-				j++;
+		while (nrLastnameCharacters > 0 && nrFirstnameCharacters < 6) {
+			StringBuilder username = new StringBuilder();
+			username.append(lastname, 0, nrLastnameCharacters);
+			username.append(firstname, 0, nrFirstnameCharacters);
+			boolean usernameNotExists = !userValidator.uniqueUsername(username);
+			if (usernameNotExists) {
+				return username.toString();
 			}
-
+			nrLastnameCharacters--;
+			nrFirstnameCharacters++;
 		}
-		return username.toString();
+		throw new TechnicalException("");
+	}
+
+	private int calculateNrOfCharactersFromLastname(String lastname) {
+		if (lastname.length() < MAX_CHARACTERTER_FROM_LASTNAME) {
+
+			return lastname.length();
+		}
+		return MAX_CHARACTERTER_FROM_LASTNAME;
+
+	}
+
+	private int calculateNrOfCharactersFromFirstname(String lastname, String firstname) {
+		if (lastname.length() < MAX_CHARACTERTER_FROM_LASTNAME) {
+			return MAX_CHARACTERS_FOR_USERNAME - lastname.length();
+		}
+		return 1;
 	}
 
 	public boolean hasActiveTasks(UserDTO userDTO) {
@@ -154,7 +165,7 @@ public class UserCRUDControl {
 		Optional<User> entity = userDAO.findUserByUsername(userDTO.getUsername());
 		User userEntity = entity.get();
 		userEntity.setCounter(userEntity.getCounter() + 1);
-		if (userEntity.getCounter() > 4) {
+		if (userEntity.getCounter() > MAX_NUMBER_OF_TRIES) {
 			userEntity.setActive(false);
 		}
 		return userDTOMapper.mapToDTO(userEntity);

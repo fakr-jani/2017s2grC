@@ -1,12 +1,8 @@
-/**
- * 
- */
+
 package ro.msg.edu.business.bug.validator;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import ro.msg.edu.business.bug.dao.BugDAO;
 import ro.msg.edu.business.bug.dto.BugDTO;
 import ro.msg.edu.business.common.exception.TechnicalException;
 
@@ -18,9 +14,6 @@ import ro.msg.edu.business.common.exception.TechnicalException;
 @Stateless
 public class BugValidator {
 
-	@EJB
-	private BugDAO bugDAO;
-
 	public static final String VALID_BUG_VERSION_REGEX = "^[a-zA-Z0-9]{2,100}[.]{1}[a-zA-Z0-9]{1,100}$";
 
 	public void validateBugData(BugDTO bugDTO) throws TechnicalException {
@@ -29,7 +22,7 @@ public class BugValidator {
 		validateVersion(bugDTO);
 		validateSeverity(bugDTO);
 	}
-	
+
 	public void validateTitle(BugDTO bugDTO) throws TechnicalException {
 		if (bugDTO.getTitleBug() == null)
 			throw new TechnicalException("Title cannot be null!");
@@ -45,12 +38,10 @@ public class BugValidator {
 			throw new TechnicalException("Invalid bug version!");
 
 	}
-	
+
 	public void validateSeverity(BugDTO bugDTO) throws TechnicalException {
 		if (bugDTO.getSeverity() == null)
 			throw new TechnicalException("Severity cannot be null!");
 	}
-
-
 
 }
