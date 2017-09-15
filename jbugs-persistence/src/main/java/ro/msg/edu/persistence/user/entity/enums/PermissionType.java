@@ -7,6 +7,10 @@ public enum PermissionType {
 
 	private final String permission;
 
+	public String getPermission() {
+		return permission;
+	}
+
 	private PermissionType(final String permission) {
 		this.permission = permission;
 	}

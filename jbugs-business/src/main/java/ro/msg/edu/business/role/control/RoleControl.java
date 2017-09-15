@@ -40,33 +40,34 @@ public class RoleControl {
 	}
 
 	public RoleDTO addPermissions(String selectedRole, String[] selectedPermissions) {
-		List<Role> role = roleDAO.getRoleByName(RoleType.valueOf(selectedRole));
+		Role role = roleDAO.getRoleByName(RoleType.valueOf(selectedRole));
 		List<Permission> permissionList = new ArrayList<>();
 
 		for (String permissionName : selectedPermissions) {
 			permissionList.add(permissionDAO.findPermissionByName(PermissionType.valueOf(permissionName)));
 		}
-		role.get(0).setPermissions(permissionList);
-		roleDAO.persistEntity(role.get(0));
-		Role persistedRole = roleDAO.findEntity(role.get(0).getId());
+		role.setPermissions(permissionList);
+		roleDAO.persistEntity(role);
+		Role persistedRole = roleDAO.findEntity(role.getId());
 		return roleDTOMapper.mapToDTO(persistedRole);
 	}
 
 	public List<String> viewPermissions(String selectedRole) {
-		List<Role> role;
-		if (selectedRole == null) {
-			role = roleDAO.getRoleByName(RoleType.ADMINISTRATOR);
-		} else {
-			role = roleDAO.getRoleByName(RoleType.valueOf(selectedRole));
-		}
-
-		List<Permission> permissionList = role.get(0).getPermissions();
+		Role role = roleDAO.getRoleByName(getRoleType(selectedRole));
+		List<Permission> permissionList = role.getPermissions();
 		List<String> permissionTypeList = new ArrayList<>();
 		for (Permission permission : permissionList) {
 			permissionTypeList.add(permission.getNamePermission().toString());
 		}
 		return permissionTypeList;
 
+	}
+
+	private RoleType getRoleType(String selectedRole) {
+		if (selectedRole == null) {
+			return RoleType.ADMINISTRATOR;
+		}
+		return RoleType.valueOf(selectedRole);
 	}
 
 }
