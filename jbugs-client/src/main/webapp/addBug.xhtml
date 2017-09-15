@@ -21,20 +21,20 @@
 			<ui:include src="menu.xhtml" />
 			<br /> <br />
 			<h:form id="addBug">
-				<p:outputLabel value="#{msg['bugtitle']}" />
+				<p:outputLabel value="#{msg['bug.title']}" />
 				<p:outputLabel value="#{bug.titleBug}" />
 				<p:inputText value="#{bugBean.newBug.titleBug}" required="true" />
 
 				<br />
 				<br />
-				<p:outputLabel value="#{msg['descriptionBug']}" />
+				<p:outputLabel value="#{msg['bug.description']}" />
 				<p:inputText value="#{bugBean.newBug.descriptionBug}"
 					required="true" />
 				<p:outputLabel value="#{bug.descriptionBug}" />
 
 				<br />
 				<br />
-				<p:outputLabel value="#{msg['version']}" />
+				<p:outputLabel value="#{msg['bug.version']}" />
 				<p:inputText value="#{bugBean.newBug.version}" required="true">
 					<f:validator validatorId="versionValidator" />
 				</p:inputText>
@@ -42,17 +42,19 @@
 
 				<br />
 				<br />
-				<p:outputLabel value="#{msg['versionFixed']}" />
+				<p:outputLabel value="#{msg['bug.versionFixed']}" />
 				<p:inputText value="#{bugBean.newBug.versionFixed}">
 
 				</p:inputText>
 
-				<p:outputLabel for="popup" value="#{msg['popup']}" />
+				<br />
+				<br />
+				<p:outputLabel for="popup" value="#{msg['bug.targetDate']}" />
 				<p:calendar id="popup" value="#{bugBean.date2}" />
 
 				<br />
 				<br />
-				<p:outputLabel value="#{msg['severity.label']}" />
+				<p:outputLabel value="#{msg['bug.severity']}" />
 				<p:selectOneMenu id="bugSeverity" value="bugBean.selectedSeverity">
 					<f:selectItems value="#{bugBean.severityList}" var="severity"
 						itemValue="#{severity}" />
