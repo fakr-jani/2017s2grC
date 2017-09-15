@@ -98,7 +98,6 @@ public class UserCRUDControl {
 
 	public UserDTO findUserbyUsername(String username) {
 		Optional<User> entity = userDAO.findUserByUsername(username);
-
 		if (entity.isPresent()) {
 			return userDTOMapper.mapToDTO(entity.get());
 		} else

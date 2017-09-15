@@ -65,7 +65,12 @@ public class UserBean extends AbstractBean {
 		try {
 
 			userFacade.deleteUser(user);
+<<<<<<< HEAD
 			addMessage(user.getUsername() + getMessageFromProperty("#{msg['user.deleted']}"));
+=======
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage("User " + user.getUsername() + " has been deactivated!"));
+>>>>>>> Id8: Edit user
 		} catch (TechnicalException e) {
 			addMessage(e.getMessage());
 		}
@@ -74,7 +79,12 @@ public class UserBean extends AbstractBean {
 
 	public String activateUser(UserDTO user) {
 		userFacade.activateUser(user);
+<<<<<<< HEAD
 		addMessage(user.getUsername() + getMessageFromProperty("#{msg['user.activated']}"));
+=======
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage("User " + user.getUsername() + " has been activated!"));
+>>>>>>> Id8: Edit user
 		return "editUsers";
 	}
 
@@ -93,14 +103,25 @@ public class UserBean extends AbstractBean {
 		return userFacade.hasActiveTasks(user);
 	}
 
+	public boolean verifyEditRendered(UserDTO user) {
+		return (selectedUser != null && user.getId().equals(selectedUser.getId()));
+	}
+
 	public String updateUser() {
 		try {
 			userFacade.updateUser(selectedUser);
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage("User " + selectedUser.getUsername() + " has been updated!"));
 		} catch (TechnicalException e) {
+<<<<<<< HEAD
 			e.printStackTrace();
 		}
 		addMessage(selectedUser.getUsername() + getMessageFromProperty("#{msg['user.edited']}"));
 
+=======
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+		}
+>>>>>>> Id8: Edit user
 		return "editUsers";
 	}
 

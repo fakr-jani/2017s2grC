@@ -34,18 +34,18 @@ public class UserValidator {
 	}
 
 	public void validateFirstName(UserDTO userDTO) throws TechnicalException {
-		if (userDTO.getFirstname() == null)
+		if (userDTO.getFirstname() == null || userDTO.getFirstname().length() < 3)
 			throw new TechnicalException("Firstname cannot be null!");
 	}
 
 	public void validateLastName(UserDTO userDTO) throws TechnicalException {
-		if (userDTO.getLastname() == null)
+		if (userDTO.getLastname() == null || userDTO.getFirstname().length() < 3)
 			throw new TechnicalException("Lastname cannot be null!");
 	}
 
 	public void validatePhoneNumber(UserDTO userDTO) throws TechnicalException {
 		if (!(userDTO.getPhoneNumber().startsWith("+40") || userDTO.getPhoneNumber().startsWith("+49"))) {
-			throw new TechnicalException("Not a valid phone number");
+			throw new TechnicalException("Phone number is invalid!");
 		}
 
 	}
