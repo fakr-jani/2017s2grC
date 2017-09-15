@@ -28,6 +28,8 @@ public class LoginBean implements Serializable {
 
 	private UserDTO user = new UserDTO();
 
+	private Locale locale = new Locale("");
+
 	public UserDTO getUser() {
 		return user;
 	}
@@ -44,6 +46,10 @@ public class LoginBean implements Serializable {
 		System.err.println("something something event from " + event.getComponent().getClientId());
 	}
 
+	public void setLocaleLanguege(String locale) {
+		FacesContext.getCurrentInstance().getViewRoot().setLocale(new Locale(locale));
+	}
+
 	public String processLogin() {
 
 		if (userFacade.verifyLoggedInUser(user)) {
@@ -51,8 +57,6 @@ public class LoginBean implements Serializable {
 			userFacade.resetStatus(user);
 			HttpSession session = (HttpSession) getFacesContext().getExternalContext().getSession(false);
 			session.setAttribute("username", user.getUsername());
-			Locale locale = new Locale("");
-			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
 			FacesContext context = FacesContext.getCurrentInstance();
 			String message = context.getApplication().evaluateExpressionGet(context, "#{msg['login.title']}",
 					String.class);
