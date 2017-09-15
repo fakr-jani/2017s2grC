@@ -22,6 +22,7 @@ public class BugControlTest extends AbstractIntegrationTest {
 	@Test
 	public void updateBug_Success() throws TechnicalException {
 		BugDTO bug = new BugDTO();
+		bug.setId(1l);
 		bug.setTitleBug("BugTitle");
 		bug.setDescriptionBug(
 				"BugDescription********************************************************************************************************************************************************************************************************************************************");
@@ -39,7 +40,8 @@ public class BugControlTest extends AbstractIntegrationTest {
 		sut.createBug(bug);
 
 		BugDTO newBug = new BugDTO();
-		newBug.setTitleBug("BugTitle");
+		newBug.setId(1l);
+		newBug.setTitleBug("BugTitle1");
 		newBug.setDescriptionBug(
 				"BugDescriptionUPDATED*************************************************************************************************************************************************************************************************************************************");
 		newBug.setVersion("2.0.0");
@@ -54,14 +56,15 @@ public class BugControlTest extends AbstractIntegrationTest {
 
 		BugDTO bugPersisted = sut.updateBug(newBug);
 
-		Assert.assertEquals("Something happened.Update Bug Operation was not a success!", bug.getTitleBug(),
+		Assert.assertEquals("Something happened.Update Bug Operation was not a success!", "BugTitle1",
 				bugPersisted.getTitleBug());
 	}
 
 	@Test(expected = TechnicalException.class)
-	public void updateBug_FindBugByTitle_Fail() throws TechnicalException {
+	public void updateBug_FindBugById_Fail() throws TechnicalException {
 		BugDTO newBug = new BugDTO();
-		newBug.setTitleBug("BugTitle2");
+		newBug.setId(4l);
+		newBug.setTitleBug("BugTitle4");
 		newBug.setDescriptionBug(
 				"BugDescriptionUPDATED*************************************************************************************************************************************************************************************************************************************");
 		newBug.setVersion("2.0.0");
@@ -73,25 +76,6 @@ public class BugControlTest extends AbstractIntegrationTest {
 		newBug.setTargetDate(date1);
 		newBug.setSeverity(BugSeverityType.HIGH);
 		newBug.setStatus(BugStatusType.IN_PROGRESS);
-
-		sut.updateBug(newBug);
-	}
-
-	@Test(expected = TechnicalException.class)
-	public void updateBug_ValidateStatus_Fail() throws TechnicalException {
-		BugDTO newBug = new BugDTO();
-		newBug.setTitleBug("BugTitle");
-		newBug.setDescriptionBug(
-				"BugDescriptionUPDATED*************************************************************************************************************************************************************************************************************************************");
-		newBug.setVersion("2.0.0");
-		Calendar calendar1 = Calendar.getInstance();
-		calendar1.set(Calendar.YEAR, 2017);
-		calendar1.set(Calendar.MONTH, 12);
-		calendar1.set(Calendar.DAY_OF_MONTH, 12);
-		Date date1 = calendar1.getTime();
-		newBug.setTargetDate(date1);
-		newBug.setSeverity(BugSeverityType.HIGH);
-		newBug.setStatus(BugStatusType.CLOSED);
 
 		sut.updateBug(newBug);
 	}

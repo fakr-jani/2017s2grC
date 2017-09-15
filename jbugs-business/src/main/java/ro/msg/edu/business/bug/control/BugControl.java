@@ -1,13 +1,8 @@
 package ro.msg.edu.business.bug.control;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -31,36 +26,13 @@ public class BugControl {
 	@EJB
 	BugValidator bugValidator;
 
-	Map<String, List<String>> statusDiagram;
-
-	@PostConstruct
-	public void init() {
-		statusDiagram = new HashMap<>();
-		statusDiagram.put("OPEN", new ArrayList<>(Arrays.asList("REJECTED", "IN_PROGRESS")));
-		statusDiagram.put("IN_PROGRESS", new ArrayList<>(Arrays.asList("REJECTED", "INFO_NEEDED", "FIXED")));
-		statusDiagram.put("INFO_NEEDED", new ArrayList<>(Arrays.asList("IN_PROGRESS")));
-		statusDiagram.put("REJECTED", new ArrayList<>(Arrays.asList("CLOSED")));
-		statusDiagram.put("FIXED", new ArrayList<>(Arrays.asList("OPEN", "CLOSED")));
-	}
-
-	public void validateStatus(BugDTO bugDTO) throws TechnicalException {
-		Bug entity = bugDAO.findBugByTitle(bugDTO.getTitleBug());
-
-		String currentBugStatus = entity.getStatus().getStatusType();
-		List<String> possibleTransitionsFromCurrentStatus = statusDiagram.get(currentBugStatus);
-		if (possibleTransitionsFromCurrentStatus == null)
-			throw new TechnicalException("The status you provided is not a valid one!");
-
-		String newBugStatus = bugDTO.getStatus().getStatusType();
-		if (!possibleTransitionsFromCurrentStatus.contains(newBugStatus))
-			throw new TechnicalException("You cannot go from " + currentBugStatus + "to " + newBugStatus);
-	}
-
 	public BugDTO updateBug(BugDTO bugDTO) throws TechnicalException {
 		bugValidator.validateBugData(bugDTO);
-		this.validateStatus(bugDTO);
 
-		Bug entity = bugDAO.findBugByTitle(bugDTO.getTitleBug());
+		Bug entity = bugDAO.findEntity(bugDTO.getId());
+		if (entity == null)
+			throw new TechnicalException("The bug does not exists!");
+
 		entity.setTitleBug(bugDTO.getTitleBug());
 		entity.setDescriptionBug(bugDTO.getDescriptionBug());
 		entity.setVersion(bugDTO.getVersion());
@@ -74,7 +46,6 @@ public class BugControl {
 	}
 
 	public BugDTO createBug(BugDTO bug) throws TechnicalException {
-
 		bugValidator.validateBugData(bug);
 
 		Bug bugEntity = new Bug();
@@ -89,7 +60,6 @@ public class BugControl {
 	}
 
 	public List<BugDTO> findAllBugs() {
-
 		List<Bug> bugEnitites = bugDAO.findAllBugs();
 
 		List<BugDTO> bugDTOs = bugEnitites.stream().map(e -> bugDTOMapper.mapToDTO(e)).collect(Collectors.toList());
