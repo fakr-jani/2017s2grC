@@ -18,7 +18,11 @@
 			<p:dataTable var="bug" value="#{bugFilter.bugs}" id="bugsTable"
 				widgetVar="bugsTable" filteredValue="#{bugFilter.filteredBugs}"
 				emptyMessage="No bugs found with given criteria"
-				selectionMode="single" selection="#{bugFilter.selectedBug}" rowKey="#{bug.titleBug}">
+				selectionMode="single" selection="#{bugFilter.selectedBug}" rowKey="#{bug.titleBug}"
+				paginator="true"
+                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rows="25"
+				>
 			
 				<p:column filterBy="#{bug.titleBug}" id="title"
 					filterMatchMode="contains">
