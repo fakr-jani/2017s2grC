@@ -62,10 +62,8 @@
 							<p:outputLabel value="#{msg['state']}" />
 							<br />
 						</f:facet>
-						<h:outputText value="#{msg['active']}" rendered="#{user.active}">
-						</h:outputText>
-						<h:outputText value="#{msg['inactive']}" rendered="#{!user.active}">
-						</h:outputText>
+						<h:outputText value="#{msg['active']}" rendered="#{user.active}"/>
+						<h:outputText value="#{msg['inactive']}" rendered="#{!user.active}"/>
 					</p:column>
 					
 					<p:column>

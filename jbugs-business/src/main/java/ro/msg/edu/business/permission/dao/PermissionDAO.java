@@ -14,7 +14,6 @@ public class PermissionDAO extends AbstractDao<Permission> {
 
 	@Override
 	public Class<Permission> getEntityClass() {
-		// TODO Auto-generated method stub
 		return Permission.class;
 	}
 
