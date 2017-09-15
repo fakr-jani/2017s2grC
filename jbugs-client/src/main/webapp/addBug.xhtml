@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title><h:outputText value="#{msg['login.title']}" /></title>
+	<h:outputStylesheet library="css" name="addUserStyle.css" />
+</h:head>
+<h:body>
+	<f:view>
+
+		<div>
+
+			<h1 style="text-align: center; font-weight: bold; font-size: 60">Add
+				bugs</h1>
+			<ui:include src="menu.xhtml" />
+			<br /> <br />
+			<h:form id="addBug">
+				<p:outputLabel value="#{msg['bugtitle']}" />
+				<p:outputLabel value="#{bug.titleBug}" />
+				<p:inputText value="#{bugBean.newBug.titleBug}" required="true" />
+
+				<br />
+				<br />
+				<p:outputLabel value="#{msg['descriptionBug']}" />
+				<p:inputText value="#{bugBean.newBug.descriptionBug}"
+					required="true" />
+				<p:outputLabel value="#{bug.descriptionBug}" />
+
+				<br />
+				<br />
+				<p:outputLabel value="#{msg['version']}" />
+				<p:inputText value="#{bugBean.newBug.version}" required="true">
+					<f:validator validatorId="versionValidator" />
+				</p:inputText>
+				<p:outputLabel value="#{bug.version}" />
+
+				<br />
+				<br />
+				<p:outputLabel value="#{msg['versionFixed']}" />
+				<p:inputText value="#{bugBean.newBug.versionFixed}">
+
+				</p:inputText>
+
+				<p:outputLabel for="popup" value="#{msg['popup']}" />
+				<p:calendar id="popup" value="#{bugBean.date2}" />
+
+				<br />
+				<br />
+				<p:outputLabel value="#{msg['severity.label']}" />
+				<p:selectOneMenu id="bugSeverity" value="bugBean.selectedSeverity">
+					<f:selectItems value="#{bugBean.severityList}" var="severity"
+						itemValue="#{severity}" />
+				</p:selectOneMenu>
+
+				<br />
+				<br />
+
+				<p:commandButton value="#{msg['create.button']}"
+					action="#{bugBean.createNewBug}">
+				</p:commandButton>
+
+			</h:form>
+		</div>
+	</f:view>
+
+</h:body>
+</html>

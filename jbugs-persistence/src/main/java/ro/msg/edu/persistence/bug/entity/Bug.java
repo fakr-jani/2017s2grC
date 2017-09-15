@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
@@ -22,13 +23,13 @@ import ro.msg.edu.persistence.common.entity.AbstractEntity;
 import ro.msg.edu.persistence.notification.entity.Notification;
 import ro.msg.edu.persistence.user.entity.User;
 
+@NamedQuery(name = Bug.FIND_BUG_BY_TITLE, query = "SELECT u from Bug u WHERE u.titleBug = :title")
 @Entity
 public class Bug extends AbstractEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+
+	public static final String FIND_BUG_BY_TITLE = "Bug.findBugByTitle";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

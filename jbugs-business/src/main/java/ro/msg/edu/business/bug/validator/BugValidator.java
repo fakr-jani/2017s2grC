@@ -9,8 +9,10 @@ import javax.ejb.Stateless;
 import ro.msg.edu.business.bug.dao.BugDAO;
 import ro.msg.edu.business.bug.dto.BugDTO;
 import ro.msg.edu.business.common.exception.TechnicalException;
+import ro.msg.edu.persistence.bug.entity.Bug;
 
 /**
+ * Validator for Bug component.
  * 
  * @author Alex Noja
  * 
@@ -29,10 +31,12 @@ public class BugValidator {
 		validateVersion(bugDTO);
 		validateSeverity(bugDTO);
 	}
-	
+
 	public void validateTitle(BugDTO bugDTO) throws TechnicalException {
-		if (bugDTO.getTitleBug() == null)
-			throw new TechnicalException("Title cannot be null!");
+		Bug existingBugWithSameTitle = bugDAO.findBugByTitle(bugDTO.getTitleBug());
+		if (existingBugWithSameTitle != null && existingBugWithSameTitle.getId() != bugDTO.getId()) {
+			throw new TechnicalException("Bug already exists with given title " + bugDTO.getTitleBug());
+		}
 	}
 
 	public void validateDescription(BugDTO bugDTO) throws TechnicalException {
@@ -45,12 +49,10 @@ public class BugValidator {
 			throw new TechnicalException("Invalid bug version!");
 
 	}
-	
+
 	public void validateSeverity(BugDTO bugDTO) throws TechnicalException {
 		if (bugDTO.getSeverity() == null)
 			throw new TechnicalException("Severity cannot be null!");
 	}
-
-
 
 }

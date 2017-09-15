@@ -16,6 +16,7 @@ import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
 import ro.msg.edu.persistence.user.entity.User;
 
 /**
+ * Controller for Bug component.
  * 
  * @author Alex Noja
  * 
