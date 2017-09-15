@@ -27,7 +27,7 @@
 				<p:menuitem value="#{msg['menu.home']}" url="menu.xhtml"
 					icon="ui-icon-home" />
 
-				<p:submenu label="Users" icon="ui-icon-person">
+				<p:submenu label="#{msg['menu.users']}" icon="ui-icon-person">
 					<p:menuitem value="#{msg['menu.adduser']}" url="addUser.xhtml"
 						icon="ui-icon-disk" />
 					<p:menuitem value="#{msg['menu.edituser']}" url="editUsers.xhtml"
@@ -36,7 +36,7 @@
 						url="deleteUser.xhtml" icon="ui-icon-close" />
 				</p:submenu>
 
-				<p:submenu label="Permissions" icon="ui-icon-check">
+				<p:submenu label="#{msg['menu.permissions']}" icon="ui-icon-check">
 					<p:menuitem value="#{msg['menu.addpermissions']}"
 						url="addPermission.xhtml" icon="ui-icon-disk" />
 					<p:menuitem value="#{msg['menu.removepermissions']}"
