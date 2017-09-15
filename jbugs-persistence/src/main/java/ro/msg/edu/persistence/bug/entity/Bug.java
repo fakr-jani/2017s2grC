@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
@@ -22,6 +24,8 @@ import ro.msg.edu.persistence.common.entity.AbstractEntity;
 import ro.msg.edu.persistence.notification.entity.Notification;
 import ro.msg.edu.persistence.user.entity.User;
 
+@NamedQueries({ @NamedQuery(name = Bug.FIND_BUG_BY_TITLE, query = "SELECT b from Bug b WHERE b.titleBug = :title"),
+		@NamedQuery(name = Bug.FIND_ALL_BUGS, query = "SELECT b from Bug b") })
 @Entity
 public class Bug extends AbstractEntity {
 
@@ -29,6 +33,10 @@ public class Bug extends AbstractEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+	public static final String FIND_BUG_BY_TITLE = "Bug.findBugByTitle";
+
+	public static final String FIND_ALL_BUGS = "Bug.findAllBugs";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,12 +62,10 @@ public class Bug extends AbstractEntity {
 	@Column
 	private Date targetDate;
 
-	@NotNull
-	@Column
 	@Enumerated(EnumType.STRING)
+	@Column
 	private BugSeverityType severity;
 
-	@NotNull
 	@ManyToOne
 	private User createdBy;
 
