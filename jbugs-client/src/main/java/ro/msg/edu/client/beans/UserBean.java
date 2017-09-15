@@ -3,7 +3,6 @@ package ro.msg.edu.client.beans;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -54,7 +53,7 @@ public class UserBean extends AbstractBean {
 	public String createNewUser() {
 		try {
 			UserDTO userCreated = userFacade.createUser(newUser, selectedRoles);
-			addMessage(userCreated.getUsername() + getMessageFromProperty("#{msg['user.added']}"));
+			addMessage(userCreated.getUsername() + " " + getMessageFromProperty("#{msg['user.added']}"));
 		} catch (JBugsException e) {
 			handleExceptioni18n(e);
 		}
@@ -65,12 +64,7 @@ public class UserBean extends AbstractBean {
 		try {
 
 			userFacade.deleteUser(user);
-<<<<<<< HEAD
-			addMessage(user.getUsername() + getMessageFromProperty("#{msg['user.deleted']}"));
-=======
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage("User " + user.getUsername() + " has been deactivated!"));
->>>>>>> Id8: Edit user
+			addMessage(user.getUsername() + " " + getMessageFromProperty("#{msg['user.deleted']}"));
 		} catch (TechnicalException e) {
 			addMessage(e.getMessage());
 		}
@@ -79,12 +73,7 @@ public class UserBean extends AbstractBean {
 
 	public String activateUser(UserDTO user) {
 		userFacade.activateUser(user);
-<<<<<<< HEAD
-		addMessage(user.getUsername() + getMessageFromProperty("#{msg['user.activated']}"));
-=======
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage("User " + user.getUsername() + " has been activated!"));
->>>>>>> Id8: Edit user
+		addMessage(user.getUsername() + " " + getMessageFromProperty("#{msg['user.activated']}"));
 		return "editUsers";
 	}
 
@@ -110,18 +99,10 @@ public class UserBean extends AbstractBean {
 	public String updateUser() {
 		try {
 			userFacade.updateUser(selectedUser);
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage("User " + selectedUser.getUsername() + " has been updated!"));
+			addMessage(selectedUser.getUsername() + " " + getMessageFromProperty("#{msg['user.updated']}"));
 		} catch (TechnicalException e) {
-<<<<<<< HEAD
-			e.printStackTrace();
+			addMessage(e.getMessage());
 		}
-		addMessage(selectedUser.getUsername() + getMessageFromProperty("#{msg['user.edited']}"));
-
-=======
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
-		}
->>>>>>> Id8: Edit user
 		return "editUsers";
 	}
 

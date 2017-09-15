@@ -13,10 +13,6 @@ public class PhoneNumberValidator implements Validator {
 	@Override
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 		String stringValue = value.toString();
-<<<<<<< HEAD
-=======
-
->>>>>>> Id8: Edit user
 		if (stringValue.length() < 10 && stringValue.length() > 15 && !(stringValue.startsWith("+49"))
 				&& !(stringValue.startsWith("+40"))) {
 			String phoneValidationMessage = context.getApplication().evaluateExpressionGet(context,

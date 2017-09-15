@@ -17,9 +17,9 @@ public class UserValidator {
 	private UserDAO userDAO;
 
 	public void validateUserData(UserDTO userDTO) throws TechnicalException {
-		validateEmail(userDTO);
 		validateFirstName(userDTO);
 		validateLastName(userDTO);
+		validateEmail(userDTO);
 		validatePhoneNumber(userDTO);
 	}
 
@@ -34,12 +34,12 @@ public class UserValidator {
 	}
 
 	public void validateFirstName(UserDTO userDTO) throws TechnicalException {
-		if (userDTO.getFirstname() == null || userDTO.getFirstname().length() < 3)
+		if (userDTO.getFirstname() == null)
 			throw new TechnicalException("Firstname cannot be null!");
 	}
 
 	public void validateLastName(UserDTO userDTO) throws TechnicalException {
-		if (userDTO.getLastname() == null || userDTO.getFirstname().length() < 3)
+		if (userDTO.getLastname() == null)
 			throw new TechnicalException("Lastname cannot be null!");
 	}
 

@@ -16,6 +16,6 @@ public class RoleDTO extends AbstractDTO {
 
 	@Override
 	public String toString() {
-		return roleName + "";
+		return roleName.toString();
 	}
 }
