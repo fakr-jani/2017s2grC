@@ -53,7 +53,6 @@ public class UserDAO extends AbstractDao<User> {
 		query.setParameter("password", password);
 		List<User> userList = query.getResultList();
 		return userList.isEmpty() == false;
-
 	}
 
 	public List<User> getAllUser() {

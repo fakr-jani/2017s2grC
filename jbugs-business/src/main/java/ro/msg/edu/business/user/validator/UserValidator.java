@@ -17,9 +17,9 @@ public class UserValidator {
 	private UserDAO userDAO;
 
 	public void validateUserData(UserDTO userDTO) throws TechnicalException {
-		validateEmail(userDTO);
 		validateFirstName(userDTO);
 		validateLastName(userDTO);
+		validateEmail(userDTO);
 		validatePhoneNumber(userDTO);
 	}
 
@@ -45,7 +45,7 @@ public class UserValidator {
 
 	public void validatePhoneNumber(UserDTO userDTO) throws TechnicalException {
 		if (!(userDTO.getPhoneNumber().startsWith("+40") || userDTO.getPhoneNumber().startsWith("+49"))) {
-			throw new TechnicalException("Not a valid phone number");
+			throw new TechnicalException("Phone number is invalid!");
 		}
 
 	}

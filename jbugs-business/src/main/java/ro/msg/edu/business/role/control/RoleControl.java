@@ -54,7 +54,6 @@ public class RoleControl {
 
 	public List<String> viewPermissions(String selectedRole) {
 		Role role = roleDAO.getRoleByName(getRoleType(selectedRole));
-
 		List<Permission> permissionList = role.getPermissions();
 		List<String> permissionTypeList = new ArrayList<>();
 		for (Permission permission : permissionList) {

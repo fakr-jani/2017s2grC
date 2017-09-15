@@ -13,8 +13,7 @@
 <h:body>
 	<f:view contentType="text/html">
 		<div>
-			<h1 style="text-align: center; font-weight: bold; font-size: 60">Edit
-				users</h1>
+			<h1><p:outputLabel value="#{msg['edit.user']}" /></h1>
 			<ui:include src="menu.xhtml" />
 			<br /> <br />
 			<h:form id="userForm">
@@ -23,17 +22,17 @@
 						<f:facet name="header">
 							<p:outputLabel value="#{msg['firstname']}" />
 							<br />
-							<h:inputText value="#{userBean.newUser.firstname}"/>
 						</f:facet>
 						<h:outputText value="#{user.firstname}"/>
+						<h:inputText value="#{userBean.selectedUser.firstname}" rendered="#{userBean.verifyEditRendered(user)}"/>
 					</p:column>
 					<p:column>
 						<f:facet name="header">
 							<p:outputLabel value="#{msg['lastname']}" />
 							<br />
-							<h:inputText value="#{userBean.newUser.lastname}"/>
 						</f:facet>
 						<h:outputText value="#{user.lastname}"/>
+						<h:inputText value="#{userBean.selectedUser.lastname}" rendered="#{userBean.verifyEditRendered(user)}"/>
 					</p:column>
 					<p:column>
 						<f:facet name="header">
@@ -46,27 +45,25 @@
 						<f:facet name="header">
 							<p:outputLabel value="#{msg['email']}" />
 							<br />
-							<h:inputText value="#{userBean.newUser.email}"/>
 						</f:facet>
 						<h:outputText value="#{user.email}"/>
+						<h:inputText value="#{userBean.selectedUser.email}" rendered="#{userBean.verifyEditRendered(user)}"/>
 					</p:column>
 					<p:column>
 						<f:facet name="header">
 							<p:outputLabel value="#{msg['phoneNumber']}" />
 							<br />
-							<h:inputText value="#{userBean.newUser.phoneNumber}"/>
 						</f:facet>
 						<h:outputText value="#{user.phoneNumber}"/>
+						<h:inputText value="#{userBean.selectedUser.phoneNumber}" rendered="#{userBean.verifyEditRendered(user)}"/>
 					</p:column>
 					<p:column>
 						<f:facet name="header">
 							<p:outputLabel value="#{msg['state']}" />
 							<br />
 						</f:facet>
-						<h:outputText value="#{msg['active']}" rendered="#{user.active}">
-						</h:outputText>
-						<h:outputText value="#{msg['inactive']}" rendered="#{!user.active}">
-						</h:outputText>
+						<h:outputText value="#{msg['active']}" rendered="#{user.active}"/>
+						<h:outputText value="#{msg['inactive']}" rendered="#{!user.active}"/>
 					</p:column>
 					
 					<p:column>
@@ -80,15 +77,15 @@
 
 						<h:commandButton value="#{msg['edit.button']}"
 							action="#{userBean.enterUpdateMode(user)}"
-							rendered="#{!userBean.verifyUserRendered(user)}"/>
+							rendered="#{!userBean.verifyEditRendered(user)}"/>
 
 						<h:commandButton value="#{msg['leave']}"
 							action="#{userBean.leaveUpdateMode}"
-							rendered="#{userBean.verifyUserRendered(user)}"/>
+							rendered="#{userBean.verifyEditRendered(user)}"/>
 
-						<h:commandButton value="#{msg['update']}"
+						<h:commandButton value="#{msg['update.button']}"
 							action="#{userBean.updateUser}"
-							rendered="#{userBean.verifyUserRendered(user)}"/>
+							rendered="#{userBean.verifyEditRendered(user)}"/>
 					</p:column>
 				</p:dataTable>
 			</h:form>

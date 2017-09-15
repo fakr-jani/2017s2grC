@@ -4,8 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<title><h:outputText value="#{msg['homepage.title']}" /></title>
@@ -14,26 +13,46 @@
 <h:body>
 	<f:view>
 		<h:form id="menuForm">
-				<p:messages autoUpdate="true" />
-				<p:menubar>
-					<p:menuitem value="#{msg['menu.home']}" url="menu.xhtml"/>
-					
-					<p:submenu label="Users"  >
-							<p:menuitem value="#{msg['menu.adduser']}" url="addUser.xhtml" />
-							<p:menuitem value="#{msg['menu.edituser']}" url="editUsers.xhtml" />
-							<p:menuitem value="#{msg['menu.deleteuser']}" url="deleteUser.xhtml" />
-					</p:submenu>
-					
-					<p:submenu label="Permissions" >
-							<p:menuitem value="#{msg['menu.addpermissions']}" url="addPermission.xhtml" />
-							<p:menuitem value="#{msg['menu.removepermissions']}" url="removePermission.xhtml" />
-					</p:submenu>
+			<p:messages autoUpdate="true" />
 
-					<f:facet name="options">
-						<h:commandButton id="logout" value="#{msg['general.logout']}"
-				 action="#{loginBean.processLogout}" />
-					</f:facet>
-				</p:menubar>
+			<h:commandLink action="#{loginBean.setLocaleLanguege('ro')}" >
+				<h:graphicImage library="images" name="ro.svg"
+					 styleClass="flag" alt="Romanian"></h:graphicImage>
+			</h:commandLink>
+			<h:commandLink action="#{loginBean.setLocaleLanguege('en')}">
+				<h:graphicImage library="images" name="us.svg" styleClass="flag" alt="English"></h:graphicImage>
+			</h:commandLink>
+			
+			<p:menubar>
+				<p:menuitem value="#{msg['menu.home']}" url="menu.xhtml"
+					icon="ui-icon-home" />
+
+				<p:submenu label="#{msg['menu.users']}" icon="ui-icon-person">
+					<p:menuitem value="#{msg['menu.adduser']}" url="addUser.xhtml"
+						icon="ui-icon-disk" />
+					<p:menuitem value="#{msg['menu.edituser']}" url="editUsers.xhtml"
+						icon="ui-icon-pencil" />
+					<p:menuitem value="#{msg['menu.deleteuser']}"
+						url="deleteUser.xhtml" icon="ui-icon-close" />
+				</p:submenu>
+
+				<p:submenu label="#{msg['menu.permissions']}" icon="ui-icon-check">
+					<p:menuitem value="#{msg['menu.addpermissions']}"
+						url="addPermission.xhtml" icon="ui-icon-disk" />
+					<p:menuitem value="#{msg['menu.removepermissions']}"
+						url="removePermission.xhtml" icon="ui-icon-close" />
+				</p:submenu>
+				
+				<p:submenu label="#{msg['menu.bug']}" >
+					<p:menuitem value="#{msg['add.bug']}"
+						url="addBug.xhtml" />
+				</p:submenu>
+
+				<f:facet name="options">
+					<h:commandButton id="logout" value="#{msg['general.logout']}"
+						action="#{loginBean.processLogout}" />
+				</f:facet>
+			</p:menubar>
 		</h:form>
 	</f:view>
 </h:body>
