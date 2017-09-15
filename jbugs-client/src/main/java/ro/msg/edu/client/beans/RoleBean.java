@@ -29,6 +29,9 @@ public class RoleBean implements Serializable {
 	private String[] selectedPermission;
 
 	private List<String> permissionTypeList;
+	
+	private static final String addPermission="addPermission";
+	private static final String removePermission="removePermission";
 
 	public void addPermissions() {
 		roleFacade.addPermissions(selectedRole, selectedPermission);
@@ -37,13 +40,13 @@ public class RoleBean implements Serializable {
 	public String addPermissionPageReturn() {
 		addPermissions();
 		printMessage();
-		return "addPermission";
+		return addPermission;
 	}
 
 	public String removePermissionPageReturn() {
 		addPermissions();
 		printMessage();
-		return "removePermission";
+		return removePermission;
 	}
 
 	public void printMessage() {

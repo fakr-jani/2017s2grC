@@ -29,6 +29,8 @@ public class LoginBean implements Serializable {
 	private UserDTO user = new UserDTO();
 
 	private final static int MAX_NUMBER_OF_TRIES = 5;
+	private final static String menu="menu";
+	private final static String login="login";
 
 	public UserDTO getUser() {
 		return user;
@@ -63,7 +65,7 @@ public class LoginBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(message + " " + user.getUsername() + "!"));
 
-			return "menu";
+			return menu;
 		} else
 
 		{
@@ -80,7 +82,7 @@ public class LoginBean implements Serializable {
 			String message = context.getApplication().evaluateExpressionGet(context,
 					"#{msg['login.error1']}" + counter + " #{msg['login.error2']}", String.class);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
-			return "login";
+			return login;
 		}
 
 	}
@@ -92,7 +94,7 @@ public class LoginBean implements Serializable {
 	public String processLogout() {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		session.invalidate();
-		return "login";
+		return login;
 	}
 
 }
