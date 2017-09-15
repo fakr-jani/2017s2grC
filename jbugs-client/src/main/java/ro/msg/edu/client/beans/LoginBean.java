@@ -28,6 +28,8 @@ public class LoginBean implements Serializable {
 
 	private UserDTO user = new UserDTO();
 
+	private final static int MAX_NUMBER_OF_TRIES = 5;
+
 	public UserDTO getUser() {
 		return user;
 	}
@@ -46,6 +48,7 @@ public class LoginBean implements Serializable {
 
 	public String processLogin() {
 
+		FacesContext context = getFacesContext();
 		if (userFacade.verifyLoggedInUser(user)) {
 
 			userFacade.resetStatus(user);
@@ -53,7 +56,6 @@ public class LoginBean implements Serializable {
 			session.setAttribute("username", user.getUsername());
 			Locale locale = new Locale("");
 			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
-			FacesContext context = FacesContext.getCurrentInstance();
 			String message = context.getApplication().evaluateExpressionGet(context, "#{msg['login.title']}",
 					String.class);
 			FacesContext.getCurrentInstance().addMessage(null,
@@ -65,13 +67,17 @@ public class LoginBean implements Serializable {
 		{
 
 			UserDTO userUpdated = userFacade.setStatus(user);
-			if (userUpdated.getCounter() > 4) {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("User deactivated"));
+			if (userUpdated.getCounter() > MAX_NUMBER_OF_TRIES) {
+				String messageLocked = context.getApplication().evaluateExpressionGet(context,
+						"#{msg['login.deactivated']}", String.class);
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(messageLocked));
 
 			}
 
-			FacesContext.getCurrentInstance().addMessage("loginForm:username",
-					new FacesMessage("Password or Username wrong!"));
+			int counter = MAX_NUMBER_OF_TRIES - userUpdated.getCounter();
+			String message = context.getApplication().evaluateExpressionGet(context,
+					"#{msg['login.error1']}" + counter + " #{msg['login.error2']}", String.class);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
 			return "login";
 		}
 

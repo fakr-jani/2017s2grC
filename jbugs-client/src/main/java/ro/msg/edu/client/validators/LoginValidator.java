@@ -11,12 +11,13 @@ import javax.faces.validator.ValidatorException;
 public class LoginValidator implements Validator {
 
 	@Override
-	public void validate(FacesContext arg0, UIComponent arg1, Object arg2) throws ValidatorException {
+	public void validate(FacesContext context, UIComponent arg1, Object arg2) throws ValidatorException {
 
 		String stringValue = arg2.toString();
-
 		if (stringValue.length() != 6) {
-			FacesMessage message = new FacesMessage("Username must have 6 characters");
+			String username = context.getApplication().evaluateExpressionGet(context, "#{msg['validator.username']}",
+					String.class);
+			FacesMessage message = new FacesMessage(username);
 			throw new ValidatorException(message);
 		}
 
