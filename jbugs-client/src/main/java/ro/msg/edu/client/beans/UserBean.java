@@ -29,6 +29,10 @@ public class UserBean extends AbstractBean {
 	private UserDTO selectedUser = new UserDTO();
 
 	private String[] selectedRoles;
+	
+	private static final String editUsers="editUsers";
+	private static final String deleteUser="deleteUser";
+	private static final String addUser="addUser";
 
 	public UserDTO getSelectedUser() {
 		return selectedUser;
@@ -57,35 +61,34 @@ public class UserBean extends AbstractBean {
 		} catch (JBugsException e) {
 			handleExceptioni18n(e);
 		}
-		return "addUser";
+		return addUser;
 	}
 
 	public String deleteUser(UserDTO user) {
 		try {
-
 			userFacade.deleteUser(user);
 			addMessage(user.getUsername() + " " + getMessageFromProperty("#{msg['user.deleted']}"));
 		} catch (TechnicalException e) {
 			addMessage(e.getMessage());
 		}
-		return "deleteUser";
+		return deleteUser;
 	}
 
 	public String activateUser(UserDTO user) {
 		userFacade.activateUser(user);
 		addMessage(user.getUsername() + " " + getMessageFromProperty("#{msg['user.activated']}"));
-		return "editUsers";
+		return editUsers;
 	}
 
 	public String enterUpdateMode(UserDTO user) {
 		this.selectedUser = user;
-		return "editUsers";
+		return editUsers;
 	}
 
 	public String leaveUpdateMode() {
 
 		selectedUser = new UserDTO();
-		return "editUsers";
+		return editUsers;
 	}
 
 	public boolean verifyUserRendered(UserDTO user) {
@@ -103,7 +106,7 @@ public class UserBean extends AbstractBean {
 		} catch (TechnicalException e) {
 			addMessage(e.getMessage());
 		}
-		return "editUsers";
+		return editUsers;
 	}
 
 	public String[] getSelectedRoles() {

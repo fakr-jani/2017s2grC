@@ -42,6 +42,11 @@
 					<p:menuitem value="#{msg['menu.removepermissions']}"
 						url="removePermission.xhtml" icon="ui-icon-close" />
 				</p:submenu>
+				
+				<p:submenu label="#{msg['menu.bug']}" >
+					<p:menuitem value="#{msg['add.bug']}"
+						url="addBug.xhtml" />
+				</p:submenu>
 
 				<f:facet name="options">
 					<h:commandButton id="logout" value="#{msg['general.logout']}"
