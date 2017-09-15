@@ -47,8 +47,9 @@ public class RoleBean implements Serializable {
 	}
 
 	/**
-	 * permissionTypeList - contains the permissions of the selectedRole
-	 * selectedPermission - array we pass the checkbox
+	 * set permissions for a roles checked alls permissionTypeList - contains
+	 * the permissions of the selectedRole selectedPermission - array we pass
+	 * the checkbox
 	 */
 	public void getViewPermissions() {
 		int i = 0;
