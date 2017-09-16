@@ -8,11 +8,17 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.event.CellEditEvent;
 
 import ro.msg.edu.business.bug.boundary.BugFacade;
 import ro.msg.edu.business.bug.dto.BugDTO;
+import ro.msg.edu.persistence.bug.entity.enums.BugSeverityType;
+import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
 
 @ManagedBean
 @ViewScoped
@@ -48,6 +54,27 @@ public class BugBean extends AbstractBean {
 
 	public List<BugDTO> getAllBugs() {
 		return bugFacade.findAllBugs();
+	}
+
+	public List<BugStatusType> getAllBugStatusTypes() {
+		return new ArrayList<>(Arrays.asList(BugStatusType.class.getEnumConstants()));
+	}
+
+	public List<BugSeverityType> getAllBugSeverityTypes() {
+		return new ArrayList<>(Arrays.asList(BugSeverityType.class.getEnumConstants()));
+	}
+
+	public void onCellEdit(CellEditEvent event) {
+		Object oldValue = event.getOldValue();
+		Object newValue = event.getNewValue();
+
+		System.out.println(event.getRowIndex());
+
+		if (newValue != null && !newValue.equals(oldValue)) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed",
+					"Old: " + oldValue + ", New:" + newValue);
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
 	}
 
 }

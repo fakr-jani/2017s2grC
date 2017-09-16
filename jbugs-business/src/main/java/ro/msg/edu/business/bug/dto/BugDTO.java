@@ -1,21 +1,14 @@
 package ro.msg.edu.business.bug.dto;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import ro.msg.edu.business.common.dto.AbstractDTO;
 import ro.msg.edu.persistence.bug.entity.Attachment;
-import ro.msg.edu.persistence.bug.entity.Bug;
 import ro.msg.edu.persistence.bug.entity.enums.BugSeverityType;
 import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
 import ro.msg.edu.persistence.user.entity.User;
 
-/**
- * DTO for {@link Bug} entity.
- * 
- * @author Alex Noja
- *
- */
 public class BugDTO extends AbstractDTO {
 
 	private String titleBug;
