@@ -29,6 +29,9 @@ public class RoleBean implements Serializable {
 	private String[] selectedPermission;
 
 	private List<String> permissionTypeList;
+	
+	private static final String addPermission="addPermission";
+	private static final String removePermission="removePermission";
 
 	public void addPermissions() {
 		roleFacade.addPermissions(selectedRole, selectedPermission);
@@ -36,14 +39,22 @@ public class RoleBean implements Serializable {
 
 	public String addPermissionPageReturn() {
 		addPermissions();
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Permission was added!"));
-		return "addPermission";
+		printMessage();
+		return addPermission;
 	}
 
 	public String removePermissionPageReturn() {
 		addPermissions();
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Permission was remove!"));
-		return "removePermission";
+		printMessage();
+		return removePermission;
+	}
+
+	public void printMessage() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String message = context.getApplication().evaluateExpressionGet(context, "#{msg['permission.update']}",
+				String.class);
+		context.addMessage(null, new FacesMessage(message));
+
 	}
 
 	/**

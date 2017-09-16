@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ro.msg.edu.business.bug.boundary;
 
 import java.util.List;

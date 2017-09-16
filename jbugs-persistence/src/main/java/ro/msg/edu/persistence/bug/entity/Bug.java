@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -62,9 +63,10 @@ public class Bug extends AbstractEntity {
 	@Column
 	private Date targetDate;
 
-	@Enumerated(EnumType.STRING)
 	@Column
+	@Enumerated(EnumType.STRING)
 	private BugSeverityType severity;
+
 
 	@ManyToOne
 	private User createdBy;

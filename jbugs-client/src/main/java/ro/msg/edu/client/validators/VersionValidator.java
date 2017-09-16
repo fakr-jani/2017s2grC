@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package ro.msg.edu.client.validators;
 
 import javax.faces.application.FacesMessage;
@@ -7,18 +10,24 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
-@FacesValidator("emailValidator")
-public class EmailValidator implements Validator {
+/**
+ * 
+ * @author Alex Noja
+ * 
+ */
+@FacesValidator("versionValidator")
+public class VersionValidator implements Validator {
+
+	public static final String VALID_BUG_VERSION_REGEX = "^[a-zA-Z0-9]{2,100}[.]{1}[a-zA-Z0-9]{1,100}$";
 
 	@Override
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 		String stringValue = value.toString();
-		if (!(stringValue.endsWith("@msggroup.com"))) {
-			String emailValidationMessage = context.getApplication().evaluateExpressionGet(context,
-					"#{msg['validator.email]}", String.class);
-			FacesMessage message = new FacesMessage(emailValidationMessage);
+		if (!stringValue.matches(VALID_BUG_VERSION_REGEX)) {
+			FacesMessage message = new FacesMessage("Not a valid bug version!");
 			throw new ValidatorException(message);
-
 		}
+
 	}
+
 }

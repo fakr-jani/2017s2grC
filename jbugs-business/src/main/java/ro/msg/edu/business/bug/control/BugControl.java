@@ -1,8 +1,10 @@
+/**
+ * 
+ */
 package ro.msg.edu.business.bug.control;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -11,17 +13,25 @@ import ro.msg.edu.business.bug.dto.BugDTO;
 import ro.msg.edu.business.bug.dto.mapper.BugDTOMapper;
 import ro.msg.edu.business.bug.validator.BugValidator;
 import ro.msg.edu.business.common.exception.TechnicalException;
+import ro.msg.edu.business.user.dao.UserDAO;
 import ro.msg.edu.persistence.bug.entity.Bug;
 import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
+import ro.msg.edu.persistence.user.entity.User;
 
+/**
+ * Controller for Bug component.
+ * 
+ * @author Alex Noja
+ * 
+ */
 @Stateless
 public class BugControl {
 
 	@EJB
-	BugDAO bugDAO;
+	private BugDTOMapper bugDTOMapper;
 
 	@EJB
-	BugDTOMapper bugDTOMapper;
+	private BugDAO bugDAO;
 
 	@EJB
 	BugValidator bugValidator;
@@ -46,8 +56,9 @@ public class BugControl {
 	}
 
 	public BugDTO createBug(BugDTO bug) throws TechnicalException {
-		bugValidator.validateBugData(bug);
 
+		bugValidator.validateBugData(bug);
+		
 		Bug bugEntity = new Bug();
 		bugDTOMapper.mapToEntity(bug, bugEntity);
 

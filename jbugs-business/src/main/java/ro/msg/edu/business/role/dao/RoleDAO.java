@@ -22,9 +22,9 @@ public class RoleDAO extends AbstractDao<Role> {
 		return query.getResultList();
 	}
 
-	public List<Role> getRoleByName(RoleType roleName) {
+	public Role getRoleByName(RoleType roleName) {
 		Query query = em.createQuery("Select r from Role r where  r.roleName = :roleName");
 		query.setParameter("roleName", roleName);
-		return query.getResultList();
+		return (Role) query.getSingleResult();
 	}
 }
