@@ -13,17 +13,13 @@ public class InvalidFormatException extends JBugsException {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static final String MESSAGE_KEY = "exception.technical";
-
-
 	public InvalidFormatException(String message) {
-		super(MESSAGE_KEY);
+		super(message);
 
 	}
 
-
 	public InvalidFormatException(String message, Throwable cause) {
-		super(MESSAGE_KEY, cause);
+		super(message, cause);
 
 	}
 
