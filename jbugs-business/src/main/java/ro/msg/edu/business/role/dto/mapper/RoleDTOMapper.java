@@ -7,7 +7,7 @@ import ro.msg.edu.business.role.dto.RoleDTO;
 import ro.msg.edu.persistence.user.entity.Role;
 
 @Stateless
-public class RoleDTOMApper extends AbstractDTOMapper<Role, RoleDTO> {
+public class RoleDTOMapper extends AbstractDTOMapper<Role, RoleDTO> {
 
 	@Override
 	public RoleDTO getDTOInstance() {

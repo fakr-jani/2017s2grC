@@ -67,7 +67,7 @@ public class UserDAO extends AbstractDao<User> {
 		List<Bug> bugList = query.getResultList();
 		for (Bug b : bugList) {
 
-			if (!(b.getStatus() == BugStatusType.CLOSED)) {
+			if (!(b.getStatus().equals(BugStatusType.CLOSED))) {
 				return true;
 			}
 		}

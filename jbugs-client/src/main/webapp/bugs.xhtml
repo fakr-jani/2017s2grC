@@ -14,7 +14,8 @@
 <h:body>
 	<f:view contentType="text/html">
 		<h:form id="bugsForm">
-
+			<h1><p:outputLabel value="#{msg['view.bug']}" /></h1>
+			<ui:include src="menu.xhtml" />
 			<p:dataTable var="bug" value="#{bugFilter.bugs}" id="bugsTable"
 				widgetVar="bugsTable" filteredValue="#{bugFilter.filteredBugs}"
 				emptyMessage="No bugs found with given criteria"
