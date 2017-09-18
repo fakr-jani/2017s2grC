@@ -1,21 +1,17 @@
 package ro.msg.edu.business.bug.dto;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ro.msg.edu.business.common.dto.AbstractDTO;
-import ro.msg.edu.persistence.bug.entity.Attachment;
-import ro.msg.edu.persistence.bug.entity.Bug;
+import ro.msg.edu.business.user.dto.UserDTO;
 import ro.msg.edu.persistence.bug.entity.enums.BugSeverityType;
 import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
-import ro.msg.edu.persistence.user.entity.User;
 
-/**
- * DTO for {@link Bug} entity.
- * 
- * @author Alex Noja
- *
- */
 public class BugDTO extends AbstractDTO {
 
 	private String titleBug;
@@ -30,13 +26,19 @@ public class BugDTO extends AbstractDTO {
 
 	private BugSeverityType severity;
 
-	private User createdBy;
+	private UserDTO createdBy;
 
 	private BugStatusType status;
 
-	private User assignedTo;
+	private UserDTO assignedTo;
 
-	private List<Attachment> attachments;
+	private List<AttachmentDTO> attachments;
+
+	private Map<BugStatusType, List<BugStatusType>> statusGraph;
+
+	public BugDTO() {
+		this.fillStatusGraph();
+	}
 
 	public String getTitleBug() {
 		return titleBug;
@@ -78,11 +80,11 @@ public class BugDTO extends AbstractDTO {
 		this.severity = severity;
 	}
 
-	public User getCreatedBy() {
+	public UserDTO getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(User createdBy) {
+	public void setCreatedBy(UserDTO createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -94,12 +96,20 @@ public class BugDTO extends AbstractDTO {
 		this.status = status;
 	}
 
-	public User getAssignedTo() {
+	public UserDTO getAssignedTo() {
 		return assignedTo;
 	}
 
-	public void setAssignedTo(User assignedTo) {
+	public void setAssignedTo(UserDTO assignedTo) {
 		this.assignedTo = assignedTo;
+	}
+
+	public List<AttachmentDTO> getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(List<AttachmentDTO> attachments) {
+		this.attachments = attachments;
 	}
 
 	public Date getTargetDate() {
@@ -110,12 +120,19 @@ public class BugDTO extends AbstractDTO {
 		this.targetDate = targetDate;
 	}
 
-	public List<Attachment> getAttachments() {
-		return attachments;
+	private void fillStatusGraph() {
+		statusGraph = new HashMap<>();
+		statusGraph.put(BugStatusType.OPEN,
+				new ArrayList<>(Arrays.asList(BugStatusType.REJECTED, BugStatusType.IN_PROGRESS)));
+		statusGraph.put(BugStatusType.IN_PROGRESS,
+				new ArrayList<>(Arrays.asList(BugStatusType.REJECTED, BugStatusType.INFO_NEEDED, BugStatusType.FIXED)));
+		statusGraph.put(BugStatusType.INFO_NEEDED, new ArrayList<>(Arrays.asList(BugStatusType.IN_PROGRESS)));
+		statusGraph.put(BugStatusType.REJECTED, new ArrayList<>(Arrays.asList(BugStatusType.CLOSED)));
+		statusGraph.put(BugStatusType.FIXED, new ArrayList<>(Arrays.asList(BugStatusType.OPEN, BugStatusType.CLOSED)));
 	}
 
-	public void setAttachments(List<Attachment> attachments) {
-		this.attachments = attachments;
+	public List<BugStatusType> getPossibleTransitionsFromCurrentBugStatus() {
+		return statusGraph.get(this.status);
 	}
 
 }

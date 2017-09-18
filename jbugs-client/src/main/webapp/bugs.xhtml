@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title><h:outputText value="#{msg['login.title']}" /></title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+<h:body>
+	<f:view contentType="text/html">
+		<h:form id="bugsForm">
+
+			<p:dataTable var="bug" value="#{bugFilter.bugs}" id="bugsTable"
+				widgetVar="bugsTable" filteredValue="#{bugFilter.filteredBugs}"
+				emptyMessage="No bugs found with given criteria"
+				selectionMode="single" selection="#{bugFilter.selectedBug}" rowKey="#{bug.titleBug}"
+				paginator="true"
+                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rows="25"
+				>
+			
+				<p:column filterBy="#{bug.titleBug}" id="title"
+					filterMatchMode="contains">
+					<f:facet name="header">
+						<p:outputLabel value="#{msg['bug.title']}" />
+						<br />
+					</f:facet>
+					<h:outputText value="#{bug.titleBug}" />
+				</p:column>
+
+				<p:column filterBy="#{bug.descriptionBug}" id="description"
+					filterMatchMode="contains">
+					<f:facet name="header">
+						<p:outputLabel value="#{msg['bug.description']}" />
+						<br />
+					</f:facet>
+					<h:outputText value="#{bug.descriptionBug}" />
+				</p:column>
+
+
+				<f:facet name="filter">
+					<p:selectOneMenu onchange="PF('bugsTable').filter()">
+						<f:selectItem itemLabel="Select One" itemValue="#{null}"
+							noSelectionOption="true" />
+						<f:selectItems value="#{bugFilter.status}" />
+					</p:selectOneMenu>
+					<br />
+				</f:facet>
+
+				<p:column filterBy="#{bug.status}" headerText="#{msg['bug.status']}">
+					<h:outputText value="#{bug.status}" />
+				</p:column>
+
+				<f:facet name="filter">
+					<p:selectOneMenu onchange="PF('bugsTable').filter()">
+						<f:selectItem itemLabel="Select One" itemValue="#{null}"
+							noSelectionOption="true" />
+						<f:selectItems value="#{bugFilter.severity}" />
+					</p:selectOneMenu>
+					<br />
+				</f:facet>
+
+				<p:column filterBy="#{bug.severity}"
+					headerText="#{msg['bug.severity']}">
+					<h:outputText value="#{bug.severity}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<p:outputLabel value="#{msg['bug.targetDate']}" />
+						<br />
+					</f:facet>
+					<h:outputText value="#{bug.targetDate}" />
+				</p:column>
+
+
+
+
+				<p:column filterBy="#{bug.version}" id="version"
+					filterMatchMode="contains">
+					<f:facet name="header">
+						<p:outputLabel value="#{msg['bug.version']}" />
+						<br />
+					</f:facet>
+					<h:outputText value="#{bug.version}" />
+				</p:column>
+
+				<p:column filterBy="#{bug.versionFixed}" id="versionFixed"
+					filterMatchMode="contains">
+					<f:facet name="header">
+						<p:outputLabel value="#{msg['bug.versionFixed']}" />
+						<br />
+					</f:facet>
+					<h:outputText value="#{bug.versionFixed}" />
+				</p:column>
+
+				<p:column filterBy="#{bug.assignedTo.username}" id="assignedTo"
+					filterMatchMode="contains">
+					<f:facet name="header">
+						<p:outputLabel value="#{msg['bug.assigned']}" />
+						<br />
+					</f:facet>
+					<h:outputText value="#{bug.assignedTo.username}" />
+				</p:column>
+
+				<p:column filterBy="#{bug.createdBy.username}" id="createdBy"
+					filterMatchMode="contains">
+					<f:facet name="header">
+						<p:outputLabel value="#{msg['bug.created']}" />
+						<br />
+					</f:facet>
+					<h:outputText value="#{bug.createdBy.username}" />
+				</p:column>
+			</p:dataTable>
+			<p:commandButton process="bugsTable" update=":bugsForm:bugDetail"
+				icon="ui-icon-search" value="View"
+				oncomplete="PF('bugDialog').show()" />
+
+
+
+			<p:dialog header="Bug Dialog" widgetVar="bugDialog" modal="true"
+				showEffect="fade" hideEffect="fade" resizable="false">
+				<p:outputPanel id="bugDetail" style="text-align:center;">
+					<p:panelGrid columns="2"
+						rendered="#{not empty bugFilter.selectedBug}"
+						columnClasses="label,value">
+						<f:facet name="header">
+						
+						</f:facet>
+						<p:outputLabel value="#{msg['bug.title']}" />
+						<h:outputText value="#{bugFilter.selectedBug.titleBug}" />
+
+						<p:outputLabel value="#{msg['bug.description']}" />
+						<h:outputText value="#{bugFilter.selectedBug.descriptionBug}" />
+
+						<p:outputLabel value="#{msg['bug.status']}" />
+						<h:outputText value="#{bugFilter.selectedBug.status}" />
+
+						<p:outputLabel value="#{msg['bug.severity']}" />
+						<h:outputText value="#{bugFilter.selectedBug.severity}" />
+
+						<p:outputLabel value="#{msg['bug.assigned']}" />
+						<h:outputText
+							value="#{bugFilter.selectedBug.assignedTo.username}" />
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+
+		</h:form>
+	</f:view>
+</h:body>
+</html>
+

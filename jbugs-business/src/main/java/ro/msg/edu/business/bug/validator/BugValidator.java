@@ -1,18 +1,25 @@
 
 package ro.msg.edu.business.bug.validator;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import ro.msg.edu.business.bug.dao.BugDAO;
 import ro.msg.edu.business.bug.dto.BugDTO;
 import ro.msg.edu.business.common.exception.TechnicalException;
+import ro.msg.edu.persistence.bug.entity.Bug;
 
 /**
+ * Validator for Bug component.
  * 
  * @author Alex Noja
  * 
  */
 @Stateless
 public class BugValidator {
+
+	@EJB
+	BugDAO bugDAO;
 
 	public static final String VALID_BUG_VERSION_REGEX = "^[a-zA-Z0-9]{2,100}[.]{1}[a-zA-Z0-9]{1,100}$";
 
@@ -24,8 +31,10 @@ public class BugValidator {
 	}
 
 	public void validateTitle(BugDTO bugDTO) throws TechnicalException {
-		if (bugDTO.getTitleBug() == null)
-			throw new TechnicalException("Title cannot be null!");
+		Bug existingBugWithSameTitle = bugDAO.findBugByTitle(bugDTO.getTitleBug());
+		if (existingBugWithSameTitle != null && existingBugWithSameTitle.getId() != bugDTO.getId()) {
+			throw new TechnicalException("Bug already exists with given title " + bugDTO.getTitleBug());
+		}
 	}
 
 	public void validateDescription(BugDTO bugDTO) throws TechnicalException {

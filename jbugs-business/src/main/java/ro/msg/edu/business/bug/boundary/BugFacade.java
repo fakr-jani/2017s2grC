@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ro.msg.edu.business.bug.boundary;
 
 import java.util.List;
@@ -31,5 +28,13 @@ public class BugFacade {
 
 	public BugDTO createBug(BugDTO bugDTO) throws TechnicalException {
 		return bugControl.createBug(bugDTO);
+	}
+
+	public BugDTO updateBugStatus(BugDTO bugDTO) throws TechnicalException {
+		return bugControl.updateBugStatus(bugDTO);
+	}
+
+	public BugDTO closeBug(BugDTO bugDTO) throws TechnicalException {
+		return bugControl.closeBug(bugDTO);
 	}
 }

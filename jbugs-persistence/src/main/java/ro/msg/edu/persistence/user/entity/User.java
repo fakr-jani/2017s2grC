@@ -2,6 +2,7 @@ package ro.msg.edu.persistence.user.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -76,10 +77,10 @@ public class User extends AbstractEntity {
 	@JoinTable(name = "User_Notification", joinColumns = @JoinColumn(name = "idUser"), inverseJoinColumns = @JoinColumn(name = "idNotification"))
 	private List<Notification> notifications;
 
-	@OneToMany(mappedBy = "assignedTo")
+	@OneToMany(mappedBy = "assignedTo", cascade = CascadeType.PERSIST)
 	private List<Bug> assignedBugs;
 
-	@OneToMany(mappedBy = "createdBy")
+	@OneToMany(mappedBy = "createdBy", cascade = CascadeType.PERSIST)
 	private List<Bug> createdBugs;
 
 	@OneToMany(mappedBy = "modifiedBy")

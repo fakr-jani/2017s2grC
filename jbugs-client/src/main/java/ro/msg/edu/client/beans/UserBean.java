@@ -1,3 +1,4 @@
+
 package ro.msg.edu.client.beans;
 
 import java.util.List;

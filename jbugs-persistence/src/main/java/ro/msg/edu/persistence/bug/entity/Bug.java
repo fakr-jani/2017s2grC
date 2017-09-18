@@ -3,6 +3,7 @@ package ro.msg.edu.persistence.bug.entity;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,9 +15,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import ro.msg.edu.persistence.bug.entity.enums.BugSeverityType;
 import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
@@ -47,7 +49,7 @@ public class Bug extends AbstractEntity {
 	private String titleBug;
 
 	@NotNull
-	@Size(min = 250)
+	// @Size(min = 250)
 	@Column
 	private String descriptionBug;
 
@@ -59,11 +61,12 @@ public class Bug extends AbstractEntity {
 	private String versionFixed;
 
 	@Future
+	@Temporal(TemporalType.DATE)
 	@Column
 	private Date targetDate;
 
-	@Enumerated(EnumType.STRING)
 	@Column
+	@Enumerated(EnumType.STRING)
 	private BugSeverityType severity;
 
 	@ManyToOne
@@ -76,7 +79,7 @@ public class Bug extends AbstractEntity {
 	@ManyToOne
 	private User assignedTo;
 
-	@OneToMany(mappedBy = "bug")
+	@OneToMany(mappedBy = "bug", cascade = CascadeType.PERSIST)
 	private List<Attachment> attachments;
 
 	@OneToMany(mappedBy = "bug")
