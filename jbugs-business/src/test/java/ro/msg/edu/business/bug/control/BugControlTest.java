@@ -1,7 +1,5 @@
 package ro.msg.edu.business.bug.control;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -21,72 +19,24 @@ public class BugControlTest extends AbstractIntegrationTest {
 	private BugControl sut;
 
 	@Test
-	public void updateBug_Success() throws TechnicalException, ParseException {
-		BugDTO bug = new BugDTO();
+	public void findAllBugs_Success() throws TechnicalException {
+		List<BugDTO> bugs = sut.findAllBugs();
 
-		bug.setTitleBug("BugTitle");
-		bug.setDescriptionBug(
-				"BugDescription********************************************************************************************************************************************************************************************************************************************");
-		bug.setVersion("1.0.0");
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date date = sdf.parse("21/12/2019");
-		bug.setTargetDate(date);
-		bug.setSeverity(BugSeverityType.LOW);
-		bug.setStatus(BugStatusType.OPEN);
-
-		sut.createBug(bug);
-
-		BugDTO newBug = new BugDTO();
-		newBug.setTitleBug("BugTitle1");
-		newBug.setDescriptionBug(
-				"BugDescriptionUPDATED*************************************************************************************************************************************************************************************************************************************");
-		newBug.setVersion("2.0.0");
-		Date date1 = sdf.parse("21/12/2019");
-		newBug.setTargetDate(date1);
-		newBug.setSeverity(BugSeverityType.HIGH);
-		newBug.setStatus(BugStatusType.IN_PROGRESS);
-
-		BugDTO bugPersisted = sut.updateBug(newBug);
-
-		Assert.assertEquals("Something happened.Update Bug Operation was not a success!", "BugTitle1",
-				bugPersisted.getTitleBug());
-	}
-
-	@Test(expected = TechnicalException.class)
-	public void updateBug_FindBugById_Fail() throws TechnicalException, ParseException {
-		BugDTO newBug = new BugDTO();
-		newBug.setId(4l);
-		newBug.setTitleBug("BugTitle4");
-		newBug.setDescriptionBug(
-				"BugDescriptionUPDATED*************************************************************************************************************************************************************************************************************************************");
-		newBug.setVersion("2.0.0");
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date date = sdf.parse("22/12/2019");
-		newBug.setTargetDate(date);
-		newBug.setSeverity(BugSeverityType.HIGH);
-		newBug.setStatus(BugStatusType.IN_PROGRESS);
-
-		sut.updateBug(newBug);
+		Assert.assertEquals(4, bugs.size());
 	}
 
 	@Test
-	public void findAllBugs_Success() throws TechnicalException, ParseException {
+	public void closeBug_Succes() throws TechnicalException {
+		Date date = new Date();
 		BugDTO bug = new BugDTO();
-		bug.setTitleBug("BugTitle3");
+		bug.setTitleBug("Bug3");
 		bug.setDescriptionBug(
 				"BugDescription********************************************************************************************************************************************************************************************************************************************");
 		bug.setVersion("1.0.0");
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date date = sdf.parse("21/12/2017");
-		bug.setTargetDate(date);
 		bug.setTargetDate(date);
 		bug.setSeverity(BugSeverityType.LOW);
-		bug.setStatus(BugStatusType.OPEN);
-
-		sut.createBug(bug);
-
-		List<BugDTO> bugs = sut.findAllBugs();
-		Assert.assertEquals("Where are my bugs?", 2, bugs.size());
+		bug.setStatus(BugStatusType.FIXED);
+		BugDTO bugDTO = sut.closeBug(bug);
+		Assert.assertEquals(bugDTO.getStatus().toString(), "CLOSED");
 	}
-
 }
