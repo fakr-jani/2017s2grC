@@ -59,6 +59,7 @@ public class BugControl {
 		persistedEntity.setVersionFixed(receivedDTOToEntity.getVersionFixed());
 		persistedEntity.setSeverity(receivedDTOToEntity.getSeverity());
 		persistedEntity.setStatus(receivedDTOToEntity.getStatus());
+		receivedDTOToEntity.getAssignedTo().setIdUser(bugDTO.getAssignedTo().getId());
 		persistedEntity.setAssignedTo(receivedDTOToEntity.getAssignedTo());
 		persistedEntity.setAttachments(receivedDTOToEntity.getAttachments());
 

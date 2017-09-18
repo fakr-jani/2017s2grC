@@ -3,6 +3,7 @@ package ro.msg.edu.business.user.control;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -111,11 +112,7 @@ public class UserCRUDControl {
 
 	public List<UserDTO> findAllUser() {
 		List<User> users = userDAO.getAllUser();
-		List<UserDTO> usersDTO = new ArrayList<UserDTO>();
-		for (User u : users) {
-			usersDTO.add(userDTOMapper.mapToDTO(u));
-		}
-		return usersDTO;
+		return users.stream().map(u -> userDTOMapper.mapToDTO(u)).collect(Collectors.toList());
 	}
 
 	public String generateUsername(String firstname, String lastname) throws TechnicalException {

@@ -80,7 +80,7 @@ public class User extends AbstractEntity {
 	@OneToMany(mappedBy = "assignedTo", cascade = CascadeType.PERSIST)
 	private List<Bug> assignedBugs;
 
-	@OneToMany(mappedBy = "createdBy", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "createdBy")
 	private List<Bug> createdBugs;
 
 	@OneToMany(mappedBy = "modifiedBy")
@@ -202,6 +202,14 @@ public class User extends AbstractEntity {
 	@Override
 	public String toString() {
 		return "User [id=" + idUser + ", username=" + username + "]";
+	}
+
+	public Long getIdUser() {
+		return idUser;
+	}
+
+	public void setIdUser(Long idUser) {
+		this.idUser = idUser;
 	}
 
 }
