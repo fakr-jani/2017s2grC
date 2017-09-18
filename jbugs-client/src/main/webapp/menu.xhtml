@@ -29,7 +29,7 @@
 
 				<p:submenu label="#{msg['menu.users']}" icon="ui-icon-person">
 					<p:menuitem value="#{msg['menu.adduser']}" url="addUser.xhtml"
-						icon="ui-icon-disk" />
+						icon="ui-icon-plus" />
 					<p:menuitem value="#{msg['menu.edituser']}" url="editUsers.xhtml"
 						icon="ui-icon-pencil" />
 					<p:menuitem value="#{msg['menu.deleteuser']}"
@@ -38,20 +38,20 @@
 
 				<p:submenu label="#{msg['menu.permissions']}" icon="ui-icon-check">
 					<p:menuitem value="#{msg['menu.addpermissions']}"
-						url="addPermission.xhtml" icon="ui-icon-disk" />
+						url="addPermission.xhtml" icon="ui-icon-plus" />
 					<p:menuitem value="#{msg['menu.removepermissions']}"
 						url="removePermission.xhtml" icon="ui-icon-close" />
 				</p:submenu>
 				
 				<p:submenu label="#{msg['menu.bug']}" >
 					<p:menuitem value="#{msg['add.bug']}"
-						url="addBug.xhtml" />
-					<p:menuitem value="#{msg['view.bug']}"
-						url="bugs.xhtml" />
+						icon="ui-icon-plus" url="addBug.xhtml"/>
+						<p:menuitem value="#{msg['view.bug']}"
+						icon="ui-icon-info" url="bugs.xhtml" />
 					<p:menuitem value="#{msg['edit.bug']}"
-						url="editBugs.xhtml" />
+						icon="ui-icon-pencil" url="editBugs.xhtml" />
 					<p:menuitem value="#{msg['edit.bug.status']}"
-						url="editBugStatus.xhtml" />
+						icon="ui-icon-pencil" url="editBugStatus.xhtml" />
 				</p:submenu>
 
 				<f:facet name="options">

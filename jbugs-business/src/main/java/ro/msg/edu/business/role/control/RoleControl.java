@@ -11,7 +11,7 @@ import ro.msg.edu.business.permission.dao.PermissionDAO;
 import ro.msg.edu.business.permission.dto.mapper.PermissionDTOMapper;
 import ro.msg.edu.business.role.dao.RoleDAO;
 import ro.msg.edu.business.role.dto.RoleDTO;
-import ro.msg.edu.business.role.dto.mapper.RoleDTOMApper;
+import ro.msg.edu.business.role.dto.mapper.RoleDTOMapper;
 import ro.msg.edu.persistence.user.entity.Permission;
 import ro.msg.edu.persistence.user.entity.Role;
 import ro.msg.edu.persistence.user.entity.enums.PermissionType;
@@ -26,7 +26,7 @@ public class RoleControl {
 	private PermissionDAO permissionDAO;
 
 	@EJB
-	private RoleDTOMApper roleDTOMapper;
+	private RoleDTOMapper roleDTOMapper;
 
 	@EJB
 	private PermissionDTOMapper permissionDTOMapper;
