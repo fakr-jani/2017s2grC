@@ -5,11 +5,13 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import ro.msg.edu.business.common.dao.AbstractDao;
 import ro.msg.edu.business.common.exception.TechnicalException;
 import ro.msg.edu.persistence.bug.entity.Bug;
+import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
 
 /**
  * DAO for {@link Bug} entity.
@@ -46,6 +48,13 @@ public class BugDAO extends AbstractDao<Bug> {
 		List<Bug> bugs = query.getResultList();
 
 		return bugs;
+	}
+
+	public List<Bug> findAllFixedAndRejectedBugs() {
+		Query query = em.createQuery("SELECT b FROM Bug b WHERE b.status = :fixed OR b.status = :rejected");
+		query.setParameter("fixed", BugStatusType.FIXED);
+		query.setParameter("rejected", BugStatusType.REJECTED);
+		return query.getResultList();
 	}
 
 }
