@@ -79,7 +79,7 @@
 
 					<h:commandButton value="#{msg['delete.button']}" 
 						action="#{userBean.deleteUser(user)}"
-						rendered="#{!userBean.verifyUserRendered(user)}">
+						rendered="#{(!userBean.verifyUserRendered(user)) and (user.active)}">
 					</h:commandButton>
 
 				</p:column>
