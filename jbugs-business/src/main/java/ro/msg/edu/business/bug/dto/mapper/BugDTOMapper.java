@@ -1,10 +1,19 @@
 package ro.msg.edu.business.bug.dto.mapper;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import ro.msg.edu.business.bug.dto.AttachmentDTO;
 import ro.msg.edu.business.bug.dto.BugDTO;
 import ro.msg.edu.business.common.dto.mapper.AbstractDTOMapper;
+import ro.msg.edu.business.user.dto.UserDTO;
+import ro.msg.edu.business.user.dto.mapper.UserDTOMapper;
+import ro.msg.edu.persistence.bug.entity.Attachment;
 import ro.msg.edu.persistence.bug.entity.Bug;
+import ro.msg.edu.persistence.user.entity.User;
 
 /**
  * Mapper for {@link Bug} and {@link BugDTO}.
@@ -14,6 +23,12 @@ import ro.msg.edu.persistence.bug.entity.Bug;
  */
 @Stateless
 public class BugDTOMapper extends AbstractDTOMapper<Bug, BugDTO> {
+
+	@EJB
+	UserDTOMapper userDTOMapper;
+
+	@EJB
+	AttachmentDTOMapper attachmentDTOMapper;
 
 	@Override
 	public BugDTO getDTOInstance() {
@@ -27,9 +42,17 @@ public class BugDTOMapper extends AbstractDTOMapper<Bug, BugDTO> {
 		dto.setVersion(entity.getVersion());
 		dto.setVersionFixed(entity.getVersionFixed());
 		dto.setTargetDate(entity.getTargetDate());
-		dto.setCreatedBy(entity.getCreatedBy());
+		dto.setCreatedBy(userDTOMapper.mapToDTO(entity.getCreatedBy()));
 		dto.setStatus(entity.getStatus());
-		dto.setAssignedTo(entity.getAssignedTo());
+		dto.setSeverity(entity.getSeverity());
+		dto.setAssignedTo(userDTOMapper.mapToDTO(entity.getAssignedTo()));
+
+		List<Attachment> attachmentEntities = entity.getAttachments();
+		if (attachmentEntities != null) {
+			List<AttachmentDTO> attachmentDTOs = attachmentEntities.stream().map(e -> attachmentDTOMapper.mapToDTO(e))
+					.collect(Collectors.toList());
+			dto.setAttachments(attachmentDTOs);
+		}
 
 	}
 
@@ -40,9 +63,30 @@ public class BugDTOMapper extends AbstractDTOMapper<Bug, BugDTO> {
 		entity.setVersion(dto.getVersion());
 		entity.setVersionFixed(dto.getVersionFixed());
 		entity.setTargetDate(dto.getTargetDate());
-		entity.setCreatedBy(dto.getCreatedBy());
+
+		User createdByEntity = new User();
+		userDTOMapper.mapToEntity(dto.getCreatedBy(), createdByEntity);
+		entity.setCreatedBy(createdByEntity);
+
 		entity.setStatus(dto.getStatus());
-		entity.setAssignedTo(dto.getAssignedTo());
+		entity.setSeverity(dto.getSeverity());
+
+		UserDTO assignedToDTO = dto.getAssignedTo();
+		if (assignedToDTO != null) {
+			User assignedToEntity = new User();
+			userDTOMapper.mapToEntity(assignedToDTO, assignedToEntity);
+			entity.setAssignedTo(assignedToEntity);
+		}
+
+		List<AttachmentDTO> attachmentDTOs = dto.getAttachments();
+		if (attachmentDTOs != null) {
+			List<Attachment> attachmentEntities = attachmentDTOs.stream().map(attachmentDTO -> {
+				Attachment attachmentEntity = new Attachment();
+				attachmentDTOMapper.mapToEntity(attachmentDTO, attachmentEntity);
+				return attachmentEntity;
+			}).collect(Collectors.toList());
+			entity.setAttachments(attachmentEntities);
+		}
 
 	}
 

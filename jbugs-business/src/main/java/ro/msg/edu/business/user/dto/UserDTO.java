@@ -106,7 +106,9 @@ public class UserDTO extends AbstractDTO {
 
 	@Override
 	public String toString() {
-		return "UserDTO [id=" + getId() + ", username=" + username + "]";
+		return "UserDTO [firstname=" + firstname + ", lastname=" + lastname + ", email=" + email + ", username="
+				+ username + ", password=" + password + ", phoneNumber=" + phoneNumber + ", active=" + active
+				+ ", counter=" + counter + ", roles=" + roles + "]";
 	}
 
 }

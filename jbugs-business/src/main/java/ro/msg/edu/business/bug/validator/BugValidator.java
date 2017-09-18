@@ -1,8 +1,10 @@
 
 package ro.msg.edu.business.bug.validator;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import ro.msg.edu.business.bug.dao.BugDAO;
 import ro.msg.edu.business.bug.dto.BugDTO;
 import ro.msg.edu.business.common.exception.TechnicalException;
 import ro.msg.edu.persistence.bug.entity.Bug;
@@ -15,6 +17,9 @@ import ro.msg.edu.persistence.bug.entity.Bug;
  */
 @Stateless
 public class BugValidator {
+
+	@EJB
+	BugDAO bugDAO;
 
 	public static final String VALID_BUG_VERSION_REGEX = "^[a-zA-Z0-9]{2,100}[.]{1}[a-zA-Z0-9]{1,100}$";
 

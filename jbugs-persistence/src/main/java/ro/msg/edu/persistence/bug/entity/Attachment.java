@@ -5,8 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 
 import ro.msg.edu.persistence.common.entity.AbstractEntity;
 
@@ -21,10 +21,9 @@ public class Attachment extends AbstractEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idAttachment;
 
-	@NotNull
+	@Lob
 	@Column
-	private Long fileDescriptor;
-	//
+	private byte[] fileBytes;
 
 	@ManyToOne
 	private Bug bug;
@@ -38,12 +37,12 @@ public class Attachment extends AbstractEntity {
 		return serialVersionUID;
 	}
 
-	public Long getFileDescriptor() {
-		return fileDescriptor;
+	public byte[] getFileBytes() {
+		return fileBytes;
 	}
 
-	public void setFileDescriptor(Long fileDescriptor) {
-		this.fileDescriptor = fileDescriptor;
+	public void setFileBytes(byte[] fileBytes) {
+		this.fileBytes = fileBytes;
 	}
 
 	public Bug getBug() {
@@ -56,7 +55,7 @@ public class Attachment extends AbstractEntity {
 
 	@Override
 	public String toString() {
-		return "Attachment [idAttachment=" + idAttachment + ", fileDescriptor=" + fileDescriptor + "]";
+		return "Attachment [idAttachment=" + idAttachment + ", fileDescriptor=" + "]";
 	}
 
 }

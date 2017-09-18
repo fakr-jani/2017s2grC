@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title><h:outputText value="#{msg['login.title']}" /></title>
+	<h:outputStylesheet library="css" name="addUserStyle.css" />
+</h:head>
+<h:body>
+	<f:view contentType="text/html">
+		<div>
+			<h1><p:outputLabel value="#{msg['edit.bug']}" /></h1>
+			<ui:include src="menu.xhtml" />
+			<br /> <br />
+			
+			<h:form id="form">
+				<p:growl id="msgs" showDetail="true"/>
+				
+				<p:dataTable id="bugs" var="bug" value="#{bugBean.allBugs}">
+						<f:facet name="header">
+				           Edit Bugs
+				        </f:facet>
+				        
+				        
+				       <p:column headerText= "#{msg['bug.title']}">
+				       			<h:outputText value="#{bug.titleBug}"/>
+	               				<h:inputText value="#{bugBean.selectedBug.titleBug}" rendered="#{bugBean.verifyEditRendered(bug)}"  />
+				       </p:column>
+				       
+				       <p:column headerText="#{msg['bug.description']}">
+				       			<h:outputText value="#{bug.descriptionBug}" />
+	               				<h:inputText  value="#{bugBean.selectedBug.descriptionBug}" rendered="#{bugBean.verifyEditRendered(bug)}"  />
+				       </p:column>
+				       
+				       <p:column headerText="#{msg['bug.version']}">
+				       			<h:outputText value="#{bug.version}" />
+	               				<h:inputText value="#{bugBean.selectedBug.version}" rendered="#{bugBean.verifyEditRendered(bug)}"   />
+				       </p:column>
+				       
+				       <p:column headerText="#{msg['bug.versionFixed']}">
+				       			<h:outputText value="#{bug.versionFixed}" />
+	               				<h:inputText value="#{bugBean.selectedBug.versionFixed}" rendered="#{bugBean.verifyEditRendered(bug)}"   />
+				       </p:column>
+				       
+				       <p:column headerText="#{msg['bug.targetDate']}">
+				       		    <h:outputText value="#{bug.targetDate}" >
+				       		    		 <f:convertDateTime pattern="yyyy-MM-dd" />
+				       		    </h:outputText>
+				       		   
+				       			<p:calendar value="#{bugBean.selectedBug.targetDate}" pattern="yyyy-MM-dd" rendered="#{bugBean.verifyEditRendered(bug)}">
+				       				<p:ajax event="dateSelect" listener="#{bugBean.onDateSelect}" update="bugs" />
+				       			</p:calendar>
+				       </p:column>
+				       
+				       <p:column headerText="#{msg['bug.assigned']}">
+				       			 <h:outputText value="#{bug.assignedTo}" />
+				       			 <h:selectOneMenu value="#{bugBean.selectedBug.assignedTo}" rendered="#{bugBean.verifyEditRendered(bug)}">
+				                       <f:selectItems value="#{bugBean.allUsers}" var="u" itemLabel="#{u}" itemValue="#{u}" />
+				                 </h:selectOneMenu>
+				       </p:column>
+				       
+				       <p:column headerText="#{msg['bug.created']}">
+				       			<h:outputText value="#{bug.createdBy}" />
+				       </p:column>
+				       
+				       
+				      <p:column headerText="#{msg['bug.severity']}">
+				              	   <h:outputText value="#{bug.severity}" />
+				                   <h:selectOneMenu value="#{bugBean.selectedBug.severity}" rendered="#{bugBean.verifyEditRendered(bug)}">
+				                       <f:selectItems value="#{bugBean.allBugSeverityTypes}" var="sev" itemLabel="#{sev}" itemValue="#{sev}" />
+				                   </h:selectOneMenu>
+			       	  </p:column>
+			       	 
+			       	 
+			       	 <p:column headerText="#{msg['bug.status']}">
+			       	 			   <h:outputText value="#{bug.status}" />
+				                   <h:selectOneMenu value="#{bugBean.selectedBug.status}" rendered="#{bugBean.verifyEditRendered(bug)}">
+				                       <f:selectItems value="#{bug.possibleTransitionsFromCurrentBugStatus}" var="sts" itemLabel="#{sts}" itemValue="#{sts}" />
+				                   </h:selectOneMenu>
+			       	 </p:column>
+			       	 
+			       	 
+			       	  <p:column headerText="#{msg['bug.attachments']}">
+						       	<p:fileUpload fileUploadListener="#{bugBean.addUploadedFile}" mode="advanced" dragDropSupport="false" multiple="true"  sizeLimit="26214400" fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|doc|odf|xlsx|xls)$/" rendered="#{bugBean.verifyEditRendered(bug)}" />
+		         	  			<p:commandButton value="Remove" onclick="PF('removeAttachmentsDialog').show();" rendered="#{bugBean.verifyEditRendered(bug)}"></p:commandButton>
+		         	  </p:column>
+			       	 
+			       	 <p:column headerText="#{msg['action']}">
+							<h:commandButton value="#{msg['edit.button']}"
+								action="#{bugBean.enterUpdateMode(bug)}"
+								rendered="#{!bugBean.verifyEditRendered(bug)}"/>
+	
+							<h:commandButton value="#{msg['leave']}"
+								action="#{bugBean.leaveUpdateMode}"
+								rendered="#{bugBean.verifyEditRendered(bug)}"/>
+	
+							<h:commandButton value="#{msg['update.button']}"
+								action="#{bugBean.updateBug}"
+								rendered="#{bugBean.verifyEditRendered(bug)}"/>
+					</p:column>
+					
+					
+			       	 
+				</p:dataTable>
+				
+				<p:dialog header="Attachments removal" widgetVar="removeAttachmentsDialog" minHeight="40">
+					<p:dataList id="attachmentsList" value="#{bugBean.selectedBug.attachments}" var="a" type="ordered">
+						<h:outputText value="#{a}"></h:outputText>
+					    <p:commandButton icon="ui-icon-trash" action="bugBean.removeAttachment(a)"></p:commandButton>
+				    </p:dataList>
+				 </p:dialog>
+ 
+
+			</h:form>
+		</div>
+	</f:view>
+
+</h:body>
+</html>
