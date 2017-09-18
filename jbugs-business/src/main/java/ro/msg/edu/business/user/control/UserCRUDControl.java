@@ -123,7 +123,7 @@ public class UserCRUDControl {
 		int nrLastnameCharacters = calculateNrOfCharactersFromLastname(lastname);
 		int nrFirstnameCharacters = calculateNrOfCharactersFromFirstname(lastname, firstname);
 
-		while (nrLastnameCharacters > 0 && nrFirstnameCharacters < 6) {
+		while (nrLastnameCharacters > 0 && nrFirstnameCharacters < MAX_CHARACTERS_FOR_USERNAME) {
 			StringBuilder username = new StringBuilder();
 			username.append(lastname, 0, nrLastnameCharacters);
 			username.append(firstname, 0, nrFirstnameCharacters);
@@ -134,7 +134,7 @@ public class UserCRUDControl {
 			nrLastnameCharacters--;
 			nrFirstnameCharacters++;
 		}
-		throw new TechnicalException("");
+		throw new TechnicalException("Cannot generate username. Please insert your middle name or father initial");
 	}
 
 	private int calculateNrOfCharactersFromLastname(String lastname) {

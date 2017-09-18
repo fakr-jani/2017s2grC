@@ -22,6 +22,7 @@ public class BugValidator {
 	BugDAO bugDAO;
 
 	public static final String VALID_BUG_VERSION_REGEX = "^[a-zA-Z0-9]{2,100}[.]{1}[a-zA-Z0-9]{1,100}$";
+	public static final int MIN_CHARACTERS_DESCRIPTION = 250;
 
 	public void validateBugData(BugDTO bugDTO) throws TechnicalException {
 		validateTitle(bugDTO);
@@ -38,7 +39,7 @@ public class BugValidator {
 	}
 
 	public void validateDescription(BugDTO bugDTO) throws TechnicalException {
-		if (bugDTO.getDescriptionBug().length() < 250)
+		if (bugDTO.getDescriptionBug().length() < MIN_CHARACTERS_DESCRIPTION)
 			throw new TechnicalException("Description must have minimum 250 characters!");
 	}
 

@@ -42,10 +42,8 @@ public class BugDAO extends AbstractDao<Bug> {
 
 	public List<Bug> findAllBugs() {
 		TypedQuery<Bug> query = this.em.createNamedQuery(Bug.FIND_ALL_BUGS, Bug.class);
+		return query.getResultList();
 
-		List<Bug> bugs = query.getResultList();
-
-		return bugs;
 	}
 
 }
