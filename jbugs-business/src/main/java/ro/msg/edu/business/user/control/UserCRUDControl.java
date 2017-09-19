@@ -71,7 +71,7 @@ public class UserCRUDControl implements Serializable {
 
 	public UserDTO deleteUser(UserDTO userDTO) throws TechnicalException {
 		Optional<User> userOptional = userDAO.findUserByUsername(userDTO.getUsername());
-		if (isUserPresent(userOptional)) {
+		if (userOptional.isPresent()) {
 			User userEntity = userOptional.get();
 			if (!userDAO.hasActiveTasks(userEntity)) {
 				userEntity.setActive(false);
@@ -84,7 +84,7 @@ public class UserCRUDControl implements Serializable {
 
 	public UserDTO activateUser(UserDTO userDTO) throws TechnicalException {
 		Optional<User> userOptional = userDAO.findUserByUsername(userDTO.getUsername());
-		if (isUserPresent(userOptional)) {
+		if (userOptional.isPresent()) {
 			User userEntity = userOptional.get();
 			userEntity.setActive(true);
 			return userDTOMapper.mapToDTO(userEntity);
@@ -94,7 +94,7 @@ public class UserCRUDControl implements Serializable {
 
 	public UserDTO updateUser(UserDTO userToUpdate, List<String> updateRoles) throws TechnicalException {
 		Optional<User> userOptional = userDAO.findUserByUsername(userToUpdate.getUsername());
-		if (isUserPresent(userOptional)) {
+		if (userOptional.isPresent()) {
 			User entity = userOptional.get();
 			List<Role> roleList = new ArrayList<>();
 
@@ -116,7 +116,7 @@ public class UserCRUDControl implements Serializable {
 
 	public UserDTO findUserbyUsername(String username) {
 		Optional<User> entity = userDAO.findUserByUsername(username);
-		if (isUserPresent(entity)) {
+		if (entity.isPresent()) {
 			return userDTOMapper.mapToDTO(entity.get());
 		}
 		return null;
@@ -169,7 +169,7 @@ public class UserCRUDControl implements Serializable {
 
 	public boolean hasActiveTasks(UserDTO userDTO) {
 		Optional<User> userOptional = userDAO.findUserByUsername(userDTO.getUsername());
-		if (isUserPresent(userOptional)) {
+		if (userOptional.isPresent()) {
 			User entity = userOptional.get();
 			return userDAO.hasActiveTasks(entity);
 		} else
@@ -179,7 +179,7 @@ public class UserCRUDControl implements Serializable {
 	public UserDTO setStatus(UserDTO userDTO) {
 
 		Optional<User> entity = userDAO.findUserByUsername(userDTO.getUsername());
-		if (isUserPresent(entity)) {
+		if (entity.isPresent()) {
 			User userEntity = entity.get();
 			userEntity.setCounter(userEntity.getCounter() + 1);
 			if (userEntity.getCounter() > MAX_NUMBER_OF_TRIES) {
@@ -195,17 +195,13 @@ public class UserCRUDControl implements Serializable {
 	public UserDTO resetStatus(UserDTO userDTO) {
 
 		Optional<User> entity = userDAO.findUserByUsername(userDTO.getUsername());
-		if (isUserPresent(entity)) {
+		if (entity.isPresent()) {
 			User userEntity = entity.get();
 			userEntity.setCounter(0);
 			return userDTOMapper.mapToDTO(userEntity);
 		} else {
 			return userDTO;
 		}
-	}
-
-	private boolean isUserPresent(Optional<User> optionalUser) {
-		return optionalUser.isPresent();
 	}
 
 	public boolean hasPermission(String username, PermissionType permissionType) {
