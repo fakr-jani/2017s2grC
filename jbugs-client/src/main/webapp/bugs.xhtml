@@ -14,6 +14,7 @@
 <h:body>
 	<h1><p:outputLabel value="#{msg['view.bug']}" /></h1>
 	<ui:include src="menu.xhtml" />
+	<br /> <br />
 	<f:view contentType="text/html">
 		<h:form id="bugsForm" rendered="#{userBean.verifyPermissionRendered('BUG_MANAGEMENT')}">
 			<p:dataTable var="bug" value="#{bugFilter.bugs}" id="bugsTable"

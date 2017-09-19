@@ -86,7 +86,7 @@ public class BugBean extends AbstractBean {
 	public void removeAttachment(AttachmentDTO a) {
 		a.setBug(null);
 		this.selectedBug.getAttachments().remove(a);
-		return EDIT_BUGS;
+		addMessage(getMessageFromProperty("#{msg['file.deleted']}"));
 	}
 
 	public void onDateSelect(SelectEvent event) {
