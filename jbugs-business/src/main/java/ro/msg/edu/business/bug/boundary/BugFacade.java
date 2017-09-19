@@ -37,4 +37,8 @@ public class BugFacade {
 	public BugDTO closeBug(BugDTO bugDTO) throws TechnicalException {
 		return bugControl.closeBug(bugDTO);
 	}
+
+	public List<BugDTO> findRejectedAndFixedBugs() {
+		return bugControl.findAllFixedAndRejectedBugs();
+	}
 }

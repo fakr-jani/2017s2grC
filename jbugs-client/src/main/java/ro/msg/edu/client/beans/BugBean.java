@@ -113,4 +113,23 @@ public class BugBean extends AbstractBean {
 		return (selectedBug != null && bug.getId().equals(selectedBug.getId()));
 	}
 
+	public List<BugDTO> getFixedAndRejectedBugs() {
+		return bugFacade.findRejectedAndFixedBugs();
+	}
+
+	public String closeBug(BugDTO bugDTO) {
+		try {
+			bugFacade.closeBug(bugDTO);
+			addMessage(bugDTO.getTitleBug() + " " + getMessageFromProperty("#{msg['close.bug.status']}"));
+		} catch (TechnicalException e) {
+			addMessage(e.getMessage());
+		}
+		return "closeBug";
+	}
+
+	public String getMessageFromProperty(String messageProperty) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		return context.getApplication().evaluateExpressionGet(context, messageProperty, String.class);
+	}
+
 }
