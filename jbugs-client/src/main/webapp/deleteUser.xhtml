@@ -16,7 +16,7 @@
 		<ui:include src="menu.xhtml" />
 		<br/>
 		<br/>
-		<h:form id="deleteUser">
+		<h:form id="deleteUser" rendered="#{userBean.verifyPermissionRendered('USER_MANAGEMENT')}">
 
 			<p:dataTable value="#{userBean.allUsers}" var="user">
 				<f:facet name="header"></f:facet>

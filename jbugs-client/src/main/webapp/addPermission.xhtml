@@ -16,7 +16,7 @@
 		<ui:include src="menu.xhtml" />
 		<br />
 		<br />
-		<h:form>
+		<h:form rendered="#{userBean.verifyPermissionRendered('PERMISSION_MANAGEMENT')}">
 			<p:outputLabel value="#{msg['roles.label']}" />
 			<p:selectOneMenu value="#{roleBean.selectedRole}">
 				<f:selectItems value="#{roleBean.allRoles}" var="role"

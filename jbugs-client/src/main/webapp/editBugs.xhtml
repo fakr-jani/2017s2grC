@@ -18,7 +18,7 @@
 			<ui:include src="menu.xhtml" />
 			<br /> <br />
 			
-			<h:form id="form">
+			<h:form id="form" rendered="#{userBean.verifyPermissionRendered('BUG_MANAGEMENT')}">
 				<p:growl id="msgs" showDetail="true"/>
 				
 				<p:dataTable id="bugs" var="bug" value="#{bugBean.allBugs}">

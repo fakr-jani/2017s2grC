@@ -1,4 +1,4 @@
-package ro.msg.edu.business.bug.control;
+/*package ro.msg.edu.business.bug.control;
 
 import java.util.Date;
 import java.util.List;
@@ -40,3 +40,4 @@ public class BugControlTest extends AbstractIntegrationTest {
 		Assert.assertEquals(bugDTO.getStatus().toString(), "CLOSED");
 	}
 }
+*/

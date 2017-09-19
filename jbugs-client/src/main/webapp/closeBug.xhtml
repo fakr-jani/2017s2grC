@@ -17,7 +17,7 @@
 			</h1>
 			<ui:include src="menu.xhtml" />
 			<br /> <br />
-			<h:form id="bugForm">
+			<h:form id="bugForm" rendered="#{userBean.verifyPermissionRendered('BUG_CLOSE')}">
 				<p:dataTable value="#{bugBean.fixedAndRejectedBugs}" var="bugVar">
 					<p:column>
 						<f:facet name="header">

@@ -7,10 +7,12 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import ro.msg.edu.business.common.exception.TechnicalException;
 import ro.msg.edu.business.user.boundary.UserFacade;
 import ro.msg.edu.business.user.dto.UserDTO;
+import ro.msg.edu.persistence.user.entity.enums.PermissionType;
 
 @ManagedBean
 @SessionScoped
@@ -29,6 +31,8 @@ public class UserBean extends AbstractBean {
 	private UserDTO selectedUser = new UserDTO();
 
 	private String[] selectedRoles;
+
+	private List<String> updateRoles;
 
 	private static final String editUsers = "editUsers";
 	private static final String deleteUser = "deleteUser";
@@ -99,9 +103,15 @@ public class UserBean extends AbstractBean {
 		return (selectedUser != null && user.getId().equals(selectedUser.getId()));
 	}
 
+	public boolean verifyPermissionRendered(String permissionType) {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		String userName = (String) session.getAttribute("username");
+		return userFacade.hasPermission(userName, PermissionType.valueOf(permissionType));
+	}
+
 	public String updateUser() {
 		try {
-			userFacade.updateUser(selectedUser);
+			userFacade.updateUser(selectedUser, updateRoles);
 			addMessage(selectedUser.getUsername() + " " + getMessageFromProperty("#{msg['user.updated']}"));
 		} catch (TechnicalException e) {
 			addMessage(e.getMessage());
@@ -120,6 +130,14 @@ public class UserBean extends AbstractBean {
 	public String getMessageFromProperty(String messageProperty) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		return context.getApplication().evaluateExpressionGet(context, messageProperty, String.class);
+	}
+
+	public List<String> getUpdateRoles() {
+		return updateRoles;
+	}
+
+	public void setUpdateRoles(List<String> updateRoles) {
+		this.updateRoles = updateRoles;
 	}
 
 }

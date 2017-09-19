@@ -1,5 +1,6 @@
 package ro.msg.edu.business.bug.control;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,7 +22,7 @@ import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
  */
 @ManagedBean(name = "bugService")
 @ViewScoped
-public class BugService {
+public class BugService implements Serializable {
 
 	@EJB
 	private BugDAO bugDAO;

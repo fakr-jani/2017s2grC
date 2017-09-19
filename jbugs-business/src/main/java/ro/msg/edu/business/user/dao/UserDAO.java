@@ -73,7 +73,6 @@ public class UserDAO extends AbstractDao<User> {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
@@ -86,5 +85,4 @@ public class UserDAO extends AbstractDao<User> {
 		return permissionList.isEmpty() == false;
 
 	}
-
 }

@@ -11,6 +11,7 @@ import ro.msg.edu.business.common.exception.TechnicalException;
 import ro.msg.edu.business.user.control.UserCRUDControl;
 import ro.msg.edu.business.user.dto.UserDTO;
 import ro.msg.edu.business.user.dto.mapper.UserDTOMapper;
+import ro.msg.edu.persistence.user.entity.enums.PermissionType;
 
 /**
  * Boundary for user component.
@@ -42,8 +43,8 @@ public class UserFacade {
 
 	}
 
-	public UserDTO updateUser(UserDTO userDTO) throws TechnicalException {
-		return userCRUDControl.updateUser(userDTO);
+	public UserDTO updateUser(UserDTO userDTO, List<String> updateRoles) throws TechnicalException {
+		return userCRUDControl.updateUser(userDTO, updateRoles);
 	}
 
 	public UserDTO findUserbyUsername(String username) {
@@ -73,6 +74,10 @@ public class UserFacade {
 
 	public boolean hasActiveTasks(UserDTO userDTO) {
 		return userCRUDControl.hasActiveTasks(userDTO);
+	}
+
+	public boolean hasPermission(String username, PermissionType permissionType) {
+		return userCRUDControl.hasPermission(username, permissionType);
 	}
 
 }
