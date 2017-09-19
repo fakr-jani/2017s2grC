@@ -71,7 +71,7 @@ public class UserCRUDControl implements Serializable {
 
 	public UserDTO deleteUser(UserDTO userDTO) throws TechnicalException {
 		Optional<User> userOptional = userDAO.findUserByUsername(userDTO.getUsername());
-		if (isUserPresent(userOptional)) {
+		if (userOptional.isPresent()) {
 			User userEntity = userOptional.get();
 			if (!userDAO.hasActiveTasks(userEntity)) {
 				userEntity.setActive(false);
