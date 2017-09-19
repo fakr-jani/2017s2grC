@@ -9,6 +9,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import ro.msg.edu.business.common.exception.JBugsException;
 import ro.msg.edu.business.common.exception.TechnicalException;
 import ro.msg.edu.business.user.boundary.UserFacade;
 import ro.msg.edu.business.user.dto.UserDTO;
@@ -62,7 +63,7 @@ public class UserBean extends AbstractBean {
 		try {
 			UserDTO userCreated = userFacade.createUser(newUser, selectedRoles);
 			addMessage(userCreated.getUsername() + " " + getMessageFromProperty("#{msg['user.added']}"));
-		} catch (TechnicalException e) {
+		} catch (JBugsException e) {
 			addMessage(e.getMessage());
 		}
 		return addUser;
@@ -79,8 +80,13 @@ public class UserBean extends AbstractBean {
 	}
 
 	public String activateUser(UserDTO user) {
-		userFacade.activateUser(user);
-		addMessage(user.getUsername() + " " + getMessageFromProperty("#{msg['user.activated']}"));
+		try {
+			userFacade.activateUser(user);
+			addMessage(user.getUsername() + " " + getMessageFromProperty("#{msg['user.activated']}"));
+
+		} catch (JBugsException e) {
+			addMessage(e.getMessage());
+		}
 		return editUsers;
 	}
 

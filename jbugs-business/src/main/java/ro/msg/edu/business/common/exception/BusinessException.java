@@ -7,9 +7,6 @@ package ro.msg.edu.business.common.exception;
  */
 public class BusinessException extends JBugsException {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public BusinessException(String message) {

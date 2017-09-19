@@ -15,11 +15,11 @@ public class UserValidator {
 
 	@EJB
 	private UserDAO userDAO;
-	private final static String MATCHER_PHONE_GERMANY = "+49";
-	private final static String MATCHER_PHONE_ROMANIA = "+40";
-	private final static String MATCHER_EMAIL = "@msggroup.com";
-	private final static String REGEX = "^(\\+)[0-9]+";
-	private final static int MIN_NUMBER_CHARACTERS_FOR_NAME = 3;
+	private static final String MATCHER_PHONE_GERMANY = "+49";
+	private static final String MATCHER_PHONE_ROMANIA = "+40";
+	private static final String MATCHER_EMAIL = "@msggroup.com";
+	private static final String REGEX = "^(\\+)[0-9]+";
+	private static final int MIN_NUMBER_CHARACTERS_FOR_NAME = 3;
 
 	public void validateUserData(UserDTO userDTO) throws TechnicalException {
 		validateFirstName(userDTO);
@@ -32,7 +32,7 @@ public class UserValidator {
 		User existingUserWithSameEmail = userDAO.findUserByEmail(userDTO.getEmail());
 		if (existingUserWithSameEmail != null && existingUserWithSameEmail.getId() != userDTO.getId()) {
 			throw new TechnicalException("User already exists with given email " + userDTO.getEmail());
-		} else if (userDTO.getEmail().endsWith(MATCHER_EMAIL) == false) {
+		} else if (!userDTO.getEmail().endsWith(MATCHER_EMAIL)) {
 			throw new TechnicalException("Email does not have the standard format " + userDTO.getEmail());
 		}
 
@@ -61,10 +61,10 @@ public class UserValidator {
 
 	public boolean uniqueUsername(StringBuilder username) {
 		Optional<User> user = userDAO.findUserByUsername(username.toString());
-		if (user.get().getId() == null) {
+		if (user.isPresent() && user.get().getId() != null) {
 			return false;
+
 		} else
 			return true;
 	}
-
 }

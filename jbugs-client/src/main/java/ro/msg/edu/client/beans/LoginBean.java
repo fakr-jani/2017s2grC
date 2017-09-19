@@ -29,8 +29,8 @@ public class LoginBean implements Serializable {
 	private UserDTO user = new UserDTO();
 
 	private final static int MAX_NUMBER_OF_TRIES = 5;
-	private final static String MENU="menu";
-	private final static String LOGIN="login";
+	private final static String MENU = "menu";
+	private final static String LOGIN = "login";
 
 	public UserDTO getUser() {
 		return user;
@@ -69,7 +69,7 @@ public class LoginBean implements Serializable {
 		} else
 
 		{
-			FacesContext context = FacesContext.getCurrentInstance();
+			FacesContext context = getFacesContext();
 			UserDTO userUpdated = userFacade.setStatus(user);
 			if (userUpdated.getCounter() > MAX_NUMBER_OF_TRIES) {
 				String messageLocked = context.getApplication().evaluateExpressionGet(context,
