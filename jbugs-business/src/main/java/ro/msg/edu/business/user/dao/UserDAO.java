@@ -11,7 +11,9 @@ import ro.msg.edu.business.common.dao.AbstractDao;
 import ro.msg.edu.business.common.exception.TechnicalException;
 import ro.msg.edu.persistence.bug.entity.Bug;
 import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
+import ro.msg.edu.persistence.user.entity.Permission;
 import ro.msg.edu.persistence.user.entity.User;
+import ro.msg.edu.persistence.user.entity.enums.PermissionType;
 
 /**
  * DAO for {@link User} entity.
@@ -73,6 +75,16 @@ public class UserDAO extends AbstractDao<User> {
 		}
 
 		return false;
+	}
+
+	public boolean hasPermission(String username, PermissionType permissionType) {
+		Query query = em.createQuery(
+				"SELECT p.namePermission FROM User u INNER JOIN u.roles ur INNER JOIN ur.permissions p WHERE p.namePermission= :permission and u.username= :username");
+		query.setParameter("username", username);
+		query.setParameter("permission", permissionType);
+		List<Permission> permissionList = query.getResultList();
+		return permissionList.isEmpty() == false;
+
 	}
 
 }
