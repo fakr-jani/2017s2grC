@@ -14,6 +14,8 @@ import ro.msg.edu.persistence.user.entity.User;
  */
 public class UserDTO extends AbstractDTO {
 
+	private static final long serialVersionUID = 1L;
+
 	private String firstname;
 
 	private String lastname;
@@ -28,7 +30,7 @@ public class UserDTO extends AbstractDTO {
 
 	private boolean active;
 
-	private int counter;
+	private int numberOfTries;
 
 	private List<Role> roles;
 
@@ -96,19 +98,19 @@ public class UserDTO extends AbstractDTO {
 		this.roles = roles;
 	}
 
-	public int getCounter() {
-		return counter;
+	public int getNumberOfTries() {
+		return numberOfTries;
 	}
 
-	public void setCounter(int counter) {
-		this.counter = counter;
+	public void setNumberOfTries(int numberOfTries) {
+		this.numberOfTries = numberOfTries;
 	}
 
 	@Override
 	public String toString() {
 		return "UserDTO [firstname=" + firstname + ", lastname=" + lastname + ", email=" + email + ", username="
 				+ username + ", password=" + password + ", phoneNumber=" + phoneNumber + ", active=" + active
-				+ ", counter=" + counter + ", roles=" + roles + "]";
+				+ ", counter=" + numberOfTries + ", roles=" + roles + "]";
 	}
 
 }

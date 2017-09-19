@@ -15,6 +15,8 @@ import ro.msg.edu.persistence.user.entity.User;
 @Stateless
 public class UserDTOMapper extends AbstractDTOMapper<User, UserDTO> {
 
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public UserDTO getDTOInstance() {
 		return new UserDTO();
@@ -30,7 +32,7 @@ public class UserDTOMapper extends AbstractDTOMapper<User, UserDTO> {
 		dto.setUsername(entity.getUsername());
 		dto.setActive(entity.isActive());
 		dto.setRoles(entity.getRoles());
-		dto.setCounter(entity.getCounter());
+		dto.setNumberOfTries(entity.getNumberOfTries());
 	}
 
 	@Override
@@ -44,7 +46,7 @@ public class UserDTOMapper extends AbstractDTOMapper<User, UserDTO> {
 		entity.setUsername(dto.getUsername());
 		entity.setActive(dto.isActive());
 		entity.setRoles(dto.getRoles());
-		entity.setCounter(dto.getCounter());
+		entity.setNumberOfTries(dto.getNumberOfTries());
 	}
 
 }

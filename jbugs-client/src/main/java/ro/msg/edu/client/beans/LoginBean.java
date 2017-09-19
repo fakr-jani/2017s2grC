@@ -71,14 +71,14 @@ public class LoginBean implements Serializable {
 		{
 			FacesContext context = getFacesContext();
 			UserDTO userUpdated = userFacade.setStatus(user);
-			if (userUpdated.getCounter() > MAX_NUMBER_OF_TRIES) {
+			if (userUpdated.getNumberOfTries() > MAX_NUMBER_OF_TRIES) {
 				String messageLocked = context.getApplication().evaluateExpressionGet(context,
 						"#{msg['login.deactivated']}", String.class);
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(messageLocked));
 
 			}
 
-			int counter = MAX_NUMBER_OF_TRIES - userUpdated.getCounter();
+			int counter = MAX_NUMBER_OF_TRIES - userUpdated.getNumberOfTries();
 			String message = context.getApplication().evaluateExpressionGet(context,
 					"#{msg['login.error1']}" + counter + " #{msg['login.error2']}", String.class);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));

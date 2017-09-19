@@ -39,7 +39,7 @@ public class BugBean extends AbstractBean {
 	@EJB
 	private UserFacade userFacade;
 
-	private BugDTO selectedBug = new BugDTO();;
+	private BugDTO selectedBug = new BugDTO();
 
 	private static final String editBugs = "editBugs";
 

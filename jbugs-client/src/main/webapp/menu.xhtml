@@ -59,6 +59,9 @@
 					<p:menuitem value="#{msg['close.bug.button']}" icon="ui-icon-close"
 						url="closeBug.xhtml" rendered="#{userBean.verifyPermissionRendered('BUG_CLOSE')}"/>
 				</p:submenu>
+				<p:submenu label="#{msg['menu.notifications']}">
+				<p:menuitem value="#{msg['notification.view']}" url="notifications.xhtml"></p:menuitem>
+				</p:submenu>
 
 				<f:facet name="options">
 					<h:commandButton id="logout" value="#{msg['general.logout']}"
