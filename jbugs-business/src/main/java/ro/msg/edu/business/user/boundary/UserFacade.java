@@ -47,6 +47,7 @@ public class UserFacade implements Serializable {
 
 	public UserDTO updateUser(UserDTO userDTO, List<String> updateRoles) throws TechnicalException {
 		return userCRUDControl.updateUser(userDTO, updateRoles);
+
 	}
 
 	public UserDTO findUserbyUsername(String username) {

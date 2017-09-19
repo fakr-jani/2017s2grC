@@ -109,7 +109,6 @@ public class UserCRUDControl {
 			return userDTOMapper.mapToDTO(entity);
 		} else
 			throw new TechnicalException("User not found!");
-
 	}
 
 	public UserDTO findUserbyUsername(String username) {
