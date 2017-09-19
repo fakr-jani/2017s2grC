@@ -16,6 +16,8 @@ import ro.msg.edu.business.bug.dto.mapper.AttachmentDTOMapper;
 import ro.msg.edu.business.bug.dto.mapper.BugDTOMapper;
 import ro.msg.edu.business.bug.validator.BugValidator;
 import ro.msg.edu.business.common.exception.TechnicalException;
+import ro.msg.edu.business.user.control.UserCRUDControl;
+import ro.msg.edu.business.user.dao.UserDAO;
 import ro.msg.edu.business.user.dto.mapper.UserDTOMapper;
 import ro.msg.edu.persistence.bug.entity.Bug;
 import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
@@ -43,6 +45,9 @@ public class BugControl implements Serializable{
 
 	@EJB
 	BugValidator bugValidator;
+
+	@EJB
+	UserDAO userDAO;
 
 	public BugDTO updateBug(BugDTO bugDTO) throws TechnicalException {
 
@@ -81,6 +86,8 @@ public class BugControl implements Serializable{
 
 	public BugDTO createBug(BugDTO bug) throws TechnicalException {
 		bugValidator.validateBugData(bug);
+
+		userDAO.findUserByUsername(bug.getAssignedTo().getUsername());
 
 		Bug bugEntity = new Bug();
 		bugDTOMapper.mapToEntity(bug, bugEntity);

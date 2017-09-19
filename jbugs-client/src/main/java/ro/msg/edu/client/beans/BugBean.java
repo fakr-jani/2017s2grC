@@ -1,19 +1,25 @@
 package ro.msg.edu.client.beans;
 
+
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.event.FileUploadEvent;
 
 import ro.msg.edu.business.bug.boundary.BugFacade;
 import ro.msg.edu.business.bug.dto.AttachmentDTO;
 import ro.msg.edu.business.bug.dto.BugDTO;
+import ro.msg.edu.business.common.exception.JBugsException;
 import ro.msg.edu.business.common.exception.TechnicalException;
 import ro.msg.edu.business.user.boundary.UserFacade;
 import ro.msg.edu.business.user.dto.UserDTO;
@@ -28,16 +34,33 @@ public class BugBean extends AbstractBean {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+	String userName = (String) session.getAttribute("username");
+	UserDTO user = new UserDTO();
+
+	List<BugSeverityType> severityList = Arrays.asList(BugSeverityType.values());
+
 	@EJB
 	private BugFacade bugFacade;
+
+	private BugDTO newBug = new BugDTO();
+
+	private String userAssigned;
 
 	@EJB
 	private UserFacade userFacade;
 
 	private BugDTO selectedBug = new BugDTO();
-
+	
+	private static final String ADD_BUG ="addBug";
 	private static final String EDIT_BUGS = "editBugs";
 	private static final String CLOSE_BUG="closeBug";
+
+	private Date date2;
+
+	private String selectedSeverity;
+
+	
 
 	public List<BugDTO> getAllBugs() {
 		return bugFacade.findAllBugs();
@@ -82,7 +105,6 @@ public class BugBean extends AbstractBean {
 	public void removeAttachment(AttachmentDTO attachmentDTO) {
 		attachmentDTO.setBug(null);
 		this.selectedBug.getAttachments().remove(attachmentDTO);
-
 		addMessage(getMessageFromProperty("#{msg['file.deleted']}"));
 	}
 
@@ -100,6 +122,7 @@ public class BugBean extends AbstractBean {
 		return (selectedBug != null && bug.getId().equals(selectedBug.getId()));
 	}
 
+
 	public List<BugDTO> getBugsThatCanBeClosed() {
 		return bugFacade.findBugsThatCanBeClosed();
 	}
@@ -112,6 +135,73 @@ public class BugBean extends AbstractBean {
 			addMessage(e.getMessage());
 		}
 		return CLOSE_BUG;
+	}
+
+
+	public String doCreateBug() {
+		try {
+			user = userFacade.findUserbyUsername(userName);
+			newBug.setCreatedBy(user);
+			user = userFacade.findUserbyUsername(userAssigned);
+			newBug.setAssignedTo(user);
+			newBug.setSeverity(BugSeverityType.valueOf(selectedSeverity));
+			newBug.setTargetDate(date2);
+			if (user == null ) {
+				FacesMessage message = new FacesMessage("Username-ul introdus este gresit!");
+				//addMessage("#{msg['assigned.username']}");
+			} else {
+				BugDTO bugCreated = bugFacade.createBug(newBug);
+				addMessage(newBug.getTitleBug() + " " + getMessageFromProperty("#{msg['bug.added']}"));
+
+			}
+		} catch (JBugsException e) {
+			handleExceptioni18n(e);
+		}
+		return ADD_BUG;
+	}
+
+	public Date getDate2() {
+		return date2;
+	}
+
+	public void setDate2(Date date2) {
+		this.date2 = date2;
+	}
+
+	public List<BugSeverityType> getSeverityList() {
+		return severityList;
+	}
+
+	public void setSeverityList(List<BugSeverityType> severityList) {
+		this.severityList = severityList;
+	}
+
+	public String getSelectedSeverity() {
+		return selectedSeverity;
+	}
+
+	public void setSelectedSeverity(String selectedSeverity) {
+		this.selectedSeverity = selectedSeverity;
+	}
+
+	public BugDTO getNewBug() {
+		return newBug;
+	}
+
+	public void setNewBug(BugDTO newBug) {
+		this.newBug = newBug;
+	}
+
+	public String getUserAssigned() {
+		return userAssigned;
+	}
+
+	public void setUserAssigned(String userAssigned) {
+		this.userAssigned = userAssigned;
+	}
+
+	public String getShowUsername() {
+		return userName;
 	}
 
 	public String getMessageFromProperty(String messageProperty) {

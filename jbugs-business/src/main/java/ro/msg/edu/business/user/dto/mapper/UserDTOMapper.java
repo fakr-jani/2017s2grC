@@ -75,6 +75,7 @@ public class UserDTOMapper extends AbstractDTOMapper<User, UserDTO> {
 
 	@Override
 	protected void mapDTOToEntityFields(UserDTO dto, User entity) {
+		entity.setId(dto.getId());
 		entity.setEmail(dto.getEmail());
 		entity.setFirstname(dto.getFirstname());
 		entity.setLastname(dto.getLastname());

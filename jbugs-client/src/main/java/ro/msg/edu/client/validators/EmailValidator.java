@@ -14,7 +14,7 @@ public class EmailValidator implements Validator {
 		String stringValue = value.toString();
 		if (!(stringValue.endsWith("@msggroup.com"))) {
 			String emailValidationMessage = context.getApplication().evaluateExpressionGet(context,
-					"#{msg['validator.email]}", String.class);
+					"#{msg['validator.email']}", String.class);
 			FacesMessage message = new FacesMessage(emailValidationMessage);
 			context.addMessage(null, message);
 		}
