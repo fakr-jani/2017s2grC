@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title><h:outputText value="#{msg['login.title']}" /></title>
+</h:head>
+<h:body>
+	<f:view contentType="text/html">
+		<div>
+			<h1>
+				<p:outputLabel value="#{msg['bug.final']}" />
+			</h1>
+			<ui:include src="menu.xhtml" />
+			<br /> <br />
+			<h:form id="bugForm" rendered="#{userBean.verifyPermissionRendered('BUG_CLOSE')}">
+				<p:dataTable value="#{bugBean.fixedAndRejectedBugs}" var="bugVar">
+					<p:column>
+						<f:facet name="header">
+							<p:outputLabel value="#{msg['bug.title']}" />
+							<br />
+						</f:facet>
+						<h:outputText value="#{bugVar.titleBug}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<p:outputLabel value="#{msg['bug.description']}" />
+							<br />
+						</f:facet>
+						<h:outputText value="#{bugVar.descriptionBug}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<p:outputLabel value="#{msg['bug.status']}" />
+							<br />
+						</f:facet>
+						<h:outputText value="#{bugVar.status}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<p:outputLabel value="#{msg['bug.severity']}" />
+							<br />
+						</f:facet>
+						<h:outputText value="#{bugVar.severity}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<p:outputLabel value="#{msg['bug.targetDate']}" />
+							<br />
+						</f:facet>
+						<h:outputText value="#{bugVar.targetDate}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<p:outputLabel value="#{msg['bug.version']}" />
+							<br />
+						</f:facet>
+						<h:outputText value="#{bugVar.version}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<p:outputLabel value="#{msg['bug.versionFixed']}" />
+							<br />
+						</f:facet>
+						<h:outputText value="#{bugVar.versionFixed}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<p:outputLabel value="#{msg['bug.assigned']}" />
+							<br />
+						</f:facet>
+						<h:outputText value="#{bugVar.assignedTo.username}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<p:outputLabel value="#{msg['bug.created']}" />
+							<br />
+						</f:facet>
+						<h:outputText value="#{bugVar.assignedTo.username}" />
+					</p:column>
+
+
+					<p:column>
+						<f:facet name="header">
+							<p:outputLabel value="#{msg['action']}" />
+							<br />
+						</f:facet>
+						<h:commandButton value="#{msg['close.bug.button']}"
+							action="#{bugBean.closeBug(bugVar)}"
+							 />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</div>
+	</f:view>
+
+</h:body>
+</html>

@@ -2,6 +2,7 @@ package ro.msg.edu.business.role.control;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -10,7 +11,7 @@ import ro.msg.edu.business.permission.dao.PermissionDAO;
 import ro.msg.edu.business.permission.dto.mapper.PermissionDTOMapper;
 import ro.msg.edu.business.role.dao.RoleDAO;
 import ro.msg.edu.business.role.dto.RoleDTO;
-import ro.msg.edu.business.role.dto.mapper.RoleDTOMApper;
+import ro.msg.edu.business.role.dto.mapper.RoleDTOMapper;
 import ro.msg.edu.persistence.user.entity.Permission;
 import ro.msg.edu.persistence.user.entity.Role;
 import ro.msg.edu.persistence.user.entity.enums.PermissionType;
@@ -25,18 +26,15 @@ public class RoleControl {
 	private PermissionDAO permissionDAO;
 
 	@EJB
-	private RoleDTOMApper roleDTOMapper;
+	private RoleDTOMapper roleDTOMapper;
 
 	@EJB
 	private PermissionDTOMapper permissionDTOMapper;
 
 	public List<RoleDTO> findAllRoles() {
 		List<Role> roles = roleDAO.getAllRoles();
-		List<RoleDTO> rolesDTO = new ArrayList<RoleDTO>();
-		for (Role r : roles) {
-			rolesDTO.add(roleDTOMapper.mapToDTO(r));
-		}
-		return rolesDTO;
+		return roles.stream().map(e -> roleDTOMapper.mapToDTO(e)).collect(Collectors.toList());
+
 	}
 
 	public RoleDTO addPermissions(String selectedRole, String[] selectedPermissions) {
@@ -56,9 +54,7 @@ public class RoleControl {
 		Role role = roleDAO.getRoleByName(getRoleType(selectedRole));
 		List<Permission> permissionList = role.getPermissions();
 		List<String> permissionTypeList = new ArrayList<>();
-		for (Permission permission : permissionList) {
-			permissionTypeList.add(permission.getNamePermission().toString());
-		}
+		permissionList.stream().forEach(e -> permissionTypeList.add(e.getNamePermission().toString()));
 		return permissionTypeList;
 
 	}

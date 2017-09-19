@@ -1,5 +1,6 @@
 package ro.msg.edu.business.bug.boundary;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -13,7 +14,9 @@ import ro.msg.edu.business.common.exception.TechnicalException;
 
 @Stateless
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-public class BugFacade {
+public class BugFacade implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@EJB
 	BugControl bugControl;
@@ -36,5 +39,9 @@ public class BugFacade {
 
 	public BugDTO closeBug(BugDTO bugDTO) throws TechnicalException {
 		return bugControl.closeBug(bugDTO);
+	}
+
+	public List<BugDTO> findRejectedAndFixedBugs() {
+		return bugControl.findAllFixedAndRejectedBugs();
 	}
 }

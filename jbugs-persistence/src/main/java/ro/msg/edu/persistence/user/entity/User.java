@@ -201,8 +201,9 @@ public class User extends AbstractEntity {
 
 	@Override
 	public String toString() {
-		return "User [id=" + idUser + ", username=" + username + "]";
+		return "User [id=" + idUser + ", username=" + username +", roles=" + roles +"]";
 	}
+	
 
 	public void setIdUser(Long idUser) {
 		this.idUser = idUser;

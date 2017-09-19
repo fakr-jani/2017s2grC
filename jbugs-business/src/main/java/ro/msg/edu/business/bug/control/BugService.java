@@ -1,5 +1,6 @@
 package ro.msg.edu.business.bug.control;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,9 +14,15 @@ import ro.msg.edu.business.bug.dto.mapper.BugDTOMapper;
 import ro.msg.edu.persistence.bug.entity.enums.BugSeverityType;
 import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
 
+/**
+ * Class for table filter
+ * 
+ * @author maresb
+ *
+ */
 @ManagedBean(name = "bugService")
 @ViewScoped
-public class BugService {
+public class BugService implements Serializable {
 
 	@EJB
 	private BugDAO bugDAO;

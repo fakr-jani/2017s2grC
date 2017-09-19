@@ -8,10 +8,11 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import ro.msg.edu.business.common.dao.AbstractDao;
-import ro.msg.edu.business.common.exception.TechnicalException;
 import ro.msg.edu.persistence.bug.entity.Bug;
 import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
+import ro.msg.edu.persistence.user.entity.Permission;
 import ro.msg.edu.persistence.user.entity.User;
+import ro.msg.edu.persistence.user.entity.enums.PermissionType;
 
 /**
  * DAO for {@link User} entity.
@@ -22,12 +23,14 @@ import ro.msg.edu.persistence.user.entity.User;
 @Stateless
 public class UserDAO extends AbstractDao<User> {
 
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public Class<User> getEntityClass() {
 		return User.class;
 	}
 
-	public User findUserByEmail(String email) throws TechnicalException {
+	public User findUserByEmail(String email) {
 		TypedQuery<User> query = this.em.createNamedQuery(User.FIND_USER_BY_EMAIL, User.class);
 		query.setParameter("email", email);
 
@@ -38,13 +41,14 @@ public class UserDAO extends AbstractDao<User> {
 	public Optional<User> findUserByUsername(String username) {
 		Query query = em.createQuery("SELECT u FROM User u WHERE u.username = :username");
 		query.setParameter("username", username);
-		Optional<User> optional;
+
 		try {
-			return optional = Optional.ofNullable((User) query.getSingleResult());
+			return Optional.ofNullable((User) query.getSingleResult());
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.getMessage();
+			return Optional.ofNullable(new User());
 		}
-		return Optional.ofNullable(new User());
+
 	}
 
 	public boolean verifyUserExists(String username, String password) {
@@ -52,7 +56,7 @@ public class UserDAO extends AbstractDao<User> {
 		query.setParameter("username", username);
 		query.setParameter("password", password);
 		List<User> userList = query.getResultList();
-		return userList.isEmpty() == false;
+		return !userList.isEmpty();
 	}
 
 	public List<User> getAllUser() {
@@ -67,12 +71,20 @@ public class UserDAO extends AbstractDao<User> {
 		List<Bug> bugList = query.getResultList();
 		for (Bug b : bugList) {
 
-			if (!(b.getStatus() == BugStatusType.CLOSED)) {
+			if (!(b.getStatus().equals(BugStatusType.CLOSED))) {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
+	public boolean hasPermission(String username, PermissionType permissionType) {
+		Query query = em.createQuery(
+				"SELECT p.namePermission FROM User u INNER JOIN u.roles ur INNER JOIN ur.permissions p WHERE p.namePermission= :permission and u.username= :username");
+		query.setParameter("username", username);
+		query.setParameter("permission", permissionType);
+		List<Permission> permissionList = query.getResultList();
+		return permissionList.isEmpty() == false;
+
+	}
 }

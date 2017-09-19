@@ -18,6 +18,6 @@ public class RoleControlTest extends AbstractIntegrationTest {
 	public void viewPermissions_Succes() {
 		String roleName = "ADMINISTRATOR";
 		List<String> permissions = roleControl.viewPermissions(roleName);
-		Assert.assertEquals(permissions.size(), 1);
+		Assert.assertEquals(1,permissions.size());
 	}
 }
