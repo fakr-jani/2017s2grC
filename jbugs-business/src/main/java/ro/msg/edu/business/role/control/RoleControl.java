@@ -1,5 +1,6 @@
 package ro.msg.edu.business.role.control;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +19,7 @@ import ro.msg.edu.persistence.user.entity.enums.PermissionType;
 import ro.msg.edu.persistence.user.entity.enums.RoleType;
 
 @Stateless
-public class RoleControl {
+public class RoleControl implements Serializable{
 	@EJB
 	private RoleDAO roleDAO;
 

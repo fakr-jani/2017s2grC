@@ -3,6 +3,7 @@
  */
 package ro.msg.edu.business.bug.control;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +27,7 @@ import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
  * 
  */
 @Stateless
-public class BugControl {
+public class BugControl implements Serializable{
 
 	@EJB
 	private BugDTOMapper bugDTOMapper;

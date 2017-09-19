@@ -13,7 +13,7 @@ public abstract class AbstractDao<E extends AbstractEntity> implements Serializa
 
 	private static final long serialVersionUID = 1L;
 	@PersistenceContext(unitName = "jbugs-persistence")
-	protected EntityManager em;
+	protected transient EntityManager em;
 
 	public abstract Class<E> getEntityClass();
 

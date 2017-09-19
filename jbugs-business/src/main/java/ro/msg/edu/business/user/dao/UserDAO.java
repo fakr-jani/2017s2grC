@@ -24,6 +24,8 @@ import ro.msg.edu.persistence.user.entity.enums.PermissionType;
 public class UserDAO extends AbstractDao<User> {
 
 	private static final long serialVersionUID = 1L;
+	
+	private static final String USERNAME="username";
 
 	@Override
 	public Class<User> getEntityClass() {
@@ -40,7 +42,7 @@ public class UserDAO extends AbstractDao<User> {
 
 	public Optional<User> findUserByUsername(String username) {
 		Query query = em.createQuery("SELECT u FROM User u WHERE u.username = :username");
-		query.setParameter("username", username);
+		query.setParameter(USERNAME, username);
 
 		try {
 			return Optional.ofNullable((User) query.getSingleResult());
@@ -53,7 +55,7 @@ public class UserDAO extends AbstractDao<User> {
 
 	public boolean verifyUserExists(String username, String password) {
 		Query query = em.createQuery("SELECT u FROM User u WHERE u.username = :username and u.password= :password");
-		query.setParameter("username", username);
+		query.setParameter(USERNAME, username);
 		query.setParameter("password", password);
 		List<User> userList = query.getResultList();
 		return !userList.isEmpty();
@@ -81,7 +83,7 @@ public class UserDAO extends AbstractDao<User> {
 	public boolean hasPermission(String username, PermissionType permissionType) {
 		Query query = em.createQuery(
 				"SELECT p.namePermission FROM User u INNER JOIN u.roles ur INNER JOIN ur.permissions p WHERE p.namePermission= :permission and u.username= :username");
-		query.setParameter("username", username);
+		query.setParameter(USERNAME, username);
 		query.setParameter("permission", permissionType);
 		List<Permission> permissionList = query.getResultList();
 		return permissionList.isEmpty() == false;

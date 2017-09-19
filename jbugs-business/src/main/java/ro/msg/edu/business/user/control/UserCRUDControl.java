@@ -1,5 +1,6 @@
 package ro.msg.edu.business.user.control;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +27,7 @@ import ro.msg.edu.persistence.user.entity.enums.RoleType;
  *
  */
 @Stateless
-public class UserCRUDControl {
+public class UserCRUDControl implements Serializable {
 
 	@EJB
 	private UserDTOMapper userDTOMapper;
@@ -45,6 +46,7 @@ public class UserCRUDControl {
 	private static final int MAX_NUMBER_OF_TRIES = 4;
 	private static final int MAX_CHARACTERTER_FROM_LASTNAME = 5;
 	private static final int MAX_CHARACTERS_FOR_USERNAME = 6;
+	private static final String USER_NOT_FOUND = "User not found!";
 
 	public UserDTO createUser(UserDTO user, String[] selectedRoles) throws TechnicalException {
 		userValidator.validateUserData(user);
@@ -77,7 +79,7 @@ public class UserCRUDControl {
 			} else
 				throw new TechnicalException("User has tasks assigned");
 		} else
-			throw new TechnicalException("User not found!");
+			throw new TechnicalException(USER_NOT_FOUND);
 	}
 
 	public UserDTO activateUser(UserDTO userDTO) throws TechnicalException {
@@ -87,7 +89,7 @@ public class UserCRUDControl {
 			userEntity.setActive(true);
 			return userDTOMapper.mapToDTO(userEntity);
 		} else
-			throw new TechnicalException("User not found!");
+			throw new TechnicalException(USER_NOT_FOUND);
 	}
 
 	public UserDTO updateUser(UserDTO userToUpdate, List<String> updateRoles) throws TechnicalException {
@@ -109,16 +111,15 @@ public class UserCRUDControl {
 			entity.setActive(userToUpdate.isActive());
 			return userDTOMapper.mapToDTO(entity);
 		} else
-			throw new TechnicalException("User not found!");
+			throw new TechnicalException(USER_NOT_FOUND);
 	}
 
 	public UserDTO findUserbyUsername(String username) {
 		Optional<User> entity = userDAO.findUserByUsername(username);
 		if (isUserPresent(entity)) {
 			return userDTOMapper.mapToDTO(entity.get());
-		} else
-			return null;
-
+		}
+		return null;
 	}
 
 	public boolean verifyUserExists(UserDTO user) {
