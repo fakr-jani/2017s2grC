@@ -19,6 +19,7 @@ import ro.msg.edu.persistence.user.entity.User;
 /**
  * Mapper for {@link User} and {@link UserDTO}.
  * 
+ * 
  * @author Andrei Floricel, msg systems ag
  *
  */

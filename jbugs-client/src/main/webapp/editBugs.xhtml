@@ -101,7 +101,7 @@
 				
 				<p:dialog header="Attachments removal" widgetVar="removeAttachmentsDialog" minHeight="40" width="400">
 					<p:dataTable id="attachmentList" value="#{bugBean.selectedBug.attachments}" var="a" type="ordered" >
-						<p:column><h:outputText value="#{a}"></h:outputText></p:column>
+						<p:column><h:outputText value="#{a.fileName}"></h:outputText></p:column>
 					    <p:column><p:commandButton icon="ui-icon-trash" actionListener="#{bugBean.removeAttachment(a)}" ajax="true" update="attachmentList"> </p:commandButton></p:column>
 				    </p:dataTable>
 				 </p:dialog>

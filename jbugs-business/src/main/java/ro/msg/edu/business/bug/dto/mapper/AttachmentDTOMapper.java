@@ -17,21 +17,21 @@ public class AttachmentDTOMapper extends AbstractDTOMapper<Attachment, Attachmen
 	}
 
 	@Override
-	protected void mapEntityToDTOFields(Attachment entity, AttachmentDTO dto) {
-		dto.setFileName(entity.getFileName());
-		dto.setFileBytes(entity.getFileBytes());
+	protected void mapEntityToDTOFields(Attachment attachmentEntity, AttachmentDTO attachmentDTO) {
+		attachmentDTO.setFileName(attachmentEntity.getFileName());
+		attachmentDTO.setFileBytes(attachmentEntity.getFileBytes());
 		BugDTO bugDTO = new BugDTO();
-		bugDTO.setId(entity.getBug().getId());
-		dto.setBug(bugDTO);
+		bugDTO.setId(attachmentEntity.getBug().getId());
+		attachmentDTO.setBug(bugDTO);
 	}
 
 	@Override
-	protected void mapDTOToEntityFields(AttachmentDTO dto, Attachment entity) {
-		entity.setFileName(dto.getFileName());
-		entity.setFileBytes(dto.getFileBytes());
+	protected void mapDTOToEntityFields(AttachmentDTO attachmentDTO, Attachment attachmentEntity) {
+		attachmentEntity.setFileName(attachmentDTO.getFileName());
+		attachmentEntity.setFileBytes(attachmentDTO.getFileBytes());
 		Bug bugEntity = new Bug();
-		bugEntity.setIdBug(dto.getBug().getId());
-		entity.setBug(bugEntity);
+		bugEntity.setIdBug(attachmentDTO.getBug().getId());
+		attachmentEntity.setBug(bugEntity);
 	}
 
 }

@@ -1,20 +1,15 @@
 package ro.msg.edu.client.beans;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.SelectEvent;
 
 import ro.msg.edu.business.bug.boundary.BugFacade;
 import ro.msg.edu.business.bug.dto.AttachmentDTO;
@@ -39,11 +34,9 @@ public class BugBean extends AbstractBean {
 	@EJB
 	private UserFacade userFacade;
 
-	private BugDTO selectedBug = new BugDTO();;
+	private BugDTO selectedBug = new BugDTO();
 
-	private static final String EDIT_BUGS = "editBugs";
-	private static final String CLOSE_BUG="closeBug";
-	private static final String DATE_FORMAT="yyyy-MM-dd";
+	private static final String editBugs = "editBugs";
 
 	public List<BugDTO> getAllBugs() {
 		return bugFacade.findAllBugs();
@@ -71,43 +64,35 @@ public class BugBean extends AbstractBean {
 		} catch (TechnicalException e) {
 			addMessage(e.getMessage());
 		}
-		return EDIT_BUGS;
+		return editBugs;
 	}
 
-	public void addUploadedFile(FileUploadEvent event) {
+	public void addUploadedFile(FileUploadEvent fileUploadEvent) {
 		AttachmentDTO attachmentDTO = new AttachmentDTO();
-		attachmentDTO.setFileBytes(event.getFile().getContents());
+		attachmentDTO.setFileBytes(fileUploadEvent.getFile().getContents());
+
 		attachmentDTO.setBug(selectedBug);
-		attachmentDTO.setFileName(event.getFile().getFileName());
+		attachmentDTO.setFileName(fileUploadEvent.getFile().getFileName());
 		this.selectedBug.getAttachments().add(attachmentDTO);
-		addMessage(event.getFile().getFileName()+ " " + getMessageFromProperty("#{msg['is.uploaded']}"));
+
+		addMessage(fileUploadEvent.getFile().getFileName() + " " + getMessageFromProperty("#{msg['is.uploaded']}"));
 	}
 
 	public void removeAttachment(AttachmentDTO a) {
 		a.setBug(null);
 		this.selectedBug.getAttachments().remove(a);
-		addMessage(getMessageFromProperty("#{msg['file.deleted']}"));
-	}
 
-	public void onDateSelect(SelectEvent event) {
-		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-		try {
-			String s = sdf.format(event.getObject());
-			Date d = sdf.parse(s);
-			this.selectedBug.setTargetDate(d);
-		} catch (ParseException e) {
-			addMessage(e.getMessage());
-		}
+		addMessage(getMessageFromProperty("#{msg['file.deleted']}"));
 	}
 
 	public String enterUpdateMode(BugDTO bug) {
 		this.selectedBug = bug;
-		return EDIT_BUGS;
+		return editBugs;
 	}
 
 	public String leaveUpdateMode() {
 		selectedBug = new BugDTO();
-		return EDIT_BUGS;
+		return editBugs;
 	}
 
 	public boolean verifyEditRendered(BugDTO bug) {
@@ -125,7 +110,7 @@ public class BugBean extends AbstractBean {
 		} catch (TechnicalException e) {
 			addMessage(e.getMessage());
 		}
-		return CLOSE_BUG;
+		return "closeBug";
 	}
 
 	public String getMessageFromProperty(String messageProperty) {

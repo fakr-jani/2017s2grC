@@ -32,77 +32,77 @@ public class BugDTOMapper extends AbstractDTOMapper<Bug, BugDTO> {
 	}
 
 	@Override
-	protected void mapEntityToDTOFields(Bug entity, BugDTO dto) {
-		dto.setTitleBug(entity.getTitleBug());
-		dto.setDescriptionBug(entity.getDescriptionBug());
-		dto.setVersion(entity.getVersion());
-		dto.setVersionFixed(entity.getVersionFixed());
-		dto.setTargetDate(entity.getTargetDate());
+	protected void mapEntityToDTOFields(Bug bugEntity, BugDTO bugDTO) {
+		bugDTO.setTitleBug(bugEntity.getTitleBug());
+		bugDTO.setDescriptionBug(bugEntity.getDescriptionBug());
+		bugDTO.setVersion(bugEntity.getVersion());
+		bugDTO.setVersionFixed(bugEntity.getVersionFixed());
+		bugDTO.setTargetDate(bugEntity.getTargetDate());
 
-		User createdByEntity = entity.getCreatedBy();
+		User createdByEntity = bugEntity.getCreatedBy();
 		if (createdByEntity != null) {
 			UserDTO createdByDTO = new UserDTO();
 			createdByDTO.setId(createdByEntity.getId());
 			createdByDTO.setUsername(createdByEntity.getUsername());
-			dto.setCreatedBy(createdByDTO);
+			bugDTO.setCreatedBy(createdByDTO);
 		}
 
-		dto.setStatus(entity.getStatus());
-		dto.setSeverity(entity.getSeverity());
+		bugDTO.setStatus(bugEntity.getStatus());
+		bugDTO.setSeverity(bugEntity.getSeverity());
 
-		User assignedToEntity = entity.getCreatedBy();
+		User assignedToEntity = bugEntity.getCreatedBy();
 		if (assignedToEntity != null) {
 			UserDTO assignedToDTO = new UserDTO();
 			assignedToDTO.setId(assignedToEntity.getId());
 			assignedToDTO.setUsername(assignedToEntity.getUsername());
-			dto.setAssignedTo(assignedToDTO);
+			bugDTO.setAssignedTo(assignedToDTO);
 		}
 
-		List<Attachment> attachmentEntities = entity.getAttachments();
+		List<Attachment> attachmentEntities = bugEntity.getAttachments();
 		if (attachmentEntities != null) {
 			List<AttachmentDTO> attachmentDTOs = attachmentEntities.stream().map(attachmentEntity -> {
 				AttachmentDTO attachmentDTO = attachmentDTOMapper.mapToDTO(attachmentEntity);
 				return attachmentDTO;
 			}).collect(Collectors.toList());
-			dto.setAttachments(attachmentDTOs);
+			bugDTO.setAttachments(attachmentDTOs);
 		}
 
 	}
 
 	@Override
-	protected void mapDTOToEntityFields(BugDTO dto, Bug entity) {
-		entity.setTitleBug(dto.getTitleBug());
-		entity.setDescriptionBug(dto.getDescriptionBug());
-		entity.setVersion(dto.getVersion());
-		entity.setVersionFixed(dto.getVersionFixed());
-		entity.setTargetDate(dto.getTargetDate());
-		entity.setStatus(dto.getStatus());
-		entity.setSeverity(dto.getSeverity());
+	protected void mapDTOToEntityFields(BugDTO bugDTO, Bug bugEntity) {
+		bugEntity.setTitleBug(bugDTO.getTitleBug());
+		bugEntity.setDescriptionBug(bugDTO.getDescriptionBug());
+		bugEntity.setVersion(bugDTO.getVersion());
+		bugEntity.setVersionFixed(bugDTO.getVersionFixed());
+		bugEntity.setTargetDate(bugDTO.getTargetDate());
+		bugEntity.setStatus(bugDTO.getStatus());
+		bugEntity.setSeverity(bugDTO.getSeverity());
 
-		UserDTO createdByDTO = dto.getCreatedBy();
+		UserDTO createdByDTO = bugDTO.getCreatedBy();
 		if (createdByDTO != null) {
 			User createdByEntity = new User();
 			createdByEntity.setIdUser(createdByDTO.getId());
 			createdByEntity.setUsername(createdByDTO.getUsername());
-			entity.setCreatedBy(createdByEntity);
+			bugEntity.setCreatedBy(createdByEntity);
 		}
 
-		UserDTO assignedToDTO = dto.getAssignedTo();
+		UserDTO assignedToDTO = bugDTO.getAssignedTo();
 		if (assignedToDTO != null) {
 			User assignedToEntity = new User();
 			assignedToEntity.setIdUser(assignedToDTO.getId());
 			assignedToEntity.setUsername(assignedToDTO.getUsername());
-			entity.setAssignedTo(assignedToEntity);
+			bugEntity.setAssignedTo(assignedToEntity);
 		}
 
-		List<AttachmentDTO> attachmentDTOs = dto.getAttachments();
+		List<AttachmentDTO> attachmentDTOs = bugDTO.getAttachments();
 		if (attachmentDTOs != null) {
 			List<Attachment> attachmentEntities = attachmentDTOs.stream().map(attachmentDTO -> {
 				Attachment attachmentEntity = new Attachment();
 				attachmentDTOMapper.mapToEntity(attachmentDTO, attachmentEntity);
 				return attachmentEntity;
 			}).collect(Collectors.toList());
-			entity.setAttachments(attachmentEntities);
+			bugEntity.setAttachments(attachmentEntities);
 		}
 	}
 
