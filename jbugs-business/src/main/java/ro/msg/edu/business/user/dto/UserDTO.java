@@ -2,6 +2,7 @@ package ro.msg.edu.business.user.dto;
 
 import java.util.List;
 
+import ro.msg.edu.business.bug.dto.BugDTO;
 import ro.msg.edu.business.common.dto.AbstractDTO;
 import ro.msg.edu.business.role.dto.RoleDTO;
 import ro.msg.edu.persistence.user.entity.User;
@@ -31,6 +32,10 @@ public class UserDTO extends AbstractDTO {
 	private int counter;
 
 	private List<RoleDTO> roles;
+
+	private List<BugDTO> createdBugs;
+
+	private List<BugDTO> assignedBugs;
 
 	public String getFirstname() {
 		return firstname;
@@ -94,6 +99,22 @@ public class UserDTO extends AbstractDTO {
 
 	public void setRoles(List<RoleDTO> roles) {
 		this.roles = roles;
+	}
+
+	public List<BugDTO> getCreatedBugs() {
+		return createdBugs;
+	}
+
+	public void setCreatedBugs(List<BugDTO> createdBugs) {
+		this.createdBugs = createdBugs;
+	}
+
+	public List<BugDTO> getAssignedBugs() {
+		return assignedBugs;
+	}
+
+	public void setAssignedBugs(List<BugDTO> assignedBugs) {
+		this.assignedBugs = assignedBugs;
 	}
 
 	public int getCounter() {

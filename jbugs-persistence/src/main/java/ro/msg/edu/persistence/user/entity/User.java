@@ -80,7 +80,7 @@ public class User extends AbstractEntity {
 	@OneToMany(mappedBy = "assignedTo", cascade = CascadeType.PERSIST)
 	private List<Bug> assignedBugs;
 
-	@OneToMany(mappedBy = "createdBy")
+	@OneToMany(mappedBy = "createdBy", cascade = CascadeType.PERSIST)
 	private List<Bug> createdBugs;
 
 	@OneToMany(mappedBy = "modifiedBy")
