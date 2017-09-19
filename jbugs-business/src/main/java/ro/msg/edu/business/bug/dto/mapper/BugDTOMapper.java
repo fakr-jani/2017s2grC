@@ -49,8 +49,10 @@ public class BugDTOMapper extends AbstractDTOMapper<Bug, BugDTO> {
 
 		List<Attachment> attachmentEntities = entity.getAttachments();
 		if (attachmentEntities != null) {
-			List<AttachmentDTO> attachmentDTOs = attachmentEntities.stream().map(e -> attachmentDTOMapper.mapToDTO(e))
-					.collect(Collectors.toList());
+			List<AttachmentDTO> attachmentDTOs = attachmentEntities.stream().map(attachmentEntity -> {
+				AttachmentDTO attachmentDTO = attachmentDTOMapper.mapToDTO(attachmentEntity);
+				return attachmentDTO;
+			}).collect(Collectors.toList());
 			dto.setAttachments(attachmentDTOs);
 		}
 
@@ -87,7 +89,6 @@ public class BugDTOMapper extends AbstractDTOMapper<Bug, BugDTO> {
 			}).collect(Collectors.toList());
 			entity.setAttachments(attachmentEntities);
 		}
-
 	}
 
 }

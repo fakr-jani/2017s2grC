@@ -1,10 +1,7 @@
 package ro.msg.edu.client.beans;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -14,7 +11,6 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.SelectEvent;
 
 import ro.msg.edu.business.bug.boundary.BugFacade;
 import ro.msg.edu.business.bug.dto.AttachmentDTO;
@@ -39,7 +35,7 @@ public class BugBean extends AbstractBean {
 	@EJB
 	private UserFacade userFacade;
 
-	private BugDTO selectedBug = new BugDTO();;
+	private BugDTO selectedBug = new BugDTO();
 
 	private static final String editBugs = "editBugs";
 
@@ -75,28 +71,21 @@ public class BugBean extends AbstractBean {
 	public void addUploadedFile(FileUploadEvent event) {
 		AttachmentDTO attachmentDTO = new AttachmentDTO();
 		attachmentDTO.setFileBytes(event.getFile().getContents());
-		attachmentDTO.setBug(selectedBug);
 
+		attachmentDTO.setBug(selectedBug);
+		attachmentDTO.setFileName(event.getFile().getFileName());
 		this.selectedBug.getAttachments().add(attachmentDTO);
 
-		FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+		FacesMessage message = new FacesMessage(event.getFile().getFileName() + " is added. Please Upload and Update.");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 
-	public String removeAttachment(AttachmentDTO a) {
+	public void removeAttachment(AttachmentDTO a) {
+		a.setBug(null);
 		this.selectedBug.getAttachments().remove(a);
-		return editBugs;
-	}
 
-	public void onDateSelect(SelectEvent event) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			String s = sdf.format(event.getObject());
-			Date d = sdf.parse(s);
-			this.selectedBug.setTargetDate(d);
-		} catch (ParseException e) {
-			addMessage(e.getMessage());
-		}
+		FacesMessage message = new FacesMessage("Attachment(s) deleted. Please Update.");
+		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 
 	public String enterUpdateMode(BugDTO bug) {
