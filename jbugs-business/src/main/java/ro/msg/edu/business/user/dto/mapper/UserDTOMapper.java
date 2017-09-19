@@ -10,7 +10,7 @@ import ro.msg.edu.business.bug.dto.BugDTO;
 import ro.msg.edu.business.bug.dto.mapper.BugDTOMapper;
 import ro.msg.edu.business.common.dto.mapper.AbstractDTOMapper;
 import ro.msg.edu.business.role.dto.RoleDTO;
-import ro.msg.edu.business.role.dto.mapper.RoleDTOMApper;
+import ro.msg.edu.business.role.dto.mapper.RoleDTOMapper;
 import ro.msg.edu.business.user.dto.UserDTO;
 import ro.msg.edu.persistence.bug.entity.Bug;
 import ro.msg.edu.persistence.user.entity.Role;
@@ -19,6 +19,7 @@ import ro.msg.edu.persistence.user.entity.User;
 /**
  * Mapper for {@link User} and {@link UserDTO}.
  * 
+ * 
  * @author Andrei Floricel, msg systems ag
  *
  */
@@ -26,7 +27,7 @@ import ro.msg.edu.persistence.user.entity.User;
 public class UserDTOMapper extends AbstractDTOMapper<User, UserDTO> {
 
 	@EJB
-	RoleDTOMApper roleDTOMapper;
+	RoleDTOMapper roleDTOMapper;
 
 	@EJB
 	BugDTOMapper bugDTOMapper;

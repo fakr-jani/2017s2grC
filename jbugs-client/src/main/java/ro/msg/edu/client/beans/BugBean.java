@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -68,24 +67,22 @@ public class BugBean extends AbstractBean {
 		return editBugs;
 	}
 
-	public void addUploadedFile(FileUploadEvent event) {
+	public void addUploadedFile(FileUploadEvent fileUploadEvent) {
 		AttachmentDTO attachmentDTO = new AttachmentDTO();
-		attachmentDTO.setFileBytes(event.getFile().getContents());
+		attachmentDTO.setFileBytes(fileUploadEvent.getFile().getContents());
 
 		attachmentDTO.setBug(selectedBug);
-		attachmentDTO.setFileName(event.getFile().getFileName());
+		attachmentDTO.setFileName(fileUploadEvent.getFile().getFileName());
 		this.selectedBug.getAttachments().add(attachmentDTO);
 
-		FacesMessage message = new FacesMessage(event.getFile().getFileName() + " is added. Please Upload and Update.");
-		FacesContext.getCurrentInstance().addMessage(null, message);
+		addMessage(fileUploadEvent.getFile().getFileName() + " " + getMessageFromProperty("#{msg['is.uploaded']}"));
 	}
 
 	public void removeAttachment(AttachmentDTO a) {
 		a.setBug(null);
 		this.selectedBug.getAttachments().remove(a);
 
-		FacesMessage message = new FacesMessage("Attachment(s) deleted. Please Update.");
-		FacesContext.getCurrentInstance().addMessage(null, message);
+		addMessage(getMessageFromProperty("#{msg['file.deleted']}"));
 	}
 
 	public String enterUpdateMode(BugDTO bug) {

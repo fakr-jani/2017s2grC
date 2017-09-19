@@ -4,6 +4,11 @@ import ro.msg.edu.business.common.dto.AbstractDTO;
 
 public class AttachmentDTO extends AbstractDTO {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private String fileName;
 
 	private byte[] fileBytes;
@@ -32,11 +37,6 @@ public class AttachmentDTO extends AbstractDTO {
 
 	public void setBug(BugDTO bug) {
 		this.bug = bug;
-	}
-
-	@Override
-	public String toString() {
-		return fileName;
 	}
 
 }
