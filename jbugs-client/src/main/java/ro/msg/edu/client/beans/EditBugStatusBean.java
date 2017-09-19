@@ -11,7 +11,6 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.CellEditEvent;
-import org.primefaces.event.RowEditEvent;
 
 import ro.msg.edu.business.bug.boundary.BugFacade;
 import ro.msg.edu.business.bug.dto.BugDTO;
@@ -40,7 +39,7 @@ public class EditBugStatusBean extends AbstractBean {
 	public List<BugDTO> getAllBugs() {
 		return allBugs;
 	}
-	
+
 	public void setAllBugs(List<BugDTO> allBugs) {
 		this.allBugs = allBugs;
 	}
@@ -50,7 +49,7 @@ public class EditBugStatusBean extends AbstractBean {
 		updatedBug.setStatus((BugStatusType) event.getNewValue());
 		try {
 			bugFacade.updateBugStatus(updatedBug);
-			FacesMessage msg = new FacesMessage("Status Edited for "+updatedBug.getTitleBug() );
+			FacesMessage msg = new FacesMessage("Status Edited for " + updatedBug.getTitleBug());
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (TechnicalException e) {
 			addMessage(e.getMessage());

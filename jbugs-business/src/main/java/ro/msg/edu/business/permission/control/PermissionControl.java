@@ -23,9 +23,7 @@ public class PermissionControl {
 	public List<PermissionDTO> findAllPermission() {
 		List<Permission> permissions = permissionDAO.getAllPermissions();
 		List<PermissionDTO> permissionsDTO = new ArrayList<PermissionDTO>();
-		for (Permission p : permissions) {
-			permissionsDTO.add(permissionDTOMapper.mapToDTO(p));
-		}
+		permissions.stream().forEach(e -> permissionsDTO.add(permissionDTOMapper.mapToDTO(e)));
 		return permissionsDTO;
 	}
 

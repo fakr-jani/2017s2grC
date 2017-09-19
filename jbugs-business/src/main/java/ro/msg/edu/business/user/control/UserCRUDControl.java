@@ -14,7 +14,6 @@ import ro.msg.edu.business.user.dao.UserDAO;
 import ro.msg.edu.business.user.dto.UserDTO;
 import ro.msg.edu.business.user.dto.mapper.UserDTOMapper;
 import ro.msg.edu.business.user.validator.UserValidator;
-import ro.msg.edu.persistence.user.entity.Permission;
 import ro.msg.edu.persistence.user.entity.Role;
 import ro.msg.edu.persistence.user.entity.User;
 import ro.msg.edu.persistence.user.entity.enums.PermissionType;
@@ -39,13 +38,13 @@ public class UserCRUDControl {
 
 	@EJB
 	UserValidator userValidator;
-	
+
 	@EJB
 	private PermissionDAO permissionDAO;
 
-	private final static int MAX_NUMBER_OF_TRIES = 4;
-	private final static int MAX_CHARACTERTER_FROM_LASTNAME = 5;
-	private final static int MAX_CHARACTERS_FOR_USERNAME = 6;
+	private static final int MAX_NUMBER_OF_TRIES = 4;
+	private static final int MAX_CHARACTERTER_FROM_LASTNAME = 5;
+	private static final int MAX_CHARACTERS_FOR_USERNAME = 6;
 
 	public UserDTO createUser(UserDTO user, String[] selectedRoles) throws TechnicalException {
 		userValidator.validateUserData(user);
@@ -70,46 +69,52 @@ public class UserCRUDControl {
 
 	public UserDTO deleteUser(UserDTO userDTO) throws TechnicalException {
 		Optional<User> userOptional = userDAO.findUserByUsername(userDTO.getUsername());
-		User userEntity = userOptional.get();
-		if (userEntity == null)
+		if (isUserPresent(userOptional)) {
+			User userEntity = userOptional.get();
+			if (!userDAO.hasActiveTasks(userEntity)) {
+				userEntity.setActive(false);
+				return userDTOMapper.mapToDTO(userEntity);
+			} else
+				throw new TechnicalException("User has tasks assigned");
+		} else
 			throw new TechnicalException("User not found!");
-		if (!userDAO.hasActiveTasks(userEntity)) {
-			userEntity.setActive(false);
+	}
+
+	public UserDTO activateUser(UserDTO userDTO) throws TechnicalException {
+		Optional<User> userOptional = userDAO.findUserByUsername(userDTO.getUsername());
+		if (isUserPresent(userOptional)) {
+			User userEntity = userOptional.get();
+			userEntity.setActive(true);
 			return userDTOMapper.mapToDTO(userEntity);
 		} else
-			throw new TechnicalException("User has tasks assigned");
-
+			throw new TechnicalException("User not found!");
 	}
 
-	public UserDTO activateUser(UserDTO userDTO) {
-		Optional<User> userOptional = userDAO.findUserByUsername(userDTO.getUsername());
-		User userEntity = userOptional.get();
-		userEntity.setActive(true);
-		return userDTOMapper.mapToDTO(userEntity);
-	}
-
-	public UserDTO updateUser(UserDTO userToUpdate,List<String> updateRoles) throws TechnicalException {
+	public UserDTO updateUser(UserDTO userToUpdate, List<String> updateRoles) throws TechnicalException {
 		Optional<User> userOptional = userDAO.findUserByUsername(userToUpdate.getUsername());
-		User entity = userOptional.get();
-		List<Role> roleList = new ArrayList<>();
+		if (isUserPresent(userOptional)) {
+			User entity = userOptional.get();
+			List<Role> roleList = new ArrayList<>();
 
-		for (String roleName : updateRoles) {
-			roleList.add(roleDAO.getRoleByName(RoleType.valueOf(roleName)));
-		}
-		userValidator.validateUserData(userToUpdate);
-		entity.setRoles(roleList);
-		entity.setEmail(userToUpdate.getEmail());
-		entity.setFirstname(userToUpdate.getFirstname());
-		entity.setLastname(userToUpdate.getLastname());
-		entity.setPassword(userToUpdate.getPassword());
-		entity.setPhoneNumber(userToUpdate.getPhoneNumber());
-		entity.setActive(userToUpdate.isActive());
-		return userDTOMapper.mapToDTO(entity);
+			for (String roleName : updateRoles) {
+				roleList.add(roleDAO.getRoleByName(RoleType.valueOf(roleName)));
+			}
+			userValidator.validateUserData(userToUpdate);
+			entity.setRoles(roleList);
+			entity.setEmail(userToUpdate.getEmail());
+			entity.setFirstname(userToUpdate.getFirstname());
+			entity.setLastname(userToUpdate.getLastname());
+			entity.setPassword(userToUpdate.getPassword());
+			entity.setPhoneNumber(userToUpdate.getPhoneNumber());
+			entity.setActive(userToUpdate.isActive());
+			return userDTOMapper.mapToDTO(entity);
+		} else
+			throw new TechnicalException("User not found!");
 	}
 
 	public UserDTO findUserbyUsername(String username) {
 		Optional<User> entity = userDAO.findUserByUsername(username);
-		if (entity.isPresent()) {
+		if (isUserPresent(entity)) {
 			return userDTOMapper.mapToDTO(entity.get());
 		} else
 			return null;
@@ -122,30 +127,27 @@ public class UserCRUDControl {
 
 	public List<UserDTO> findAllUser() {
 		List<User> users = userDAO.getAllUser();
-		List<UserDTO> usersDTO = new ArrayList<UserDTO>();
-		for (User u : users) {
-			usersDTO.add(userDTOMapper.mapToDTO(u));
-		}
-		return usersDTO;
+		return userDTOMapper.mapToDTOs(users);
+
 	}
 
-	public String generateUsername(String firstname, String lastname) throws TechnicalException {
+	private String generateUsername(String firstname, String lastname) throws TechnicalException {
 
 		int nrLastnameCharacters = calculateNrOfCharactersFromLastname(lastname);
-		int nrFirstnameCharacters = calculateNrOfCharactersFromFirstname(lastname, firstname);
+		int nrFirstnameCharacters = calculateNrOfCharactersFromFirstname(lastname);
 
 		while (nrLastnameCharacters > 0 && nrFirstnameCharacters < MAX_CHARACTERS_FOR_USERNAME) {
 			StringBuilder username = new StringBuilder();
 			username.append(lastname, 0, nrLastnameCharacters);
 			username.append(firstname, 0, nrFirstnameCharacters);
-			boolean usernameNotExists = !userValidator.uniqueUsername(username);
+			boolean usernameNotExists = userValidator.uniqueUsername(username);
 			if (usernameNotExists) {
 				return username.toString();
 			}
 			nrLastnameCharacters--;
 			nrFirstnameCharacters++;
 		}
-		throw new TechnicalException("Cannot generate username. Please insert your middle name or father initial");
+		throw new TechnicalException("Cannot generate username. Please insert your middle name");
 	}
 
 	private int calculateNrOfCharactersFromLastname(String lastname) {
@@ -157,7 +159,7 @@ public class UserCRUDControl {
 
 	}
 
-	private int calculateNrOfCharactersFromFirstname(String lastname, String firstname) {
+	private int calculateNrOfCharactersFromFirstname(String lastname) {
 		if (lastname.length() < MAX_CHARACTERTER_FROM_LASTNAME) {
 			return MAX_CHARACTERS_FOR_USERNAME - lastname.length();
 		}
@@ -166,29 +168,47 @@ public class UserCRUDControl {
 
 	public boolean hasActiveTasks(UserDTO userDTO) {
 		Optional<User> userOptional = userDAO.findUserByUsername(userDTO.getUsername());
-		User entity = userOptional.get();
-
-		return userDAO.hasActiveTasks(entity);
+		if (isUserPresent(userOptional)) {
+			User entity = userOptional.get();
+			return userDAO.hasActiveTasks(entity);
+		} else
+			return false;
 	}
 
 	public UserDTO setStatus(UserDTO userDTO) {
 
 		Optional<User> entity = userDAO.findUserByUsername(userDTO.getUsername());
-		User userEntity = entity.get();
-		userEntity.setCounter(userEntity.getCounter() + 1);
-		if (userEntity.getCounter() > MAX_NUMBER_OF_TRIES) {
-			userEntity.setActive(false);
-		}
-		return userDTOMapper.mapToDTO(userEntity);
+		if (isUserPresent(entity)) {
+			User userEntity = entity.get();
+			userEntity.setCounter(userEntity.getCounter() + 1);
+			if (userEntity.getCounter() > MAX_NUMBER_OF_TRIES) {
+				userEntity.setActive(false);
+			}
+
+			return userDTOMapper.mapToDTO(userEntity);
+		} else
+			return userDTO;
+
 	}
 
 	public UserDTO resetStatus(UserDTO userDTO) {
 
 		Optional<User> entity = userDAO.findUserByUsername(userDTO.getUsername());
-		User userEntity = entity.get();
-		userEntity.setCounter(0);
-
-		return userDTOMapper.mapToDTO(userEntity);
+		if (isUserPresent(entity)) {
+			User userEntity = entity.get();
+			userEntity.setCounter(0);
+			return userDTOMapper.mapToDTO(userEntity);
+		} else {
+			return userDTO;
+		}
 	}
-	
+
+	private boolean isUserPresent(Optional<User> optionalUser) {
+		return optionalUser.isPresent();
+	}
+
+	public boolean hasPermission(String username, PermissionType permissionType) {
+		return userDAO.hasPermission(username, permissionType);
+	}
+
 }

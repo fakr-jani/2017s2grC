@@ -9,7 +9,6 @@
 
 <h:head>
 	<title><h:outputText value="#{msg['login.title']}" /></title>
-	<h:outputStylesheet library="css" name="addUserStyle.css" />
 </h:head>
 <h:body>
 	<f:view contentType="text/html">
@@ -18,7 +17,7 @@
 			<ui:include src="menu.xhtml" />
 			<br /> <br />
 			
-			<h:form id="form">
+			<h:form id="form" rendered="#{userBean.verifyPermissionRendered('BUG_CLOSE') or userBean.verifyPermissionRendered('BUG_MANAGEMENT')}">
 				<p:growl id="msgs" showDetail="true"/>
 				
 				

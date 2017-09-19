@@ -21,6 +21,9 @@ public class Attachment extends AbstractEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idAttachment;
 
+	@Column
+	private String fileName;
+
 	@Lob
 	@Column
 	private byte[] fileBytes;
@@ -35,6 +38,14 @@ public class Attachment extends AbstractEntity {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 	public byte[] getFileBytes() {

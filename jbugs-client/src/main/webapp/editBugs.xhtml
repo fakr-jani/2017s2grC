@@ -9,7 +9,6 @@
 
 <h:head>
 	<title><h:outputText value="#{msg['login.title']}" /></title>
-	<h:outputStylesheet library="css" name="addUserStyle.css" />
 </h:head>
 <h:body>
 	<f:view contentType="text/html">
@@ -23,13 +22,13 @@
 				
 				<p:dataTable id="bugs" var="bug" value="#{bugBean.allBugs}">
 						<f:facet name="header">
-				           Edit Bugs
+				           <p:outputLabel value="#{msg['bug.description']}"></p:outputLabel>
 				        </f:facet>
 				        
 				        
 				       <p:column headerText= "#{msg['bug.title']}">
 				       			<h:outputText value="#{bug.titleBug}"/>
-	               				<h:inputText value="#{bugBean.selectedBug.titleBug}" rendered="#{bugBean.verifyEditRendered(bug)}"  />
+	               				<h:inputText value="#{bugBean.selectedBug.titleBug}" rendered="#{bugBean.verifyEditRendered(bug)}"   />
 				       </p:column>
 				       
 				       <p:column headerText="#{msg['bug.description']}">
@@ -47,31 +46,23 @@
 	               				<h:inputText value="#{bugBean.selectedBug.versionFixed}" rendered="#{bugBean.verifyEditRendered(bug)}"   />
 				       </p:column>
 				       
-				       <p:column headerText="#{msg['bug.targetDate']}">
-				       		    <h:outputText value="#{bug.targetDate}" >
-				       		    		 <f:convertDateTime pattern="yyyy-MM-dd" />
-				       		    </h:outputText>
-				       		   
-				       			<p:calendar value="#{bugBean.selectedBug.targetDate}" pattern="yyyy-MM-dd" rendered="#{bugBean.verifyEditRendered(bug)}">
-				       				<p:ajax event="dateSelect" listener="#{bugBean.onDateSelect}" update="bugs" />
-				       			</p:calendar>
+				       
+				        <p:column headerText="#{msg['bug.created']}">
+				       			<h:outputText value="#{bug.createdBy.username}" />
 				       </p:column>
+				       
 				       
 				       <p:column headerText="#{msg['bug.assigned']}">
-				       			 <h:outputText value="#{bug.assignedTo}" />
-				       			 <h:selectOneMenu value="#{bugBean.selectedBug.assignedTo}" rendered="#{bugBean.verifyEditRendered(bug)}">
-				                       <f:selectItems value="#{bugBean.allUsers}" var="u" itemLabel="#{u}" itemValue="#{u}" />
+				       			 <h:outputText value="#{bug.assignedTo.username}" />
+				       			 <h:selectOneMenu value="#{bugBean.selectedBug.assignedTo}" rendered="#{bugBean.verifyEditRendered(bug)}" converter="userConverter" class="styleSelectOne">
+				                       <f:selectItems value="#{bugBean.allUsers}" var="u" itemLabel="#{u.username}" itemValue="#{u}" />
 				                 </h:selectOneMenu>
-				       </p:column>
-				       
-				       <p:column headerText="#{msg['bug.created']}">
-				       			<h:outputText value="#{bug.createdBy}" />
 				       </p:column>
 				       
 				       
 				      <p:column headerText="#{msg['bug.severity']}">
 				              	   <h:outputText value="#{bug.severity}" />
-				                   <h:selectOneMenu value="#{bugBean.selectedBug.severity}" rendered="#{bugBean.verifyEditRendered(bug)}">
+				                   <h:selectOneMenu value="#{bugBean.selectedBug.severity}" rendered="#{bugBean.verifyEditRendered(bug)}" class="styleSelectOne">
 				                       <f:selectItems value="#{bugBean.allBugSeverityTypes}" var="sev" itemLabel="#{sev}" itemValue="#{sev}" />
 				                   </h:selectOneMenu>
 			       	  </p:column>
@@ -79,7 +70,7 @@
 			       	 
 			       	 <p:column headerText="#{msg['bug.status']}">
 			       	 			   <h:outputText value="#{bug.status}" />
-				                   <h:selectOneMenu value="#{bugBean.selectedBug.status}" rendered="#{bugBean.verifyEditRendered(bug)}">
+				                   <h:selectOneMenu value="#{bugBean.selectedBug.status}" rendered="#{bugBean.verifyEditRendered(bug)}" class="styleSelectOne">
 				                       <f:selectItems value="#{bug.possibleTransitionsFromCurrentBugStatus}" var="sts" itemLabel="#{sts}" itemValue="#{sts}" />
 				                   </h:selectOneMenu>
 			       	 </p:column>
@@ -108,11 +99,11 @@
 			       	 
 				</p:dataTable>
 				
-				<p:dialog header="Attachments removal" widgetVar="removeAttachmentsDialog" minHeight="40">
-					<p:dataList id="attachmentsList" value="#{bugBean.selectedBug.attachments}" var="a" type="ordered">
-						<h:outputText value="#{a}"></h:outputText>
-					    <p:commandButton icon="ui-icon-trash" action="bugBean.removeAttachment(a)"></p:commandButton>
-				    </p:dataList>
+				<p:dialog header="Attachments removal" widgetVar="removeAttachmentsDialog" minHeight="40" width="400">
+					<p:dataTable id="attachmentList" value="#{bugBean.selectedBug.attachments}" var="a" type="ordered" >
+						<p:column><h:outputText value="#{a}"></h:outputText></p:column>
+					    <p:column><p:commandButton icon="ui-icon-trash" actionListener="#{bugBean.removeAttachment(a)}" ajax="true" update="attachmentList"> </p:commandButton></p:column>
+				    </p:dataTable>
 				 </p:dialog>
  
 

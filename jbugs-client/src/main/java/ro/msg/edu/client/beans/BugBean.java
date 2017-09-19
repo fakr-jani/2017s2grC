@@ -78,12 +78,13 @@ public class BugBean extends AbstractBean {
 		AttachmentDTO attachmentDTO = new AttachmentDTO();
 		attachmentDTO.setFileBytes(event.getFile().getContents());
 		attachmentDTO.setBug(selectedBug);
-
+		attachmentDTO.setFileName(event.getFile().getFileName());
 		this.selectedBug.getAttachments().add(attachmentDTO);
 		addMessage(event.getFile().getFileName()+ " " + getMessageFromProperty("#{msg['is.uploaded']}"));
 	}
 
-	public String removeAttachment(AttachmentDTO a) {
+	public void removeAttachment(AttachmentDTO a) {
+		a.setBug(null);
 		this.selectedBug.getAttachments().remove(a);
 		return EDIT_BUGS;
 	}

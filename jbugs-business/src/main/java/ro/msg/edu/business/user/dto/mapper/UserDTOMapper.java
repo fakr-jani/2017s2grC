@@ -1,9 +1,19 @@
 package ro.msg.edu.business.user.dto.mapper;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import ro.msg.edu.business.bug.dto.BugDTO;
+import ro.msg.edu.business.bug.dto.mapper.BugDTOMapper;
 import ro.msg.edu.business.common.dto.mapper.AbstractDTOMapper;
+import ro.msg.edu.business.role.dto.RoleDTO;
+import ro.msg.edu.business.role.dto.mapper.RoleDTOMapper;
 import ro.msg.edu.business.user.dto.UserDTO;
+import ro.msg.edu.persistence.bug.entity.Bug;
+import ro.msg.edu.persistence.user.entity.Role;
 import ro.msg.edu.persistence.user.entity.User;
 
 /**
@@ -14,6 +24,12 @@ import ro.msg.edu.persistence.user.entity.User;
  */
 @Stateless
 public class UserDTOMapper extends AbstractDTOMapper<User, UserDTO> {
+
+	@EJB
+	RoleDTOMapper roleDTOMapper;
+
+	@EJB
+	BugDTOMapper bugDTOMapper;
 
 	@Override
 	public UserDTO getDTOInstance() {
@@ -29,8 +45,28 @@ public class UserDTOMapper extends AbstractDTOMapper<User, UserDTO> {
 		dto.setPhoneNumber(entity.getPhoneNumber());
 		dto.setUsername(entity.getUsername());
 		dto.setActive(entity.isActive());
-		dto.setRoles(entity.getRoles());
 		dto.setCounter(entity.getCounter());
+
+		List<Role> roleEntities = entity.getRoles();
+		if (roleEntities != null) {
+			List<RoleDTO> roleDTOs = roleEntities.stream().map(e -> roleDTOMapper.mapToDTO(e))
+					.collect(Collectors.toList());
+			dto.setRoles(roleDTOs);
+		}
+
+		List<Bug> assignedBugsEntities = entity.getAssignedBugs();
+		if (assignedBugsEntities != null) {
+			List<BugDTO> bugDTOs = assignedBugsEntities.stream().map(bugEntity -> bugDTOMapper.mapToDTO(bugEntity))
+					.collect(Collectors.toList());
+			dto.setAssignedBugs(bugDTOs);
+		}
+
+		List<Bug> createdBugsEntities = entity.getCreatedBugs();
+		if (createdBugsEntities != null) {
+			List<BugDTO> bugDTOs = createdBugsEntities.stream().map(bugEntity -> bugDTOMapper.mapToDTO(bugEntity))
+					.collect(Collectors.toList());
+			dto.setCreatedBugs(bugDTOs);
+		}
 	}
 
 	@Override
@@ -43,8 +79,37 @@ public class UserDTOMapper extends AbstractDTOMapper<User, UserDTO> {
 		entity.setPhoneNumber(dto.getPhoneNumber());
 		entity.setUsername(dto.getUsername());
 		entity.setActive(dto.isActive());
-		entity.setRoles(dto.getRoles());
 		entity.setCounter(dto.getCounter());
+
+		List<RoleDTO> roleDTOs = dto.getRoles();
+		if (roleDTOs != null) {
+			List<Role> roleEntities = roleDTOs.stream().map(roleDTO -> {
+				Role roleEntity = new Role();
+				roleDTOMapper.mapToEntity(roleDTO, roleEntity);
+				return roleEntity;
+			}).collect(Collectors.toList());
+			entity.setRoles(roleEntities);
+		}
+
+		List<BugDTO> assignedBugsDTOs = dto.getAssignedBugs();
+		if (assignedBugsDTOs != null) {
+			List<Bug> bugEntities = assignedBugsDTOs.stream().map(bugDTO -> {
+				Bug bugEntity = new Bug();
+				bugDTOMapper.mapToEntity(bugDTO, bugEntity);
+				return bugEntity;
+			}).collect(Collectors.toList());
+			entity.setAssignedBugs(bugEntities);
+		}
+
+		List<BugDTO> createdBugsDTOs = dto.getCreatedBugs();
+		if (createdBugsDTOs != null) {
+			List<Bug> bugEntities = createdBugsDTOs.stream().map(bugDTO -> {
+				Bug bugEntity = new Bug();
+				bugDTOMapper.mapToEntity(bugDTO, bugEntity);
+				return bugEntity;
+			}).collect(Collectors.toList());
+			entity.setCreatedBugs(bugEntities);
+		}
 	}
 
 }

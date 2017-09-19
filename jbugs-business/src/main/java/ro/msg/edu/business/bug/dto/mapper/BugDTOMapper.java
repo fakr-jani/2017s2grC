@@ -10,7 +10,6 @@ import ro.msg.edu.business.bug.dto.AttachmentDTO;
 import ro.msg.edu.business.bug.dto.BugDTO;
 import ro.msg.edu.business.common.dto.mapper.AbstractDTOMapper;
 import ro.msg.edu.business.user.dto.UserDTO;
-import ro.msg.edu.business.user.dto.mapper.UserDTOMapper;
 import ro.msg.edu.persistence.bug.entity.Attachment;
 import ro.msg.edu.persistence.bug.entity.Bug;
 import ro.msg.edu.persistence.user.entity.User;
@@ -23,9 +22,6 @@ import ro.msg.edu.persistence.user.entity.User;
  */
 @Stateless
 public class BugDTOMapper extends AbstractDTOMapper<Bug, BugDTO> {
-
-	@EJB
-	UserDTOMapper userDTOMapper;
 
 	@EJB
 	AttachmentDTOMapper attachmentDTOMapper;
@@ -42,15 +38,32 @@ public class BugDTOMapper extends AbstractDTOMapper<Bug, BugDTO> {
 		dto.setVersion(entity.getVersion());
 		dto.setVersionFixed(entity.getVersionFixed());
 		dto.setTargetDate(entity.getTargetDate());
-		dto.setCreatedBy(userDTOMapper.mapToDTO(entity.getCreatedBy()));
+
+		User createdByEntity = entity.getCreatedBy();
+		if (createdByEntity != null) {
+			UserDTO createdByDTO = new UserDTO();
+			createdByDTO.setId(createdByEntity.getId());
+			createdByDTO.setUsername(createdByEntity.getUsername());
+			dto.setCreatedBy(createdByDTO);
+		}
+
 		dto.setStatus(entity.getStatus());
 		dto.setSeverity(entity.getSeverity());
-		dto.setAssignedTo(userDTOMapper.mapToDTO(entity.getAssignedTo()));
+
+		User assignedToEntity = entity.getCreatedBy();
+		if (assignedToEntity != null) {
+			UserDTO assignedToDTO = new UserDTO();
+			assignedToDTO.setId(assignedToEntity.getId());
+			assignedToDTO.setUsername(assignedToEntity.getUsername());
+			dto.setAssignedTo(assignedToDTO);
+		}
 
 		List<Attachment> attachmentEntities = entity.getAttachments();
 		if (attachmentEntities != null) {
-			List<AttachmentDTO> attachmentDTOs = attachmentEntities.stream().map(e -> attachmentDTOMapper.mapToDTO(e))
-					.collect(Collectors.toList());
+			List<AttachmentDTO> attachmentDTOs = attachmentEntities.stream().map(attachmentEntity -> {
+				AttachmentDTO attachmentDTO = attachmentDTOMapper.mapToDTO(attachmentEntity);
+				return attachmentDTO;
+			}).collect(Collectors.toList());
 			dto.setAttachments(attachmentDTOs);
 		}
 
@@ -63,18 +76,22 @@ public class BugDTOMapper extends AbstractDTOMapper<Bug, BugDTO> {
 		entity.setVersion(dto.getVersion());
 		entity.setVersionFixed(dto.getVersionFixed());
 		entity.setTargetDate(dto.getTargetDate());
-
-		User createdByEntity = new User();
-		userDTOMapper.mapToEntity(dto.getCreatedBy(), createdByEntity);
-		entity.setCreatedBy(createdByEntity);
-
 		entity.setStatus(dto.getStatus());
 		entity.setSeverity(dto.getSeverity());
+
+		UserDTO createdByDTO = dto.getCreatedBy();
+		if (createdByDTO != null) {
+			User createdByEntity = new User();
+			createdByEntity.setIdUser(createdByDTO.getId());
+			createdByEntity.setUsername(createdByDTO.getUsername());
+			entity.setCreatedBy(createdByEntity);
+		}
 
 		UserDTO assignedToDTO = dto.getAssignedTo();
 		if (assignedToDTO != null) {
 			User assignedToEntity = new User();
-			userDTOMapper.mapToEntity(assignedToDTO, assignedToEntity);
+			assignedToEntity.setIdUser(assignedToDTO.getId());
+			assignedToEntity.setUsername(assignedToDTO.getUsername());
 			entity.setAssignedTo(assignedToEntity);
 		}
 
@@ -87,7 +104,6 @@ public class BugDTOMapper extends AbstractDTOMapper<Bug, BugDTO> {
 			}).collect(Collectors.toList());
 			entity.setAttachments(attachmentEntities);
 		}
-
 	}
 
 }

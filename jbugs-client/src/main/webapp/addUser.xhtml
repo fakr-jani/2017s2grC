@@ -18,7 +18,7 @@
 			<h1><p:outputLabel value="#{msg['add.user']}" /></h1>
 			<ui:include src="menu.xhtml" />
 			<br /> <br />
-			<h:form id="addUser">
+			<h:form id="addUser" rendered="#{userBean.verifyPermissionRendered('USER_MANAGEMENT')}">
 				<p:outputLabel value="#{msg['firstname']}" />
 				<p:outputLabel value="#{user.firstname}" />
 				<p:inputText value="#{userBean.newUser.firstname}" required="true" />
