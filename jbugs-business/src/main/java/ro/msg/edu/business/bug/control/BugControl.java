@@ -44,7 +44,6 @@ public class BugControl {
 	BugValidator bugValidator;
 
 	public BugDTO updateBug(BugDTO bugDTO) throws TechnicalException {
-		// bugValidator.validateBugData(bugDTO);
 
 		Bug persistedEntity = bugDAO.findEntity(bugDTO.getId());
 		if (persistedEntity == null)

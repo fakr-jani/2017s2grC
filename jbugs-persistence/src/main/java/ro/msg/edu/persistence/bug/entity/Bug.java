@@ -49,7 +49,6 @@ public class Bug extends AbstractEntity {
 	private String titleBug;
 
 	@NotNull
-	// @Size(min = 250)
 	@Column
 	private String descriptionBug;
 

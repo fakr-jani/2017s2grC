@@ -11,13 +11,12 @@ import javax.faces.validator.ValidatorException;
 public class EmailValidator implements Validator {
 
 	@Override
-	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+	public void validate(FacesContext context, UIComponent component, Object value) {
 		String stringValue = value.toString();
 		if (!(stringValue.endsWith("@msggroup.com"))) {
 			String emailValidationMessage = context.getApplication().evaluateExpressionGet(context,
 					"#{msg['validator.email]}", String.class);
 			FacesMessage message = new FacesMessage(emailValidationMessage);
-			throw new ValidatorException(message);
 
 		}
 	}

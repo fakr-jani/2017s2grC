@@ -51,7 +51,7 @@ public class UserCRUDControlTest extends AbstractIntegrationTest {
 		String[] nameRoles = { "ADMINISTRATOR" };
 		UserDTO persisted = sut.createUser(testUser, nameRoles);
 		boolean existUser = sut.verifyUserExists(persisted);
-		Assert.assertEquals(existUser, true);
+		Assert.assertEquals(true,existUser);
 
 	}
 
