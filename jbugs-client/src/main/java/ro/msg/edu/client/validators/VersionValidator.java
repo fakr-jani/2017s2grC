@@ -23,7 +23,10 @@ public class VersionValidator implements Validator {
 	public void validate(FacesContext context, UIComponent component, Object value) {
 		String stringValue = value.toString();
 		if (!stringValue.matches(VALID_BUG_VERSION_REGEX)) {
-			FacesMessage message = new FacesMessage("Not a valid bug version!");
+			String versionValidationMessage= context.getApplication().evaluateExpressionGet(context,
+					"#{msg['validator.version']}", String.class);
+			FacesMessage message = new FacesMessage(versionValidationMessage);
+			context.addMessage(null, message);
 		}
 
 	}

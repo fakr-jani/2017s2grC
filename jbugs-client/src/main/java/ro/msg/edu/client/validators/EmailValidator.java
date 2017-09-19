@@ -17,7 +17,7 @@ public class EmailValidator implements Validator {
 			String emailValidationMessage = context.getApplication().evaluateExpressionGet(context,
 					"#{msg['validator.email]}", String.class);
 			FacesMessage message = new FacesMessage(emailValidationMessage);
-
+			context.addMessage(null, message);
 		}
 	}
 }

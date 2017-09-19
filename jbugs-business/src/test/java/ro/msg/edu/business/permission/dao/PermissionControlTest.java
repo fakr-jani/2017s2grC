@@ -17,6 +17,6 @@ public class PermissionControlTest extends AbstractIntegrationTest {
 	@Test
 	public void findPermissionByName_Success() {
 		Permission permission = permissionDAO.findPermissionByName(PermissionType.BUG_CLOSE);
-		Assert.assertEquals(permission.getNamePermission(), PermissionType.BUG_CLOSE);
+		Assert.assertEquals(PermissionType.BUG_CLOSE,permission.getNamePermission());
 	}
 }

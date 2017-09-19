@@ -20,6 +20,7 @@ public class PhoneNumberValidator implements Validator {
 			String phoneValidationMessage = context.getApplication().evaluateExpressionGet(context,
 					"#{msg['validator.phone']}", String.class);
 			FacesMessage message = new FacesMessage(phoneValidationMessage);
+			context.addMessage(null, message);
 		}
 
 	}

@@ -36,7 +36,7 @@ public class BugBean extends AbstractBean {
 
 	private BugDTO selectedBug = new BugDTO();
 
-	private static final String editBugs = "editBugs";
+	private static final String EDIT_BUGS = "editBugs";
 
 	public List<BugDTO> getAllBugs() {
 		return bugFacade.findAllBugs();
@@ -64,7 +64,7 @@ public class BugBean extends AbstractBean {
 		} catch (TechnicalException e) {
 			addMessage(e.getMessage());
 		}
-		return editBugs;
+		return EDIT_BUGS ;
 	}
 
 	public void addUploadedFile(FileUploadEvent fileUploadEvent) {
@@ -87,12 +87,12 @@ public class BugBean extends AbstractBean {
 
 	public String enterUpdateMode(BugDTO bug) {
 		this.selectedBug = bug;
-		return editBugs;
+		return EDIT_BUGS ;
 	}
 
 	public String leaveUpdateMode() {
 		selectedBug = new BugDTO();
-		return editBugs;
+		return EDIT_BUGS ;
 	}
 
 	public boolean verifyEditRendered(BugDTO bug) {

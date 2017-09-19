@@ -17,6 +17,7 @@ public class LoginValidator implements Validator {
 			String username = context.getApplication().evaluateExpressionGet(context, "#{msg['validator.username']}",
 					String.class);
 			FacesMessage message = new FacesMessage(username);
+			context.addMessage(null, message);
 		}
 
 	}

@@ -1,5 +1,6 @@
 package ro.msg.edu.business.user.validator;
 
+import java.io.Serializable;
 import java.util.Optional;
 
 import javax.ejb.EJB;
@@ -11,7 +12,7 @@ import ro.msg.edu.business.user.dto.UserDTO;
 import ro.msg.edu.persistence.user.entity.User;
 
 @Stateless
-public class UserValidator {
+public class UserValidator implements Serializable{
 
 	@EJB
 	private UserDAO userDAO;
