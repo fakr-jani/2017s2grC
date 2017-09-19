@@ -41,7 +41,9 @@ public class BugBean extends AbstractBean {
 
 	private BugDTO selectedBug = new BugDTO();;
 
-	private static final String editBugs = "editBugs";
+	private static final String EDIT_BUGS = "editBugs";
+	private static final String CLOSE_BUG="closeBug";
+	private static final String DATE_FORMAT="yyyy-MM-dd";
 
 	public List<BugDTO> getAllBugs() {
 		return bugFacade.findAllBugs();
@@ -69,7 +71,7 @@ public class BugBean extends AbstractBean {
 		} catch (TechnicalException e) {
 			addMessage(e.getMessage());
 		}
-		return editBugs;
+		return EDIT_BUGS;
 	}
 
 	public void addUploadedFile(FileUploadEvent event) {
@@ -78,18 +80,16 @@ public class BugBean extends AbstractBean {
 		attachmentDTO.setBug(selectedBug);
 
 		this.selectedBug.getAttachments().add(attachmentDTO);
-
-		FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
-		FacesContext.getCurrentInstance().addMessage(null, message);
+		addMessage(event.getFile().getFileName()+ " " + getMessageFromProperty("#{msg['is.uploaded']}"));
 	}
 
 	public String removeAttachment(AttachmentDTO a) {
 		this.selectedBug.getAttachments().remove(a);
-		return editBugs;
+		return EDIT_BUGS;
 	}
 
 	public void onDateSelect(SelectEvent event) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
 		try {
 			String s = sdf.format(event.getObject());
 			Date d = sdf.parse(s);
@@ -101,12 +101,12 @@ public class BugBean extends AbstractBean {
 
 	public String enterUpdateMode(BugDTO bug) {
 		this.selectedBug = bug;
-		return editBugs;
+		return EDIT_BUGS;
 	}
 
 	public String leaveUpdateMode() {
 		selectedBug = new BugDTO();
-		return editBugs;
+		return EDIT_BUGS;
 	}
 
 	public boolean verifyEditRendered(BugDTO bug) {
@@ -124,7 +124,7 @@ public class BugBean extends AbstractBean {
 		} catch (TechnicalException e) {
 			addMessage(e.getMessage());
 		}
-		return "closeBug";
+		return CLOSE_BUG;
 	}
 
 	public String getMessageFromProperty(String messageProperty) {

@@ -33,9 +33,9 @@ public class UserBean extends AbstractBean {
 	
 	private List<String> updateRoles;
 
-	private static final String editUsers = "editUsers";
-	private static final String deleteUser = "deleteUser";
-	private static final String addUser = "addUser";
+	private static final String EDIT_USERS = "editUsers";
+	private static final String DELETE_USER = "deleteUser";
+	private static final String ADD_USER = "addUser";
 
 	public UserDTO getSelectedUser() {
 		return selectedUser;
@@ -64,7 +64,7 @@ public class UserBean extends AbstractBean {
 		} catch (TechnicalException e) {
 			addMessage(e.getMessage());
 		}
-		return addUser;
+		return ADD_USER;
 	}
 
 	public String deleteUser(UserDTO user) {
@@ -74,24 +74,24 @@ public class UserBean extends AbstractBean {
 		} catch (TechnicalException e) {
 			addMessage(e.getMessage());
 		}
-		return deleteUser;
+		return DELETE_USER;
 	}
 
 	public String activateUser(UserDTO user) {
 		userFacade.activateUser(user);
 		addMessage(user.getUsername() + " " + getMessageFromProperty("#{msg['user.activated']}"));
-		return editUsers;
+		return EDIT_USERS ;
 	}
 
 	public String enterUpdateMode(UserDTO user) {
 		this.selectedUser = user;
-		return editUsers;
+		return EDIT_USERS ;
 	}
 
 	public String leaveUpdateMode() {
 
 		selectedUser = new UserDTO();
-		return editUsers;
+		return EDIT_USERS ;
 	}
 
 	public boolean verifyUserRendered(UserDTO user) {
@@ -109,7 +109,7 @@ public class UserBean extends AbstractBean {
 		} catch (TechnicalException e) {
 			addMessage(e.getMessage());
 		}
-		return editUsers;
+		return EDIT_USERS;
 	}
 
 	public String[] getSelectedRoles() {

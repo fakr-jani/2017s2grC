@@ -15,45 +15,56 @@
 		<h:form id="menuForm">
 			<p:messages autoUpdate="true" />
 
-			<h:commandLink action="#{loginBean.setLocaleLanguege('ro')}" >
-				<h:graphicImage library="images" name="ro.svg"
-					 styleClass="flag" alt="Romanian"></h:graphicImage>
+			<h:commandLink action="#{loginBean.setLocaleLanguege('ro')}">
+				<h:graphicImage library="images" name="ro.svg" styleClass="flag"
+					alt="Romanian"></h:graphicImage>
 			</h:commandLink>
 			<h:commandLink action="#{loginBean.setLocaleLanguege('en')}">
-				<h:graphicImage library="images" name="us.svg" styleClass="flag" alt="English"></h:graphicImage>
+				<h:graphicImage library="images" name="us.svg" styleClass="flag"
+					alt="English"></h:graphicImage>
 			</h:commandLink>
-			
+
 			<p:menubar>
 				<p:menuitem value="#{msg['menu.home']}" url="menu.xhtml"
 					icon="ui-icon-home" />
 
 				<p:submenu label="#{msg['menu.users']}" icon="ui-icon-person">
 					<p:menuitem value="#{msg['menu.adduser']}" url="addUser.xhtml"
-						icon="ui-icon-plus" rendered="#{!userbean.hasPermission(user,USER_MANAGEMENT)}"/>
+						icon="ui-icon-plus"
+						rendered="#{!userbean.hasPermission(user,USER_MANAGEMENT)}" />
 					<p:menuitem value="#{msg['menu.edituser']}" url="editUsers.xhtml"
 						icon="ui-icon-pencil" />
 					<p:menuitem value="#{msg['menu.deleteuser']}"
-						url="deleteUser.xhtml" icon="ui-icon-close" />
+						url="deleteUser.xhtml" icon="ui-icon-trash" />
 				</p:submenu>
 
 				<p:submenu label="#{msg['menu.permissions']}" icon="ui-icon-check">
 					<p:menuitem value="#{msg['menu.addpermissions']}"
 						url="addPermission.xhtml" icon="ui-icon-plus" />
 					<p:menuitem value="#{msg['menu.removepermissions']}"
-						url="removePermission.xhtml" icon="ui-icon-close" />
+						url="removePermission.xhtml" icon="ui-icon-trash" />
 				</p:submenu>
-				
-				<p:submenu label="#{msg['menu.bug']}" >
-					<p:menuitem value="#{msg['add.bug']}"
-						icon="ui-icon-plus" url="addBug.xhtml"/>
-						<p:menuitem value="#{msg['view.bug']}"
-						icon="ui-icon-info" url="bugs.xhtml" />
-					<p:menuitem value="#{msg['edit.bug']}"
-						icon="ui-icon-pencil" url="editBugs.xhtml" />
-					<p:menuitem value="#{msg['edit.bug.status']}"
-						icon="ui-icon-pencil" url="editBugStatus.xhtml" />
-					<p:menuitem value="#{msg['close.bug.button']}"
-						icon="ui-icon-close" url="closeBug.xhtml" />
+
+				<p:submenu label="#{msg['menu.bug']}" icon="ui-icon-gear">
+					<p:menuitem value="#{msg['add.bug']}" icon="ui-icon-plus"
+						url="addBug.xhtml" />
+					<p:menuitem value="#{msg['view.bug']}" icon="ui-icon-info"
+						url="bugs.xhtml" />
+					<p:menuitem value="#{msg['edit.bug']}" icon="ui-icon-pencil"
+						url="editBugs.xhtml" />
+					<p:menuitem value="#{msg['edit.bug.status']}" icon="ui-icon-pencil"
+						url="editBugStatus.xhtml" />
+					<p:menuitem value="#{msg['bug.export.pdf']}"
+						icon="ui-icon-document" />
+					<p:menuitem value="#{msg['close.bug.button']}" icon="ui-icon-trash"
+						url="closeBug.xhtml" />
+				</p:submenu>
+
+				<p:submenu label="#{msg['menu.notification']}"
+					icon="ui-icon-mail-closed">
+					<p:menuitem value="#{msg['view.notification']}" icon="ui-icon-info" />
+					<p:menuitem value="#{msg['delete.notification']}"
+						icon="ui-icon-trash" />
 				</p:submenu>
 
 				<f:facet name="options">
