@@ -78,8 +78,6 @@ public class BugControl {
 		return bugDTOMapper.mapToDTO(persistedEntity);
 	}
 
-	
-
 	public BugDTO createBug(BugDTO bug) throws TechnicalException {
 		bugValidator.validateBugData(bug);
 
@@ -97,18 +95,15 @@ public class BugControl {
 	public List<BugDTO> findAllBugs() {
 		List<Bug> bugEnitites = bugDAO.findAllBugs();
 
-		List<BugDTO> bugDTOs = bugEnitites.stream().map(e -> bugDTOMapper.mapToDTO(e)).collect(Collectors.toList());
+		return bugEnitites.stream().map(e -> bugDTOMapper.mapToDTO(e)).collect(Collectors.toList());
 
-		return bugDTOs;
 	}
-	
 
 	public List<BugDTO> findAllFixedAndRejectedBugs() {
 		List<Bug> bugEnitites = bugDAO.findAllFixedAndRejectedBugs();
 
-		List<BugDTO> bugDTOs = bugEnitites.stream().map(e -> bugDTOMapper.mapToDTO(e)).collect(Collectors.toList());
+		return bugEnitites.stream().map(e -> bugDTOMapper.mapToDTO(e)).collect(Collectors.toList());
 
-		return bugDTOs;
 	}
 
 	public BugDTO closeBug(BugDTO bugDTO) throws TechnicalException {

@@ -1,5 +1,7 @@
 package ro.msg.edu.business.common.dao;
 
+import java.io.Serializable;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -7,8 +9,9 @@ import javax.persistence.TypedQuery;
 
 import ro.msg.edu.persistence.common.entity.AbstractEntity;
 
-public abstract class AbstractDao<E extends AbstractEntity> {
+public abstract class AbstractDao<E extends AbstractEntity> implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	@PersistenceContext(unitName = "jbugs-persistence")
 	protected EntityManager em;
 

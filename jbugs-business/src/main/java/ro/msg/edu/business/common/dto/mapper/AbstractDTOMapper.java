@@ -1,12 +1,15 @@
 package ro.msg.edu.business.common.dto.mapper;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import ro.msg.edu.business.common.dto.AbstractDTO;
 import ro.msg.edu.persistence.common.entity.AbstractEntity;
 
-public abstract class AbstractDTOMapper<E extends AbstractEntity, DTO extends AbstractDTO> {
+public abstract class AbstractDTOMapper<E extends AbstractEntity, DTO extends AbstractDTO> implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	public abstract DTO getDTOInstance();
 
@@ -40,8 +43,6 @@ public abstract class AbstractDTOMapper<E extends AbstractEntity, DTO extends Ab
 
 		return dtos;
 	}
-
-	// TODO implement mapToEntites()
 
 	protected abstract void mapEntityToDTOFields(E entity, DTO dto);
 

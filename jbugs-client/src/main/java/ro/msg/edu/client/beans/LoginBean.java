@@ -18,9 +18,6 @@ import ro.msg.edu.business.user.dto.UserDTO;
 @ViewScoped
 public class LoginBean implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@EJB
@@ -29,8 +26,8 @@ public class LoginBean implements Serializable {
 	private UserDTO user = new UserDTO();
 
 	private final static int MAX_NUMBER_OF_TRIES = 5;
-	private final static String MENU="menu";
-	private final static String LOGIN="login";
+	private final static String MENU = "menu";
+	private final static String LOGIN = "login";
 
 	public UserDTO getUser() {
 		return user;
