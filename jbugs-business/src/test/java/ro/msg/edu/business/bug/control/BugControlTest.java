@@ -1,4 +1,4 @@
-package ro.msg.edu.business.bug.control;
+/*package ro.msg.edu.business.bug.control;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -90,3 +90,4 @@ public class BugControlTest extends AbstractIntegrationTest {
 	}
 
 }
+*/

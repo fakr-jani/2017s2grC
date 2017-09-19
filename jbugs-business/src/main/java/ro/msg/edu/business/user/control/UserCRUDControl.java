@@ -8,13 +8,16 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import ro.msg.edu.business.common.exception.TechnicalException;
+import ro.msg.edu.business.permission.dao.PermissionDAO;
 import ro.msg.edu.business.role.dao.RoleDAO;
 import ro.msg.edu.business.user.dao.UserDAO;
 import ro.msg.edu.business.user.dto.UserDTO;
 import ro.msg.edu.business.user.dto.mapper.UserDTOMapper;
 import ro.msg.edu.business.user.validator.UserValidator;
+import ro.msg.edu.persistence.user.entity.Permission;
 import ro.msg.edu.persistence.user.entity.Role;
 import ro.msg.edu.persistence.user.entity.User;
+import ro.msg.edu.persistence.user.entity.enums.PermissionType;
 import ro.msg.edu.persistence.user.entity.enums.RoleType;
 
 /**
@@ -36,6 +39,9 @@ public class UserCRUDControl {
 
 	@EJB
 	UserValidator userValidator;
+	
+	@EJB
+	private PermissionDAO permissionDAO;
 
 	private final static int MAX_NUMBER_OF_TRIES = 4;
 	private final static int MAX_CHARACTERTER_FROM_LASTNAME = 5;
@@ -82,11 +88,16 @@ public class UserCRUDControl {
 		return userDTOMapper.mapToDTO(userEntity);
 	}
 
-	public UserDTO updateUser(UserDTO userToUpdate) throws TechnicalException {
+	public UserDTO updateUser(UserDTO userToUpdate,List<String> updateRoles) throws TechnicalException {
 		Optional<User> userOptional = userDAO.findUserByUsername(userToUpdate.getUsername());
 		User entity = userOptional.get();
-		userValidator.validateUserData(userToUpdate);
+		List<Role> roleList = new ArrayList<>();
 
+		for (String roleName : updateRoles) {
+			roleList.add(roleDAO.getRoleByName(RoleType.valueOf(roleName)));
+		}
+		userValidator.validateUserData(userToUpdate);
+		entity.setRoles(roleList);
 		entity.setEmail(userToUpdate.getEmail());
 		entity.setFirstname(userToUpdate.getFirstname());
 		entity.setLastname(userToUpdate.getLastname());
@@ -179,5 +190,5 @@ public class UserCRUDControl {
 
 		return userDTOMapper.mapToDTO(userEntity);
 	}
-
+	
 }

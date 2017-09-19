@@ -11,7 +11,9 @@ import ro.msg.edu.business.common.dao.AbstractDao;
 import ro.msg.edu.business.common.exception.TechnicalException;
 import ro.msg.edu.persistence.bug.entity.Bug;
 import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
+import ro.msg.edu.persistence.user.entity.Permission;
 import ro.msg.edu.persistence.user.entity.User;
+import ro.msg.edu.persistence.user.entity.enums.PermissionType;
 
 /**
  * DAO for {@link User} entity.
@@ -71,8 +73,8 @@ public class UserDAO extends AbstractDao<User> {
 				return true;
 			}
 		}
-
 		return false;
 	}
-
+	
+	
 }

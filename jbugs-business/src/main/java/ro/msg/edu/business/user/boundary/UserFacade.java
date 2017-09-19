@@ -42,8 +42,8 @@ public class UserFacade {
 
 	}
 
-	public UserDTO updateUser(UserDTO userDTO) throws TechnicalException {
-		return userCRUDControl.updateUser(userDTO);
+	public UserDTO updateUser(UserDTO userDTO,List<String> updateRoles) throws TechnicalException {
+		return userCRUDControl.updateUser(userDTO,updateRoles);
 	}
 
 	public UserDTO findUserbyUsername(String username) {
@@ -74,5 +74,6 @@ public class UserFacade {
 	public boolean hasActiveTasks(UserDTO userDTO) {
 		return userCRUDControl.hasActiveTasks(userDTO);
 	}
+	
 
 }

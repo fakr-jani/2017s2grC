@@ -29,7 +29,7 @@
 
 				<p:submenu label="#{msg['menu.users']}" icon="ui-icon-person">
 					<p:menuitem value="#{msg['menu.adduser']}" url="addUser.xhtml"
-						icon="ui-icon-plus" />
+						icon="ui-icon-plus" rendered="#{!userbean.hasPermission(user,USER_MANAGEMENT)}"/>
 					<p:menuitem value="#{msg['menu.edituser']}" url="editUsers.xhtml"
 						icon="ui-icon-pencil" />
 					<p:menuitem value="#{msg['menu.deleteuser']}"
