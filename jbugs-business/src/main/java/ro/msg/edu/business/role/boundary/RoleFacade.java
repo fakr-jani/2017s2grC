@@ -1,5 +1,6 @@
 package ro.msg.edu.business.role.boundary;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -12,8 +13,9 @@ import ro.msg.edu.business.role.dto.RoleDTO;
 
 @Stateless
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-public class RoleFacade {
+public class RoleFacade implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	@EJB
 	private RoleControl roleControl;
 

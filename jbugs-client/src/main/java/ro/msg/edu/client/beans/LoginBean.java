@@ -18,6 +18,9 @@ import ro.msg.edu.business.user.dto.UserDTO;
 @ViewScoped
 public class LoginBean implements Serializable {
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 
 	@EJB
@@ -66,7 +69,7 @@ public class LoginBean implements Serializable {
 		} else
 
 		{
-			FacesContext context = FacesContext.getCurrentInstance();
+			FacesContext context = getFacesContext();
 			UserDTO userUpdated = userFacade.setStatus(user);
 			if (userUpdated.getCounter() > MAX_NUMBER_OF_TRIES) {
 				String messageLocked = context.getApplication().evaluateExpressionGet(context,

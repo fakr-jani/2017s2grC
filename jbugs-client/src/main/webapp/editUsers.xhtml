@@ -13,7 +13,9 @@
 <h:body>
 	<f:view contentType="text/html">
 		<div>
-			<h1><p:outputLabel value="#{msg['edit.user']}" /></h1>
+			<h1>
+				<p:outputLabel value="#{msg['edit.user']}" />
+			</h1>
 			<ui:include src="menu.xhtml" />
 			<br /> <br />
 			<h:form id="userForm">
@@ -23,49 +25,71 @@
 							<p:outputLabel value="#{msg['firstname']}" />
 							<br />
 						</f:facet>
-						<h:outputText value="#{user.firstname}"/>
-						<h:inputText value="#{userBean.selectedUser.firstname}" rendered="#{userBean.verifyEditRendered(user)}"/>
+						<h:outputText value="#{user.firstname}" />
+						<h:inputText value="#{userBean.selectedUser.firstname}"
+							rendered="#{userBean.verifyEditRendered(user)}" />
 					</p:column>
 					<p:column>
 						<f:facet name="header">
 							<p:outputLabel value="#{msg['lastname']}" />
 							<br />
 						</f:facet>
-						<h:outputText value="#{user.lastname}"/>
-						<h:inputText value="#{userBean.selectedUser.lastname}" rendered="#{userBean.verifyEditRendered(user)}"/>
+						<h:outputText value="#{user.lastname}" />
+						<h:inputText value="#{userBean.selectedUser.lastname}"
+							rendered="#{userBean.verifyEditRendered(user)}" />
 					</p:column>
 					<p:column>
 						<f:facet name="header">
 							<p:outputLabel value="#{msg['username']}" />
 							<br />
 						</f:facet>
-						<h:outputText value="#{user.username}"/>
+						<h:outputText value="#{user.username}" />
 					</p:column>
 					<p:column>
 						<f:facet name="header">
 							<p:outputLabel value="#{msg['email']}" />
 							<br />
 						</f:facet>
-						<h:outputText value="#{user.email}"/>
-						<h:inputText value="#{userBean.selectedUser.email}" rendered="#{userBean.verifyEditRendered(user)}"/>
+						<h:outputText value="#{user.email}" />
+						<h:inputText value="#{userBean.selectedUser.email}"
+							rendered="#{userBean.verifyEditRendered(user)}" />
 					</p:column>
 					<p:column>
 						<f:facet name="header">
 							<p:outputLabel value="#{msg['phoneNumber']}" />
 							<br />
 						</f:facet>
-						<h:outputText value="#{user.phoneNumber}"/>
-						<h:inputText value="#{userBean.selectedUser.phoneNumber}" rendered="#{userBean.verifyEditRendered(user)}"/>
+						<h:outputText value="#{user.phoneNumber}" />
+						<h:inputText value="#{userBean.selectedUser.phoneNumber}"
+							rendered="#{userBean.verifyEditRendered(user)}" />
 					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<p:outputLabel value="#{msg['role']}" />
+							<br />
+						</f:facet>
+						<p:dataList value="#{user.roles}" var="role" type="definition">
+							<h:outputText value="#{role.roleName}" />
+						</p:dataList>
+						<p:selectManyMenu value="#{userBean.updateRoles}" filter="true"
+							filterMatchMode="startsWith" showCheckbox="true"
+							rendered="#{userBean.verifyEditRendered(user)}">
+							<f:selectItems value="#{roleBean.allRoles}" var="role"
+								itemLabel="#{role.roleName}" itemValue="#{role.roleName}" />
+						</p:selectManyMenu>
+					</p:column>
+
 					<p:column>
 						<f:facet name="header">
 							<p:outputLabel value="#{msg['state']}" />
 							<br />
 						</f:facet>
-						<h:outputText value="#{msg['active']}" rendered="#{user.active}"/>
-						<h:outputText value="#{msg['inactive']}" rendered="#{!user.active}"/>
+						<h:outputText value="#{msg['active']}" rendered="#{user.active}" />
+						<h:outputText value="#{msg['inactive']}"
+							rendered="#{!user.active}" />
 					</p:column>
-					
+
 					<p:column>
 						<f:facet name="header">
 							<p:outputLabel value="#{msg['action']}" />
@@ -73,19 +97,19 @@
 						</f:facet>
 						<h:commandButton value="#{msg['activate']}"
 							action="#{userBean.activateUser(user)}"
-							rendered="#{!user.active}"/>
+							rendered="#{!user.active}" />
 
 						<h:commandButton value="#{msg['edit.button']}"
 							action="#{userBean.enterUpdateMode(user)}"
-							rendered="#{!userBean.verifyEditRendered(user)}"/>
+							rendered="#{!userBean.verifyEditRendered(user)}" />
 
 						<h:commandButton value="#{msg['leave']}"
 							action="#{userBean.leaveUpdateMode}"
-							rendered="#{userBean.verifyEditRendered(user)}"/>
+							rendered="#{userBean.verifyEditRendered(user)}" />
 
 						<h:commandButton value="#{msg['update.button']}"
 							action="#{userBean.updateUser}"
-							rendered="#{userBean.verifyEditRendered(user)}"/>
+							rendered="#{userBean.verifyEditRendered(user)}" />
 					</p:column>
 				</p:dataTable>
 			</h:form>

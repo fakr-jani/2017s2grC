@@ -7,17 +7,17 @@ import java.util.List;
 import ro.msg.edu.business.common.dto.AbstractDTO;
 import ro.msg.edu.persistence.common.entity.AbstractEntity;
 
-public abstract class AbstractDTOMapper<E extends AbstractEntity, DTO extends AbstractDTO> implements Serializable {
+public abstract class AbstractDTOMapper<E extends AbstractEntity, D extends AbstractDTO> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public abstract DTO getDTOInstance();
+	public abstract D getDTOInstance();
 
-	public DTO mapToDTO(E entity) {
+	public D mapToDTO(E entity) {
 		if (entity == null) {
 			return null;
 		} else {
-			DTO dto = getDTOInstance();
+			D dto = getDTOInstance();
 
 			dto.setId(entity.getId());
 			dto.setLockVersion(entity.getLockVersion());
@@ -29,14 +29,14 @@ public abstract class AbstractDTOMapper<E extends AbstractEntity, DTO extends Ab
 
 	}
 
-	public void mapToEntity(DTO dto, E entity) {
+	public void mapToEntity(D dto, E entity) {
 		entity.setLockVersion(dto.getLockVersion());
 
 		mapDTOToEntityFields(dto, entity);
 	}
 
-	public List<DTO> mapToDTOs(List<E> entities) {
-		List<DTO> dtos = new ArrayList<>();
+	public List<D> mapToDTOs(List<E> entities) {
+		List<D> dtos = new ArrayList<>();
 		for (E entity : entities) {
 			dtos.add(mapToDTO(entity));
 		}
@@ -44,8 +44,8 @@ public abstract class AbstractDTOMapper<E extends AbstractEntity, DTO extends Ab
 		return dtos;
 	}
 
-	protected abstract void mapEntityToDTOFields(E entity, DTO dto);
+	protected abstract void mapEntityToDTOFields(E entity, D dto);
 
-	protected abstract void mapDTOToEntityFields(DTO dto, E entity);
+	protected abstract void mapDTOToEntityFields(D dto, E entity);
 
 }

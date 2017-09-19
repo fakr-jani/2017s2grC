@@ -57,12 +57,12 @@
 				       			</p:calendar>
 				       </p:column>
 				       
-				       <p:column headerText="#{msg['bug.assigned']}">
+	<!-- 			       <p:column headerText="#{msg['bug.assigned']}">
 				       			 <h:outputText value="#{bug.assignedTo}" />
 				       			 <h:selectOneMenu value="#{bugBean.selectedBug.assignedTo}" rendered="#{bugBean.verifyEditRendered(bug)}">
 				                       <f:selectItems value="#{bugBean.allUsers}" var="u" itemLabel="#{u}" itemValue="#{u}" />
 				                 </h:selectOneMenu>
-				       </p:column>
+				       </p:column> -->
 				       
 				       <p:column headerText="#{msg['bug.created']}">
 				       			<h:outputText value="#{bug.createdBy}" />

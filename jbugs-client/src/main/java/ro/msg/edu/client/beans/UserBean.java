@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import ro.msg.edu.business.common.exception.JBugsException;
 import ro.msg.edu.business.common.exception.TechnicalException;
 import ro.msg.edu.business.user.boundary.UserFacade;
 import ro.msg.edu.business.user.dto.UserDTO;
@@ -29,6 +30,8 @@ public class UserBean extends AbstractBean {
 	private UserDTO selectedUser = new UserDTO();
 
 	private String[] selectedRoles;
+
+	private List<String> updateRoles;
 
 	private static final String editUsers = "editUsers";
 	private static final String deleteUser = "deleteUser";
@@ -58,7 +61,7 @@ public class UserBean extends AbstractBean {
 		try {
 			UserDTO userCreated = userFacade.createUser(newUser, selectedRoles);
 			addMessage(userCreated.getUsername() + " " + getMessageFromProperty("#{msg['user.added']}"));
-		} catch (TechnicalException e) {
+		} catch (JBugsException e) {
 			addMessage(e.getMessage());
 		}
 		return addUser;
@@ -75,8 +78,13 @@ public class UserBean extends AbstractBean {
 	}
 
 	public String activateUser(UserDTO user) {
-		userFacade.activateUser(user);
-		addMessage(user.getUsername() + " " + getMessageFromProperty("#{msg['user.activated']}"));
+		try {
+			userFacade.activateUser(user);
+			addMessage(user.getUsername() + " " + getMessageFromProperty("#{msg['user.activated']}"));
+
+		} catch (JBugsException e) {
+			addMessage(e.getMessage());
+		}
 		return editUsers;
 	}
 
@@ -101,7 +109,7 @@ public class UserBean extends AbstractBean {
 
 	public String updateUser() {
 		try {
-			userFacade.updateUser(selectedUser);
+			userFacade.updateUser(selectedUser, updateRoles);
 			addMessage(selectedUser.getUsername() + " " + getMessageFromProperty("#{msg['user.updated']}"));
 		} catch (TechnicalException e) {
 			addMessage(e.getMessage());
@@ -120,6 +128,14 @@ public class UserBean extends AbstractBean {
 	public String getMessageFromProperty(String messageProperty) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		return context.getApplication().evaluateExpressionGet(context, messageProperty, String.class);
+	}
+
+	public List<String> getUpdateRoles() {
+		return updateRoles;
+	}
+
+	public void setUpdateRoles(List<String> updateRoles) {
+		this.updateRoles = updateRoles;
 	}
 
 }

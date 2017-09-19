@@ -8,20 +8,13 @@ package ro.msg.edu.business.common.exception;
 public class JBugsException extends Exception {
 	private static final long serialVersionUID = -5628141671921410481L;
 
-	private final String message;
-
 	public JBugsException(String message) {
-		super();
-		this.message = message;
+		super(message);
 	}
 
 	public JBugsException(String message, Throwable cause) {
-		super(cause);
-		this.message = message;
+		super(message, cause);
+
 	}
 
-	@Override
-	public String getMessage() {
-		return message;
-	}
 }
