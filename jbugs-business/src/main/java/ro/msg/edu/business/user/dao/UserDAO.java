@@ -86,7 +86,7 @@ public class UserDAO extends AbstractDao<User> {
 		query.setParameter(USERNAME, username);
 		query.setParameter("permission", permissionType);
 		List<Permission> permissionList = query.getResultList();
-		return permissionList.isEmpty() == false;
+		return !permissionList.isEmpty();
 
 	}
 }

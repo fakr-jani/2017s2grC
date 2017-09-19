@@ -62,10 +62,6 @@ public class UserValidator implements Serializable{
 
 	public boolean uniqueUsername(StringBuilder username) {
 		Optional<User> user = userDAO.findUserByUsername(username.toString());
-		if (user.isPresent() && user.get().getId() != null) {
-			return false;
-
-		} else
-			return true;
+		return user.isPresent() && user.get().getId() != null;
 	}
 }
