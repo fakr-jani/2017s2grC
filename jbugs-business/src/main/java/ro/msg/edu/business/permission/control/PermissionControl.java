@@ -1,5 +1,6 @@
 package ro.msg.edu.business.permission.control;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import ro.msg.edu.business.permission.dto.mapper.PermissionDTOMapper;
 import ro.msg.edu.persistence.user.entity.Permission;
 
 @Stateless
-public class PermissionControl {
+public class PermissionControl implements Serializable{
 
 	@EJB
 	private PermissionDAO permissionDAO;

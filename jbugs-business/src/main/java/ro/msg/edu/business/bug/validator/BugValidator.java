@@ -1,6 +1,8 @@
 
 package ro.msg.edu.business.bug.validator;
 
+import java.io.Serializable;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -16,7 +18,7 @@ import ro.msg.edu.persistence.bug.entity.Bug;
  * 
  */
 @Stateless
-public class BugValidator {
+public class BugValidator implements Serializable{
 
 	@EJB
 	BugDAO bugDAO;

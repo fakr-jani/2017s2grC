@@ -12,12 +12,11 @@
 	<h:outputStylesheet library="css" name="style.css" />
 </h:head>
 <h:body>
+	<h1><p:outputLabel value="#{msg['view.bug']}" /></h1>
 	<ui:include src="menu.xhtml" />
+	<br /> <br />
 	<f:view contentType="text/html">
 		<h:form id="bugsForm" rendered="#{userBean.verifyPermissionRendered('BUG_MANAGEMENT')}">
-			<h1>
-				<p:outputLabel value="#{msg['view.bug']}" />
-			</h1>
 			<p:dataTable var="bug" value="#{bugFilter.bugs}" id="bugsTable"
 				widgetVar="bugsTable" filteredValue="#{bugFilter.filteredBugs}"
 				emptyMessage= "#{msg['bug.notfound']}"

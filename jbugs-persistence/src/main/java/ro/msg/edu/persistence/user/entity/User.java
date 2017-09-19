@@ -204,4 +204,8 @@ public class User extends AbstractEntity {
 		return "User [id=" + idUser + ", username=" + username + ", roles=" + roles + "]";
 	}
 
+	public void setIdUser(Long idUser) {
+		this.idUser = idUser;
+	}
+
 }

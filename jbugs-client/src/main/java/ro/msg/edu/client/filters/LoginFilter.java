@@ -18,7 +18,7 @@ public class LoginFilter implements Filter {
 
 	@Override
 	public void destroy() {
-
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class LoginFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
-
+		throw new UnsupportedOperationException();
 	}
 
 }

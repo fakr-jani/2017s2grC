@@ -49,7 +49,6 @@ public class Bug extends AbstractEntity {
 	private String titleBug;
 
 	@NotNull
-	// @Size(min = 250)
 	@Column
 	private String descriptionBug;
 
@@ -79,7 +78,7 @@ public class Bug extends AbstractEntity {
 	@ManyToOne
 	private User assignedTo;
 
-	@OneToMany(mappedBy = "bug", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "bug", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Attachment> attachments;
 
 	@OneToMany(mappedBy = "bug")
@@ -197,6 +196,10 @@ public class Bug extends AbstractEntity {
 	public String toString() {
 		return "Bug [idBug=" + idBug + ", titleBug=" + titleBug + ", createdBy=" + createdBy + ", status=" + status
 				+ ", assignedTo=" + assignedTo + "]";
+	}
+
+	public void setIdBug(Long idBug) {
+		this.idBug = idBug;
 	}
 
 }

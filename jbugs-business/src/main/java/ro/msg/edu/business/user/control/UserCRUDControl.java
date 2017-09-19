@@ -1,5 +1,6 @@
 package ro.msg.edu.business.user.control;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +27,7 @@ import ro.msg.edu.persistence.user.entity.enums.RoleType;
  *
  */
 @Stateless
-public class UserCRUDControl {
+public class UserCRUDControl implements Serializable {
 
 	@EJB
 	private UserDTOMapper userDTOMapper;
@@ -45,6 +46,7 @@ public class UserCRUDControl {
 	private static final int MAX_NUMBER_OF_TRIES = 4;
 	private static final int MAX_CHARACTERTER_FROM_LASTNAME = 5;
 	private static final int MAX_CHARACTERS_FOR_USERNAME = 6;
+	private static final String USER_NOT_FOUND = "User not found!";
 
 	public UserDTO createUser(UserDTO user, String[] selectedRoles) throws TechnicalException {
 		userValidator.validateUserData(user);
@@ -69,7 +71,7 @@ public class UserCRUDControl {
 
 	public UserDTO deleteUser(UserDTO userDTO) throws TechnicalException {
 		Optional<User> userOptional = userDAO.findUserByUsername(userDTO.getUsername());
-		if (isUserPresent(userOptional)) {
+		if (userOptional.isPresent()) {
 			User userEntity = userOptional.get();
 			if (!userDAO.hasActiveTasks(userEntity)) {
 				userEntity.setActive(false);
@@ -77,22 +79,22 @@ public class UserCRUDControl {
 			} else
 				throw new TechnicalException("User has tasks assigned");
 		} else
-			throw new TechnicalException("User not found!");
+			throw new TechnicalException(USER_NOT_FOUND);
 	}
 
 	public UserDTO activateUser(UserDTO userDTO) throws TechnicalException {
 		Optional<User> userOptional = userDAO.findUserByUsername(userDTO.getUsername());
-		if (isUserPresent(userOptional)) {
+		if (userOptional.isPresent()) {
 			User userEntity = userOptional.get();
 			userEntity.setActive(true);
 			return userDTOMapper.mapToDTO(userEntity);
 		} else
-			throw new TechnicalException("User not found!");
+			throw new TechnicalException(USER_NOT_FOUND);
 	}
 
 	public UserDTO updateUser(UserDTO userToUpdate, List<String> updateRoles) throws TechnicalException {
 		Optional<User> userOptional = userDAO.findUserByUsername(userToUpdate.getUsername());
-		if (isUserPresent(userOptional)) {
+		if (userOptional.isPresent()) {
 			User entity = userOptional.get();
 			List<Role> roleList = new ArrayList<>();
 
@@ -109,16 +111,15 @@ public class UserCRUDControl {
 			entity.setActive(userToUpdate.isActive());
 			return userDTOMapper.mapToDTO(entity);
 		} else
-			throw new TechnicalException("User not found!");
+			throw new TechnicalException(USER_NOT_FOUND);
 	}
 
 	public UserDTO findUserbyUsername(String username) {
 		Optional<User> entity = userDAO.findUserByUsername(username);
-		if (isUserPresent(entity)) {
+		if (entity.isPresent()) {
 			return userDTOMapper.mapToDTO(entity.get());
-		} else
-			return null;
-
+		}
+		return null;
 	}
 
 	public boolean verifyUserExists(UserDTO user) {
@@ -168,7 +169,7 @@ public class UserCRUDControl {
 
 	public boolean hasActiveTasks(UserDTO userDTO) {
 		Optional<User> userOptional = userDAO.findUserByUsername(userDTO.getUsername());
-		if (isUserPresent(userOptional)) {
+		if (userOptional.isPresent()) {
 			User entity = userOptional.get();
 			return userDAO.hasActiveTasks(entity);
 		} else
@@ -178,7 +179,7 @@ public class UserCRUDControl {
 	public UserDTO setStatus(UserDTO userDTO) {
 
 		Optional<User> entity = userDAO.findUserByUsername(userDTO.getUsername());
-		if (isUserPresent(entity)) {
+		if (entity.isPresent()) {
 			User userEntity = entity.get();
 			userEntity.setNumberOfTries(userEntity.getNumberOfTries() + 1);
 			if (userEntity.getNumberOfTries() > MAX_NUMBER_OF_TRIES) {
@@ -194,17 +195,13 @@ public class UserCRUDControl {
 	public UserDTO resetStatus(UserDTO userDTO) {
 
 		Optional<User> entity = userDAO.findUserByUsername(userDTO.getUsername());
-		if (isUserPresent(entity)) {
+		if (entity.isPresent()) {
 			User userEntity = entity.get();
 			userEntity.setNumberOfTries(0);
 			return userDTOMapper.mapToDTO(userEntity);
 		} else {
 			return userDTO;
 		}
-	}
-
-	private boolean isUserPresent(Optional<User> optionalUser) {
-		return optionalUser.isPresent();
 	}
 
 	public boolean hasPermission(String username, PermissionType permissionType) {

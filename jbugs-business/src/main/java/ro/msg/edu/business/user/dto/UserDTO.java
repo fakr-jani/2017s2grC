@@ -2,8 +2,9 @@ package ro.msg.edu.business.user.dto;
 
 import java.util.List;
 
+import ro.msg.edu.business.bug.dto.BugDTO;
 import ro.msg.edu.business.common.dto.AbstractDTO;
-import ro.msg.edu.persistence.user.entity.Role;
+import ro.msg.edu.business.role.dto.RoleDTO;
 import ro.msg.edu.persistence.user.entity.User;
 
 /**
@@ -32,7 +33,11 @@ public class UserDTO extends AbstractDTO {
 
 	private int numberOfTries;
 
-	private List<Role> roles;
+	private List<RoleDTO> roles;
+
+	private List<BugDTO> createdBugs;
+
+	private List<BugDTO> assignedBugs;
 
 	public String getFirstname() {
 		return firstname;
@@ -90,16 +95,33 @@ public class UserDTO extends AbstractDTO {
 		this.active = active;
 	}
 
-	public List<Role> getRoles() {
+	public List<RoleDTO> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<Role> roles) {
+	public void setRoles(List<RoleDTO> roles) {
 		this.roles = roles;
 	}
 
 	public int getNumberOfTries() {
 		return numberOfTries;
+
+	}
+
+	public List<BugDTO> getCreatedBugs() {
+		return createdBugs;
+	}
+
+	public void setCreatedBugs(List<BugDTO> createdBugs) {
+		this.createdBugs = createdBugs;
+	}
+
+	public List<BugDTO> getAssignedBugs() {
+		return assignedBugs;
+	}
+
+	public void setAssignedBugs(List<BugDTO> assignedBugs) {
+		this.assignedBugs = assignedBugs;
 	}
 
 	public void setNumberOfTries(int numberOfTries) {
@@ -108,9 +130,55 @@ public class UserDTO extends AbstractDTO {
 
 	@Override
 	public String toString() {
-		return "UserDTO [firstname=" + firstname + ", lastname=" + lastname + ", email=" + email + ", username="
-				+ username + ", password=" + password + ", phoneNumber=" + phoneNumber + ", active=" + active
-				+ ", counter=" + numberOfTries + ", roles=" + roles + "]";
+		return getId() + "," + firstname + "," + lastname + "," + email + "," + username + "," + password + ","
+				+ phoneNumber + "," + active + "," + numberOfTries;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserDTO other = (UserDTO) obj;
+		if (active != other.active)
+			return false;
+		if (numberOfTries != other.numberOfTries)
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (firstname == null) {
+			if (other.firstname != null)
+				return false;
+		} else if (!firstname.equals(other.firstname))
+			return false;
+		if (lastname == null) {
+			if (other.lastname != null)
+				return false;
+		} else if (!lastname.equals(other.lastname))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (phoneNumber == null) {
+			if (other.phoneNumber != null)
+				return false;
+		} else if (!phoneNumber.equals(other.phoneNumber))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
+
 	}
 
 }

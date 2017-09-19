@@ -4,9 +4,24 @@ import ro.msg.edu.business.common.dto.AbstractDTO;
 
 public class AttachmentDTO extends AbstractDTO {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private String fileName;
+
 	private byte[] fileBytes;
 
 	private BugDTO bug;
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 
 	public byte[] getFileBytes() {
 		return fileBytes;
@@ -22,11 +37,6 @@ public class AttachmentDTO extends AbstractDTO {
 
 	public void setBug(BugDTO bug) {
 		this.bug = bug;
-	}
-
-	@Override
-	public String toString() {
-		return "Attachment" + this.getId();
 	}
 
 }

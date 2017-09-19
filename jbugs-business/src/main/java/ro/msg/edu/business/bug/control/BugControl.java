@@ -3,6 +3,7 @@
  */
 package ro.msg.edu.business.bug.control;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +27,7 @@ import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
  * 
  */
 @Stateless
-public class BugControl {
+public class BugControl implements Serializable{
 
 	@EJB
 	private BugDTOMapper bugDTOMapper;
@@ -44,7 +45,6 @@ public class BugControl {
 	BugValidator bugValidator;
 
 	public BugDTO updateBug(BugDTO bugDTO) throws TechnicalException {
-		// bugValidator.validateBugData(bugDTO);
 
 		Bug persistedEntity = bugDAO.findEntity(bugDTO.getId());
 		if (persistedEntity == null)
@@ -59,6 +59,7 @@ public class BugControl {
 		persistedEntity.setVersionFixed(receivedDTOToEntity.getVersionFixed());
 		persistedEntity.setSeverity(receivedDTOToEntity.getSeverity());
 		persistedEntity.setStatus(receivedDTOToEntity.getStatus());
+		receivedDTOToEntity.getAssignedTo().setIdUser(bugDTO.getAssignedTo().getId());
 		persistedEntity.setAssignedTo(receivedDTOToEntity.getAssignedTo());
 		persistedEntity.setAttachments(receivedDTOToEntity.getAttachments());
 

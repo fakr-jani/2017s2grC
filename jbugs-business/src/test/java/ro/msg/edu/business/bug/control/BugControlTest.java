@@ -1,4 +1,4 @@
-/*package ro.msg.edu.business.bug.control;
+package ro.msg.edu.business.bug.control;
 
 import java.util.Date;
 import java.util.List;
@@ -37,7 +37,6 @@ public class BugControlTest extends AbstractIntegrationTest {
 		bug.setSeverity(BugSeverityType.LOW);
 		bug.setStatus(BugStatusType.FIXED);
 		BugDTO bugDTO = sut.closeBug(bug);
-		Assert.assertEquals(bugDTO.getStatus().toString(), "CLOSED");
+		Assert.assertEquals( "CLOSED",bugDTO.getStatus().toString());
 	}
 }
-*/
