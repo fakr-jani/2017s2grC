@@ -18,6 +18,7 @@ import ro.msg.edu.business.user.dao.UserDAO;
 import ro.msg.edu.business.user.dto.UserDTO;
 import ro.msg.edu.business.user.dto.mapper.UserDTOMapper;
 import ro.msg.edu.business.user.validator.UserValidator;
+import ro.msg.edu.persistence.user.entity.Permission;
 import ro.msg.edu.persistence.user.entity.Role;
 import ro.msg.edu.persistence.user.entity.User;
 import ro.msg.edu.persistence.user.entity.enums.PermissionType;
@@ -51,14 +52,15 @@ public class UserCRUDControl implements Serializable {
 	private static final int MAX_CHARACTERS_FOR_USERNAME = 6;
 	private static final String USER_NOT_FOUND = "User not found!";
 
-	public UserDTO createUser(UserDTO user, String[] selectedRoles) throws TechnicalException {
+	public UserDTO createUser(UserDTO user, List<String> selectedRoles) throws TechnicalException {
 		userValidator.validateUserData(user);
+		userValidator.validateRoles(selectedRoles);
 		User userEntity = new User();
 		userDTOMapper.mapToEntity(user, userEntity);
 
 		userEntity.setActive(true);
 		userEntity.setUsername(generateUsername(user.getFirstname(), user.getLastname()));
-		userEntity.setRoles(convertArrayToList(selectedRoles));
+		userEntity.setRoles(convertStringListToRoleList(selectedRoles));
 		userDAO.persistEntity(userEntity);
 
 		User persistedUser = userDAO.findEntity(userEntity.getId());
@@ -94,6 +96,7 @@ public class UserCRUDControl implements Serializable {
 		if (userOptional.isPresent()) {
 			User entity = userOptional.get();
 			userValidator.validateUserData(userToUpdate);
+			userValidator.validateRoles(updateRoles);
 			entity.setRoles(updateRoles.stream().map(role->roleDAO.getRoleByName(RoleType.valueOf(role))).collect(Collectors.toList()));
 			entity.setEmail(userToUpdate.getEmail());
 			entity.setFirstname(userToUpdate.getFirstname());
@@ -200,7 +203,16 @@ public class UserCRUDControl implements Serializable {
 		return userDAO.hasPermission(username, permissionType);
 	}
 
-	private List<Role> convertArrayToList(String[] selectedRoles){
-		return  Arrays.stream(selectedRoles).map(role->roleDAO.getRoleByName(RoleType.valueOf(role))).collect(Collectors.toList());
+	private List<Role> convertStringListToRoleList(List<String> selectedRoles){
+		return selectedRoles.stream().map(role->roleDAO.getRoleByName(RoleType.valueOf(role))).collect(Collectors.toList());
+	}
+	
+	public List<String> viewRoles(UserDTO selectedUser) {
+		Optional<User> user = userDAO.findUserByUsername(selectedUser.getUsername());
+		List<Role> roleList =user.get().getRoles();
+		List<String> roleTypeList = new ArrayList<>();
+		roleList.stream().forEach(e -> roleTypeList.add(e.getRoleName().toString()));
+		return roleTypeList;
+
 	}
 }

@@ -1,6 +1,7 @@
 package ro.msg.edu.business.user.validator;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Optional;
 
 import javax.ejb.EJB;
@@ -64,4 +65,10 @@ public class UserValidator implements Serializable {
 		Optional<User> user = userDAO.findUserByUsername(username.toString());
 		return user.isPresent() && user.get().getId() == null;
 	}
+	
+	public void validateRoles(List<String> updateRoles) throws TechnicalException{
+		if (updateRoles.isEmpty())
+			throw new TechnicalException("Invalid role(s)");
+	}
+	
 }

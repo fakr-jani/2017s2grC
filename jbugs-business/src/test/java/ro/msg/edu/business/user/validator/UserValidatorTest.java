@@ -1,5 +1,8 @@
 package ro.msg.edu.business.user.validator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.EJB;
 
 import org.junit.Assert;
@@ -32,7 +35,8 @@ public class UserValidatorTest extends AbstractIntegrationTest {
 		testUser.setUsername("somethig");
 		testUser.setPhoneNumber("+40788877697");
 		testUser.setEmail("dorin_danescu@msggroup.com");
-		String[] nameRoles = { "ADMINISTRATOR" };
+		List<String> nameRoles = new ArrayList<String>();
+		nameRoles.add("ADMINISTRATOR");
 
 		UserDTO testUser2 = new UserDTO();
 		testUser2.setFirstname("Dorin");
@@ -56,7 +60,8 @@ public class UserValidatorTest extends AbstractIntegrationTest {
 		testUser.setEmail("john_smith@msgssds.com");
 		testUser.setUsername("DoeJohn");
 		testUser.setPhoneNumber("+4047500437");
-		String[] nameRoles = { "ADMINISTRATOR" };
+		List<String> nameRoles = new ArrayList<String>();
+		nameRoles.add("ADMINISTRATOR");
 		userCRUDControl.createUser(testUser, nameRoles);
 
 	}

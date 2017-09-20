@@ -12,21 +12,26 @@
 </h:head>
 <h:body>
 	<f:view contentType="text/html">
-		<h1><p:outputLabel value="#{msg['add.permissions']}" /></h1>
+		<h1>
+			<p:outputLabel value="#{msg['add.permissions']}" />
+		</h1>
 		<ui:include src="menu.xhtml" />
 		<br />
 		<br />
-		<h:form rendered="#{userBean.verifyPermissionRendered('PERMISSION_MANAGEMENT')}">
+		<h:form
+			rendered="#{userBean.verifyPermissionRendered('PERMISSION_MANAGEMENT')}">
 			<p:outputLabel value="#{msg['roles.label']}" />
 			<p:selectOneMenu value="#{roleBean.selectedRole}">
 				<f:selectItems value="#{roleBean.allRoles}" var="role"
 					itemValue="#{role.roleName}" />
+				<p:ajax update="permissions"
+					listener="#{roleBean.getViewPermissions}" />
 			</p:selectOneMenu>
 			<br />
 			<br />
 			<p:outputLabel value="#{msg['permissions.label']}" />
-			<p:selectManyCheckbox id="grid"
-				value="#{roleBean.selectedPermission}" layout="grid" columns="3">
+			<p:selectManyCheckbox id="permissions"
+				value="#{roleBean.selectedPermission}" layout="grid" columns="3" >
 				<f:selectItems value="#{permissionBean.allPermissions}"
 					var="permission" itemLabel="#{permission.namePermission}"
 					itemValue="#{permission.namePermission}" />

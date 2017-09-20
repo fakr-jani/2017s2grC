@@ -2,7 +2,9 @@ package ro.msg.edu.business.user.control;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import javax.ejb.EJB;
@@ -48,7 +50,8 @@ public class UserCRUDControlTest extends AbstractIntegrationTest {
 		testUser.setEmail("Ceva_nume@msggroup.com");
 		testUser.setPhoneNumber("+407098884443");
 
-		String[] nameRoles = { "ADMINISTRATOR" };
+		List<String> nameRoles = new ArrayList<String>();
+		nameRoles.add("ADMINISTRATOR");
 		UserDTO persisted = userCRUDControl.createUser(testUser, nameRoles);
 		boolean existUser = userCRUDControl.verifyUserExists(persisted);
 		Assert.assertEquals(true,existUser);
@@ -64,7 +67,8 @@ public class UserCRUDControlTest extends AbstractIntegrationTest {
 		testUser.setPassword("123sa");
 		testUser.setPhoneNumber("+40788787697");
 		testUser.setEmail("marthss@msggroup.com");
-		String[] nameRoles = { "ADMINISTRATOR" };
+		List<String> nameRoles = new ArrayList<String>();
+		nameRoles.add("ADMINISTRATOR");
 
 		UserDTO persisted = userCRUDControl.createUser(testUser, nameRoles);
 
@@ -96,7 +100,8 @@ public class UserCRUDControlTest extends AbstractIntegrationTest {
 		testUser.setPassword("123sa");
 		testUser.setPhoneNumber("+40788787697");
 		testUser.setEmail("marthssasaa@msggroup.com");
-		String[] nameRoles = { "ADMINISTRATOR" };
+		List<String> nameRoles = new ArrayList<String>();
+		nameRoles.add("ADMINISTRATOR");
 
 		UserDTO persisted = userCRUDControl.createUser(testUser, nameRoles);
 		Bug bug = new Bug();

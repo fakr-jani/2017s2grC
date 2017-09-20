@@ -18,7 +18,8 @@
 			</h1>
 			<ui:include src="menu.xhtml" />
 			<br /> <br />
-			<h:form id="userForm" rendered="#{userBean.verifyPermissionRendered('USER_MANAGEMENT')}">
+			<h:form id="userForm"
+				rendered="#{userBean.verifyPermissionRendered('USER_MANAGEMENT')}">
 				<p:dataTable var="user" value="#{userBean.allUsers}">
 					<p:column>
 						<f:facet name="header">
@@ -72,10 +73,10 @@
 						<p:dataList value="#{user.roles}" var="role" type="definition">
 							<h:outputText value="#{role.roleName}" />
 						</p:dataList>
-						<p:selectManyMenu value="#{userBean.updateRoles}" filter="true"
-							filterMatchMode="startsWith" showCheckbox="true"
-							rendered="#{userBean.verifyEditRendered(user)}">
-							<f:selectItems value="#{roleBean.allRoles}" var="role"
+						<p:selectManyMenu id="roles" value="#{userBean.updateRoles}"
+							filter="true" filterMatchMode="startsWith" showCheckbox="true" 
+							rendered="#{userBean.verifyEditRendered(user)}" >
+							<f:selectItems id="this" value="#{roleBean.allRoles}" var="role"
 								itemLabel="#{role.roleName}" itemValue="#{role.roleName}" />
 						</p:selectManyMenu>
 					</p:column>
@@ -101,7 +102,8 @@
 
 						<h:commandButton value="#{msg['edit.button']}"
 							action="#{userBean.enterUpdateMode(user)}"
-							rendered="#{!userBean.verifyEditRendered(user)}" />
+							rendered="#{!userBean.verifyEditRendered(user)}">
+						</h:commandButton>
 
 						<h:commandButton value="#{msg['leave']}"
 							action="#{userBean.leaveUpdateMode}"

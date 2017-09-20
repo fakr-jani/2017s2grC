@@ -31,8 +31,8 @@ public class UserBean extends AbstractBean {
 
 	private UserDTO selectedUser = new UserDTO();
 
-	private String[] selectedRoles;
-	
+	private List<String> selectedRoles;
+
 	private List<String> updateRoles;
 
 	private static final String EDIT_USERS = "editUsers";
@@ -87,18 +87,18 @@ public class UserBean extends AbstractBean {
 		} catch (JBugsException e) {
 			addMessage(e.getMessage());
 		}
-		return EDIT_USERS ;
+		return EDIT_USERS;
 	}
 
 	public String enterUpdateMode(UserDTO user) {
 		this.selectedUser = user;
-		return EDIT_USERS ;
+		return EDIT_USERS;
 	}
 
 	public String leaveUpdateMode() {
 
 		selectedUser = new UserDTO();
-		return EDIT_USERS ;
+		return EDIT_USERS;
 	}
 
 	public boolean verifyUserRendered(UserDTO user) {
@@ -117,7 +117,7 @@ public class UserBean extends AbstractBean {
 
 	public String updateUser() {
 		try {
-			userFacade.updateUser(selectedUser,updateRoles);
+			userFacade.updateUser(selectedUser, updateRoles);
 			addMessage(selectedUser.getUsername() + " " + getMessageFromProperty("#{msg['user.updated']}"));
 		} catch (TechnicalException e) {
 			addMessage(e.getMessage());
@@ -125,11 +125,11 @@ public class UserBean extends AbstractBean {
 		return EDIT_USERS;
 	}
 
-	public String[] getSelectedRoles() {
+	public List<String> getSelectedRoles() {
 		return selectedRoles;
 	}
 
-	public void setSelectedRoles(String[] selectedRoles) {
+	public void setSelectedRoles(List<String> selectedRoles) {
 		this.selectedRoles = selectedRoles;
 	}
 
@@ -137,7 +137,7 @@ public class UserBean extends AbstractBean {
 		FacesContext context = FacesContext.getCurrentInstance();
 		return context.getApplication().evaluateExpressionGet(context, messageProperty, String.class);
 	}
-	
+
 	public List<String> getUpdateRoles() {
 		return updateRoles;
 	}
