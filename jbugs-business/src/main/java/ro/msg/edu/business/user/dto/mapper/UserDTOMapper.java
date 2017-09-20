@@ -56,40 +56,35 @@ public class UserDTOMapper extends AbstractDTOMapper<User, UserDTO> {
 			List<RoleDTO> roleDTOs = roleEntities.stream().map(e -> roleDTOMapper.mapToDTO(e))
 					.collect(Collectors.toList());
 			if (userDTO.getRoles() == null) {
-				userDTO.setRoles(new ArrayList<>());
+				userDTO.setRoles(new ArrayList<RoleDTO>());
 			}
-			userDTO.setRoles(roleDTOs);
+			userDTO.getRoles().addAll(roleDTOs);
 		}
 
 		List<Bug> assignedBugsEntities = userEntity.getAssignedBugs();
 		if (assignedBugsEntities != null) {
-			List<BugDTO> bugDTOs = assignedBugsEntities.stream().map(bugEntity -> bugDTOMapper.mapToDTO(bugEntity))
-					.collect(Collectors.toList());
+			List<BugDTO> assignedBugsDTOs = assignedBugsEntities.stream()
+					.map(bugEntity -> bugDTOMapper.mapToDTO(bugEntity)).collect(Collectors.toList());
 			if (userDTO.getAssignedBugs() == null) {
-				userDTO.setAssignedBugs(new ArrayList<>());
+				userDTO.setAssignedBugs(new ArrayList<BugDTO>());
 			}
-			userDTO.getAssignedBugs().addAll(bugDTOs);
+			userDTO.getAssignedBugs().addAll(assignedBugsDTOs);
 		}
-
-		userDTO.setRoles(roleDTOMapper.mapToDTOs(userEntity.getRoles()));
-		userDTO.setAssignedBugs(bugDTOMapper.mapToDTOs(userEntity.getAssignedBugs()));
-		userDTO.setCreatedBugs(bugDTOMapper.mapToDTOs(userEntity.getCreatedBugs()));
 
 		List<Bug> createdBugsEntities = userEntity.getCreatedBugs();
 		if (createdBugsEntities != null) {
-			List<BugDTO> bugDTOs = createdBugsEntities.stream().map(bugEntity -> bugDTOMapper.mapToDTO(bugEntity))
-					.collect(Collectors.toList());
+			List<BugDTO> createdBugsDTOs = createdBugsEntities.stream()
+					.map(bugEntity -> bugDTOMapper.mapToDTO(bugEntity)).collect(Collectors.toList());
 			if (userDTO.getCreatedBugs() == null) {
-				userDTO.setCreatedBugs(new ArrayList<>());
+				userDTO.setCreatedBugs(new ArrayList<BugDTO>());
 			}
-			userDTO.getCreatedBugs().addAll(bugDTOs);
+			userDTO.getCreatedBugs().addAll(createdBugsDTOs);
 		}
 
 	}
 
 	@Override
 	protected void mapDTOToEntityFields(UserDTO userDTO, User userEntity) {
-		userEntity.setId(userDTO.getId());
 		userEntity.setEmail(userDTO.getEmail());
 		userEntity.setFirstname(userDTO.getFirstname());
 		userEntity.setLastname(userDTO.getLastname());
@@ -107,36 +102,36 @@ public class UserDTOMapper extends AbstractDTOMapper<User, UserDTO> {
 				roleDTOMapper.mapToEntity(roleDTO, roleEntity);
 				return roleEntity;
 			}).collect(Collectors.toList());
-			if (userEntity.getRoles() == null) {
-				userEntity.setRoles(new ArrayList<>());
+			if (userDTO.getRoles() == null) {
+				userEntity.setRoles(new ArrayList<Role>());
 			}
 			userEntity.getRoles().addAll(roleEntities);
 		}
 
 		List<BugDTO> assignedBugsDTOs = userDTO.getAssignedBugs();
 		if (assignedBugsDTOs != null) {
-			List<Bug> bugEntities = assignedBugsDTOs.stream().map(bugDTO -> {
+			List<Bug> assignedBugsEntities = assignedBugsDTOs.stream().map(bugDTO -> {
 				Bug bugEntity = new Bug();
 				bugDTOMapper.mapToEntity(bugDTO, bugEntity);
 				return bugEntity;
 			}).collect(Collectors.toList());
-			if (userEntity.getAssignedBugs() == null) {
-				userEntity.setAssignedBugs(new ArrayList<>());
+			if (userDTO.getAssignedBugs() == null) {
+				userEntity.setAssignedBugs(new ArrayList<Bug>());
 			}
-			userEntity.getAssignedBugs().addAll(bugEntities);
+			userEntity.getAssignedBugs().addAll(assignedBugsEntities);
 		}
 
 		List<BugDTO> createdBugsDTOs = userDTO.getCreatedBugs();
 		if (createdBugsDTOs != null) {
-			List<Bug> bugEntities = createdBugsDTOs.stream().map(bugDTO -> {
+			List<Bug> createdBugsEntities = createdBugsDTOs.stream().map(bugDTO -> {
 				Bug bugEntity = new Bug();
 				bugDTOMapper.mapToEntity(bugDTO, bugEntity);
 				return bugEntity;
 			}).collect(Collectors.toList());
 			if (userEntity.getCreatedBugs() == null) {
-				userEntity.setCreatedBugs(new ArrayList<>());
+				userEntity.setCreatedBugs(new ArrayList<Bug>());
 			}
-			userEntity.getCreatedBugs().addAll(bugEntities);
+			userEntity.getCreatedBugs().addAll(createdBugsEntities);
 		}
 
 	}
