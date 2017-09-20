@@ -37,6 +37,7 @@ public class BugBean extends AbstractBean {
 	private BugDTO selectedBug = new BugDTO();
 
 	private static final String EDIT_BUGS = "editBugs";
+	private static final String CLOSE_BUG="closeBug";
 
 	public List<BugDTO> getAllBugs() {
 		return bugFacade.findAllBugs();
@@ -110,7 +111,7 @@ public class BugBean extends AbstractBean {
 		} catch (TechnicalException e) {
 			addMessage(e.getMessage());
 		}
-		return "closeBug";
+		return CLOSE_BUG;
 	}
 
 	public String getMessageFromProperty(String messageProperty) {
