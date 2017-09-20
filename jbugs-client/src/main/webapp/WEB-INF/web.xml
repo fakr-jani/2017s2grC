@@ -11,6 +11,12 @@
 	</context-param>
 
 
+	<error-page>
+		<!-- Forbidden directory listing -->
+		<error-code>401</error-code>
+		<location>/general-error.html</location>
+	</error-page>
+
 	<!-- Welcome page -->
 	<welcome-file-list>
 		<welcome-file>login.xhtml</welcome-file>

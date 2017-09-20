@@ -24,8 +24,8 @@ import ro.msg.edu.persistence.user.entity.enums.PermissionType;
 public class UserDAO extends AbstractDao<User> {
 
 	private static final long serialVersionUID = 1L;
-	
-	private static final String USERNAME="username";
+
+	private static final String USERNAME = "username";
 
 	@Override
 	public Class<User> getEntityClass() {

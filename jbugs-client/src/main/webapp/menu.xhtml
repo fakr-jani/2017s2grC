@@ -48,13 +48,11 @@
 					<p:menuitem value="#{msg['add.bug']}" icon="ui-icon-plus"
 						url="addBug.xhtml" rendered="#{userBean.verifyPermissionRendered('BUG_MANAGEMENT')}"/>
 					<p:menuitem value="#{msg['view.bug']}" icon="ui-icon-info"
-						url="bugs.xhtml" rendered="#{userBean.verifyPermissionRendered('BUG_MANAGEMENT')}"/>
+						url="bugs.xhtml" rendered="#{userBean.verifyPermissionRendered('BUG_MANAGEMENT') or userBean.verifyPermissionRendered('BUG_EXPORT_PDF')}"/>
 					<p:menuitem value="#{msg['edit.bug']}" icon="ui-icon-pencil"
 						url="editBugs.xhtml" rendered="#{userBean.verifyPermissionRendered('BUG_MANAGEMENT')}" />
 					<p:menuitem value="#{msg['edit.bug.status']}" icon="ui-icon-pencil"
 						url="editBugStatus.xhtml" rendered="#{userBean.verifyPermissionRendered('BUG_CLOSE') or userBean.verifyPermissionRendered('BUG_MANAGEMENT')}"/>
-					<p:menuitem value="#{msg['bug.export.pdf']}"
-						icon="ui-icon-document" />
 					<p:menuitem value="#{msg['close.bug.button']}" icon="ui-icon-trash"
 						url="closeBug.xhtml" rendered="#{userBean.verifyPermissionRendered('BUG_CLOSE')}"/>
 				</p:submenu>
