@@ -1,8 +1,8 @@
 package ro.msg.edu.business.common.dto.mapper;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import ro.msg.edu.business.common.dto.AbstractDTO;
 import ro.msg.edu.persistence.common.entity.AbstractEntity;
@@ -36,12 +36,7 @@ public abstract class AbstractDTOMapper<E extends AbstractEntity, D extends Abst
 	}
 
 	public List<D> mapToDTOs(List<E> entities) {
-		List<D> dtos = new ArrayList<>();
-		for (E entity : entities) {
-			dtos.add(mapToDTO(entity));
-		}
-
-		return dtos;
+		return entities.stream().map(entity -> mapToDTO(entity)).collect(Collectors.toList());
 	}
 
 	protected abstract void mapEntityToDTOFields(E entity, D dto);

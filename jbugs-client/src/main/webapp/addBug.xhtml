@@ -56,10 +56,12 @@
 
 
 						<p:outputLabel value="#{msg['bug.attachments']}" />
-						<p:fileUpload value="#{fileUploadView.file}" mode="simple"
+						<!-- <p:fileUpload value="#{fileUploadView.file}" mode="simple"
 							skinSimple="true" />
 						<p:commandButton value="Submit" ajax="false"
-							actionListener="#{fileUploadView.upload}" disabled="true" />
+							actionListener="#{fileUploadView.upload}" disabled="true" /> -->
+							
+						<p:fileUpload fileUploadListener="#{bugBean.addUploadedFile}" mode="advanced" dragDropSupport="false" multiple="true"  sizeLimit="26214400" fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|doc|odf|xlsx|xls)$/"  />
 					</h:panelGrid>
 
 					<br />

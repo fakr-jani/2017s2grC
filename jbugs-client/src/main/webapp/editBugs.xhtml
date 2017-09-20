@@ -54,7 +54,8 @@
 				       
 				       <p:column headerText="#{msg['bug.assigned']}">
 				       			 <h:outputText value="#{bug.assignedTo.username}" />
-				       			 <h:selectOneMenu value="#{bugBean.selectedBug.assignedTo}" rendered="#{bugBean.verifyEditRendered(bug)}" converter="userConverter" class="styleSelectOne">
+<!-- 				       			 <h:inputText value="#{bugBean.selectedBug.assignedTo.username}" rendered="#{bugBean.verifyEditRendered(bug)}"   />
+ -->				       			 <h:selectOneMenu value="#{bugBean.selectedBug.assignedTo}" rendered="#{bugBean.verifyEditRendered(bug)}" converter="userConverter" class="styleSelectOne">
 				                       <f:selectItems value="#{bugBean.allUsers}" var="u" itemLabel="#{u.username}" itemValue="#{u}" />
 				                 </h:selectOneMenu>
 				       </p:column>

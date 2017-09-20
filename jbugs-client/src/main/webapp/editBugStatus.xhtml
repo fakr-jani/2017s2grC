@@ -11,7 +11,7 @@
 	<title><h:outputText value="#{msg['login.title']}" /></title>
 </h:head>
 <h:body>
-	<f:view contentType="text/html">
+	<f:view>
 		<div>
 			<h1><p:outputLabel value="#{msg['edit.bug']}" /></h1>
 			<ui:include src="menu.xhtml" />
@@ -21,11 +21,11 @@
 				<p:growl id="msgs" showDetail="true"/>
 				
 				
-				<p:dataTable id="bugs" var="bug" value="#{editBugStatusBean.allBugs}" editable="true" editMode="cell">
+				<p:dataTable id="bugs" var="bug" value="#{bugBean.allBugsForEditStatusView}" editable="true" editMode="cell">
 						<f:facet name="header">
 				           Edit Bug Status
 				        </f:facet>
-       					<p:ajax event="cellEdit" listener="#{editBugStatusBean.onCellEdit}" update=":form:msgs" />
+       					<p:ajax event="cellEdit" listener="#{bugBean.onCellEdit}" update=":form:msgs" />
 				        
 				       <p:column headerText= "#{msg['bug.title']}">
 					       			<h:outputText value="#{bug.titleBug}"/>
