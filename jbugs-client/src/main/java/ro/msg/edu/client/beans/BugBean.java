@@ -78,9 +78,9 @@ public class BugBean extends AbstractBean {
 		addMessage(fileUploadEvent.getFile().getFileName() + " " + getMessageFromProperty("#{msg['is.uploaded']}"));
 	}
 
-	public void removeAttachment(AttachmentDTO a) {
-		a.setBug(null);
-		this.selectedBug.getAttachments().remove(a);
+	public void removeAttachment(AttachmentDTO attachmentDTO) {
+		attachmentDTO.setBug(null);
+		this.selectedBug.getAttachments().remove(attachmentDTO);
 
 		addMessage(getMessageFromProperty("#{msg['file.deleted']}"));
 	}

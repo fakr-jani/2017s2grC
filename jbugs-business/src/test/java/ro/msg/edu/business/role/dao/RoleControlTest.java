@@ -19,6 +19,6 @@ public class RoleControlTest extends AbstractIntegrationTest {
 	@Test
 	public void findRoleByName_Success() {
 		Role role = roleDAO.getRoleByName(RoleType.TESTER);
-		Assert.assertEquals(role.getRoleName(), RoleType.TESTER);
+		Assert.assertEquals(RoleType.TESTER, role.getRoleName());
 	}
 }
