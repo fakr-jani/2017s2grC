@@ -1,5 +1,6 @@
 package ro.msg.edu.client.beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -34,7 +35,7 @@ public class NotificationBean extends AbstractBean {
 			return notificationFacade.getAllNotifications(logedinUser);
 		} catch (TechnicalException e) {
 			addMessage(e.getMessage());
-			return null;
+			return new ArrayList<NotificationDTO>();
 		}
 
 	}

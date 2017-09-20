@@ -12,96 +12,86 @@
 	<h:outputStylesheet library="css" name="style.css" />
 </h:head>
 <h:body>
-	<h1>
-		<p:outputLabel value="#{msg['view.bug']}" />
-	</h1>
+	<h1><p:outputLabel value="#{msg['view.bug']}" /></h1>
 	<ui:include src="menu.xhtml" />
-	<br />
-	<br />
+	<br /> <br />
 	<f:view contentType="text/html">
-		<h:form id="bugsForm">
+		<h:form id="bugsForm" >
 			<p:dataTable var="bug" value="#{bugFilter.bugs}" id="bugsTable"
 				widgetVar="bugsTable" filteredValue="#{bugFilter.filteredBugs}"
-				emptyMessage="#{msg['bug.notfound']}" selectionMode="single"
-				selection="#{bugFilter.selectedBug}" rowKey="#{bug.titleBug}"
-				paginator="true"
+				emptyMessage= "#{msg['bug.notfound']}"
+				selectionMode="single" selection="#{bugFilter.selectedBug}"
+				rowKey="#{bug.titleBug}" paginator="true"
 				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rows="25" sortMode="multiple"
+				rows="25" 
+				sortMode="multiple"
 				rendered="#{userBean.verifyPermissionRendered('BUG_MANAGEMENT')}">
 
-				<p:column filterBy="#{bug.titleBug}" filterMatchMode="contains"
-					exportable="true" headerText="#{msg['bug.title']}"
-					sortBy="#{bug.titleBug}">
-					<h:outputText value="#{bug.titleBug}" />
+				<p:column filterBy="#{bug.titleBug}" 
+					filterMatchMode="contains"
+					exportable="true"
+					headerText="#{msg['bug.title']}"
+						sortBy="#{bug.titleBug}" >
+					<h:outputText value="#{bug.titleBug}" 
+				/>
 				</p:column>
 
 				<p:column filterBy="#{bug.descriptionBug}" id="description"
-					filterMatchMode="contains" headerText="#{msg['bug.description']}"
-					sortBy="#{bug.descriptionBug}">
-
+					filterMatchMode="contains" headerText="#{msg['bug.description']}" sortBy="#{bug.descriptionBug}">
+					
 					<h:outputText value="#{bug.descriptionBug}" />
 				</p:column>
 
 
-				<p:column filterBy="#{bug.status}" headerText="#{msg['bug.status']}"
-					sortBy="#{bug.status}" filterMatchMode="exact">
-					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('bugsTable').filter()">
-							<f:selectItem itemLabel="Select One" itemValue="#{null}"
-								noSelectionOption="true" />
-							<f:selectItems value="#{bugFilter.status}" />
-						</p:selectOneMenu>
-					</f:facet>
-					<h:outputText value="#{bug.status}" />
+				<p:column filterBy="#{bug.status}" headerText="#{msg['bug.status']}" sortBy="#{bug.status}" filterMatchMode="exact">
+			<f:facet name="filter">
+				<p:selectOneMenu onchange="PF('bugsTable').filter()">
+					<f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+					<f:selectItems value="#{bugFilter.status}" />
+				</p:selectOneMenu>
+			</f:facet>
+			<h:outputText value="#{bug.status}" />
 				</p:column>
 
-				<p:column filterBy="#{bug.severity}"
-					headerText="#{msg['bug.severity']}" sortBy="#{bug.severity}"
-					filterMatchMode="exact">
-					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('bugsTable').filter()">
-							<f:selectItem itemLabel="Select One" itemValue="#{null}"
-								noSelectionOption="true" />
-							<f:selectItems value="#{bugFilter.severity}" />
-						</p:selectOneMenu>
-					</f:facet>
-					<h:outputText value="#{bug.severity}" />
-				</p:column>
+				<p:column filterBy="#{bug.severity}" headerText="#{msg['bug.severity']}" sortBy="#{bug.severity}" filterMatchMode="exact">
+            <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('bugsTable').filter()" >
+                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{bugFilter.severity}" />
+                </p:selectOneMenu>
+            </f:facet>
+            <h:outputText value="#{bug.severity}" />
+      		  </p:column>
 
 
-				<p:column headerText="#{msg['bug.targetDate']}"
-					sortBy="#{bug.targetDate}">
+				<p:column headerText="#{msg['bug.targetDate']}" sortBy="#{bug.targetDate}">
 					<h:outputText value="#{bug.targetDate}" />
 				</p:column>
 
-				<p:column filterBy="#{bug.version}" id="version"
-					sortBy="#{bug.version}" filterMatchMode="contains"
-					headerText="#{msg['bug.version']}">
+				<p:column filterBy="#{bug.version}" id="version" sortBy="#{bug.version}"
+					filterMatchMode="contains" headerText="#{msg['bug.version']}">
 					<h:outputText value="#{bug.version}" />
 				</p:column>
 
-				<p:column filterBy="#{bug.versionFixed}" id="versionFixed"
-					sortBy="#{bug.versionFixed}" filterMatchMode="contains"
-					headerText="#{msg['bug.versionFixed']}">
+				<p:column filterBy="#{bug.versionFixed}" id="versionFixed" sortBy="#{bug.versionFixed}"
+					filterMatchMode="contains" headerText="#{msg['bug.versionFixed']}">
 					<h:outputText value="#{bug.versionFixed}" />
 				</p:column>
 
-				<p:column filterBy="#{bug.assignedTo.username}" id="assignedTo"
-					sortBy="#{bug.assignedTo.username}" filterMatchMode="contains"
-					headerText="#{msg['bug.assigned']}">
-
+				<p:column filterBy="#{bug.assignedTo.username}" id="assignedTo" sortBy="#{bug.assignedTo.username}"
+					filterMatchMode="contains" headerText="#{msg['bug.assigned']}">
+			
 					<h:outputText value="#{bug.assignedTo.username}" />
 				</p:column>
 
-				<p:column filterBy="#{bug.createdBy.username}" id="createdBy"
-					sortBy="#{bug.createdBy.username}" filterMatchMode="contains"
-					headerText="#{msg['bug.created']}">
+				<p:column filterBy="#{bug.createdBy.username}" id="createdBy" sortBy="#{bug.createdBy.username}"
+					filterMatchMode="contains" headerText="#{msg['bug.created']}">
 
 					<h:outputText value="#{bug.createdBy.username}" />
 				</p:column>
 
 			</p:dataTable>
-			<br />
+				<br/>
 			<p:commandButton process="bugsTable" update=":bugsForm:bugDetail"
 				icon="ui-icon-search" value="View"
 				oncomplete="PF('bugDialog').show()" rendered="#{userBean.verifyPermissionRendered('BUG_MANAGEMENT')}"/>
@@ -121,7 +111,7 @@
 			</h:commandLink>
 
 			<p:dialog header="Selected Bug" widgetVar="bugDialog" modal="true"
-				showEffect="fade" hideEffect="fade" resizable="false" >
+				showEffect="fade" hideEffect="fade" resizable="false">
 				<p:outputPanel id="bugDetail" style="text-align:center;">
 					<p:panelGrid columns="2"
 						rendered="#{not empty bugFilter.selectedBug}"

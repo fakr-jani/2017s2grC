@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -29,6 +30,11 @@ import ro.msg.edu.persistence.user.entity.enums.RoleType;
 @Stateless
 public class UserCRUDControl implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@EJB
 	private UserDTOMapper userDTOMapper;
 
@@ -48,20 +54,15 @@ public class UserCRUDControl implements Serializable {
 	private static final int MAX_CHARACTERS_FOR_USERNAME = 6;
 	private static final String USER_NOT_FOUND = "User not found!";
 
-	public UserDTO createUser(UserDTO user, String[] selectedRoles) throws TechnicalException {
+	public UserDTO createUser(UserDTO user, List<String> selectedRoles) throws TechnicalException {
 		userValidator.validateUserData(user);
+		userValidator.validateRoles(selectedRoles);
 		User userEntity = new User();
 		userDTOMapper.mapToEntity(user, userEntity);
 
 		userEntity.setActive(true);
 		userEntity.setUsername(generateUsername(user.getFirstname(), user.getLastname()));
-		List<Role> roles = new ArrayList<Role>();
-
-		for (String role : selectedRoles) {
-
-			roles.add(roleDAO.getRoleByName(RoleType.valueOf(role)));
-		}
-		userEntity.setRoles(roles);
+		userEntity.setRoles(convertStringListToRoleList(selectedRoles));
 		userDAO.persistEntity(userEntity);
 
 		User persistedUser = userDAO.findEntity(userEntity.getId());
@@ -96,13 +97,9 @@ public class UserCRUDControl implements Serializable {
 		Optional<User> userOptional = userDAO.findUserByUsername(userToUpdate.getUsername());
 		if (userOptional.isPresent()) {
 			User entity = userOptional.get();
-			List<Role> roleList = new ArrayList<>();
-
-			for (String roleName : updateRoles) {
-				roleList.add(roleDAO.getRoleByName(RoleType.valueOf(roleName)));
-			}
 			userValidator.validateUserData(userToUpdate);
-			entity.setRoles(roleList);
+			userValidator.validateRoles(updateRoles);
+			entity.setRoles(updateRoles.stream().map(role->roleDAO.getRoleByName(RoleType.valueOf(role))).collect(Collectors.toList()));
 			entity.setEmail(userToUpdate.getEmail());
 			entity.setFirstname(userToUpdate.getFirstname());
 			entity.setLastname(userToUpdate.getLastname());
@@ -208,4 +205,19 @@ public class UserCRUDControl implements Serializable {
 		return userDAO.hasPermission(username, permissionType);
 	}
 
+	private List<Role> convertStringListToRoleList(List<String> selectedRoles){
+		return selectedRoles.stream().map(role->roleDAO.getRoleByName(RoleType.valueOf(role))).collect(Collectors.toList());
+	}
+	
+	public List<String> viewRoles(UserDTO selectedUser) throws TechnicalException {
+		Optional<User> user = userDAO.findUserByUsername(selectedUser.getUsername());
+		if (user.isPresent()) {
+		List<Role> roleList =user.get().getRoles();
+		List<String> roleTypeList = new ArrayList<>();
+		roleList.stream().forEach(e -> roleTypeList.add(e.getRoleName().toString()));
+		return roleTypeList;
+		}else
+			throw new TechnicalException(USER_NOT_FOUND);
+
+	}
 }

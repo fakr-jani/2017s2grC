@@ -208,4 +208,8 @@ public class User extends AbstractEntity {
 		this.idUser = idUser;
 	}
 
+	public void setId(Long id) {
+		this.idUser = id;
+	}
+
 }

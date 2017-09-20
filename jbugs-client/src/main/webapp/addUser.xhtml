@@ -21,12 +21,16 @@
 			<h:form id="addUser" rendered="#{userBean.verifyPermissionRendered('USER_MANAGEMENT')}">
 				<p:outputLabel value="#{msg['firstname']}" />
 				<p:outputLabel value="#{user.firstname}" />
-				<p:inputText value="#{userBean.newUser.firstname}" required="true" />
+				<p:inputText value="#{userBean.newUser.firstname}">
+				<f:validator validatorId="nameValidator" />
+				</p:inputText>
 				
 				<br />
 				<br />
 				<p:outputLabel value="#{msg['lastname']}" />
-				<p:inputText value="#{userBean.newUser.lastname}" required="true" />
+				<p:inputText value="#{userBean.newUser.lastname}">
+					<f:validator validatorId="nameValidator" />
+					</p:inputText>
 				<p:outputLabel value="#{user.lastname}" />
 
 				<br />

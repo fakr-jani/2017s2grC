@@ -12,7 +12,10 @@
 	<h:outputStylesheet library="css" name="style.css" />
 </h:head>
 <h:body>
+<h1><p:outputLabel value="#{msg['notification.title']}" /></h1>
 	<ui:include src="menu.xhtml" />
+	<br/>
+	<br/>
 	<f:view contentType="text/html">
 		<h:form id="notificationForm">
 			<p:dataTable var="notification"

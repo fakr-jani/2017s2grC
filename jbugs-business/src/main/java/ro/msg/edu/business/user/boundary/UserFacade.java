@@ -32,7 +32,7 @@ public class UserFacade implements Serializable {
 	@EJB
 	private UserDTOMapper userDTOMapper;
 
-	public UserDTO createUser(UserDTO user, String[] selectedRoles) throws TechnicalException {
+	public UserDTO createUser(UserDTO user, List<String> selectedRoles) throws TechnicalException {
 		return userCRUDControl.createUser(user, selectedRoles);
 	}
 
@@ -82,6 +82,10 @@ public class UserFacade implements Serializable {
 
 	public boolean hasPermission(String username, PermissionType permissionType) {
 		return userCRUDControl.hasPermission(username, permissionType);
+	}
+	
+	public List<String> viewRoles(UserDTO selectedUser) throws TechnicalException {
+		return userCRUDControl.viewRoles(selectedUser);
 	}
 
 }

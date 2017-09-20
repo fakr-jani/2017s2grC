@@ -13,6 +13,7 @@ import ro.msg.edu.business.common.exception.JBugsException;
 import ro.msg.edu.business.common.exception.TechnicalException;
 import ro.msg.edu.business.user.boundary.UserFacade;
 import ro.msg.edu.business.user.dto.UserDTO;
+import ro.msg.edu.persistence.user.entity.enums.PermissionType;
 
 @ManagedBean
 @SessionScoped
@@ -32,8 +33,8 @@ public class UserBean extends AbstractBean {
 	private UserDTO newUser = new UserDTO();
 
 	private UserDTO selectedUser = new UserDTO();
-
-	private String[] selectedRoles;
+	
+	private List<String> selectedRoles;
 
 	private List<String> updateRoles;
 
@@ -61,12 +62,7 @@ public class UserBean extends AbstractBean {
 		this.newUser = newUser;
 	}
 
-	public boolean verifyPermissionRendered(String permissionType) {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-		String userName = (String) session.getAttribute("username");
-		return permissionCheck.verifyPermissionRendered(userName, permissionType);
-	}
-
+	
 	public String createNewUser() {
 		try {
 			UserDTO userCreated = userFacade.createUser(newUser, selectedRoles);
@@ -117,6 +113,13 @@ public class UserBean extends AbstractBean {
 		return (selectedUser != null && user.getId().equals(selectedUser.getId()));
 	}
 
+public boolean verifyPermissionRendered(String permissionType) {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		String userName = (String) session.getAttribute("username");
+		return permissionCheck.verifyPermissionRendered(userName, permissionType);
+	}
+
+
 	public String updateUser() {
 		try {
 			userFacade.updateUser(selectedUser, updateRoles);
@@ -127,11 +130,11 @@ public class UserBean extends AbstractBean {
 		return EDIT_USERS;
 	}
 
-	public String[] getSelectedRoles() {
+	public List<String> getSelectedRoles() {
 		return selectedRoles;
 	}
 
-	public void setSelectedRoles(String[] selectedRoles) {
+	public void setSelectedRoles(List<String> selectedRoles) {
 		this.selectedRoles = selectedRoles;
 	}
 

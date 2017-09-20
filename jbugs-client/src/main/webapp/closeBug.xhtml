@@ -18,7 +18,7 @@
 			<ui:include src="menu.xhtml" />
 			<br /> <br />
 			<h:form id="bugForm" rendered="#{userBean.verifyPermissionRendered('BUG_CLOSE')}">
-				<p:dataTable value="#{bugBean.fixedAndRejectedBugs}" var="bugVar">
+				<p:dataTable value="#{bugBean.bugsThatCanBeClosed}" var="bugVar">
 					<p:column>
 						<f:facet name="header">
 							<p:outputLabel value="#{msg['bug.title']}" />

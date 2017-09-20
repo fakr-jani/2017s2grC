@@ -16,6 +16,7 @@ import ro.msg.edu.business.bug.dto.mapper.AttachmentDTOMapper;
 import ro.msg.edu.business.bug.dto.mapper.BugDTOMapper;
 import ro.msg.edu.business.bug.validator.BugValidator;
 import ro.msg.edu.business.common.exception.TechnicalException;
+import ro.msg.edu.business.user.dao.UserDAO;
 import ro.msg.edu.business.user.dto.mapper.UserDTOMapper;
 import ro.msg.edu.persistence.bug.entity.Bug;
 import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
@@ -43,6 +44,9 @@ public class BugControl implements Serializable{
 
 	@EJB
 	BugValidator bugValidator;
+
+	@EJB
+	UserDAO userDAO;
 
 	public BugDTO updateBug(BugDTO bugDTO) throws TechnicalException {
 
@@ -82,6 +86,8 @@ public class BugControl implements Serializable{
 	public BugDTO createBug(BugDTO bug) throws TechnicalException {
 		bugValidator.validateBugData(bug);
 
+		userDAO.findUserByUsername(bug.getAssignedTo().getUsername());
+
 		Bug bugEntity = new Bug();
 		bugDTOMapper.mapToEntity(bug, bugEntity);
 
@@ -96,14 +102,14 @@ public class BugControl implements Serializable{
 	public List<BugDTO> findAllBugs() {
 		List<Bug> bugEnitites = bugDAO.findAllBugs();
 
-		return bugEnitites.stream().map(e -> bugDTOMapper.mapToDTO(e)).collect(Collectors.toList());
+		return bugEnitites.stream().map(bugEntity -> bugDTOMapper.mapToDTO(bugEntity)).collect(Collectors.toList());
 
 	}
 
-	public List<BugDTO> findAllFixedAndRejectedBugs() {
-		List<Bug> bugEnitites = bugDAO.findAllFixedAndRejectedBugs();
+	public List<BugDTO> findBugsThatCanBeClosed() {
+		List<Bug> bugEnitites = bugDAO.findBugsThatCanBeClosed();
 
-		return bugEnitites.stream().map(e -> bugDTOMapper.mapToDTO(e)).collect(Collectors.toList());
+		return bugEnitites.stream().map(bugEntity -> bugDTOMapper.mapToDTO(bugEntity)).collect(Collectors.toList());
 
 	}
 

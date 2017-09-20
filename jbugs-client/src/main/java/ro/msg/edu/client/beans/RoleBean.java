@@ -29,11 +29,9 @@ public class RoleBean implements Serializable {
 	private String[] selectedPermission;
 
 	private List<String> permissionTypeList;
-	
 
-	
-	private static final String ADD_PERMISSION="addPermission";
-	private static final String REMOVE_PERMISSION="removePermission";
+	private static final String ADD_PERMISSION = "addPermission";
+	private static final String REMOVE_PERMISSION = "removePermission";
 
 	public void addPermissions() {
 		roleFacade.addPermissions(selectedRole, selectedPermission);
@@ -60,7 +58,7 @@ public class RoleBean implements Serializable {
 	}
 
 	/**
-	 * set permissions for a roles checked alls permissionTypeList - contains
+	 * set permissions for a roles checked all permissionTypeList - contains
 	 * the permissions of the selectedRole selectedPermission - array we pass
 	 * the checkbox
 	 */
@@ -101,8 +99,5 @@ public class RoleBean implements Serializable {
 	public void setPermissionTypeLst(List<String> permissionTypeLst) {
 		this.permissionTypeList = permissionTypeLst;
 	}
-
-
-	 
 
 }

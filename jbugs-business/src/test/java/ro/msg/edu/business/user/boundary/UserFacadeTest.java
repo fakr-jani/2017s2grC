@@ -1,5 +1,8 @@
 package ro.msg.edu.business.user.boundary;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.EJB;
 
 import org.junit.Assert;
@@ -12,7 +15,7 @@ import ro.msg.edu.business.user.dto.UserDTO;
 public class UserFacadeTest extends AbstractIntegrationTest {
 
 	@EJB
-	private UserFacade sut;
+	private UserFacade userFacade;
 
 	@Test
 	public void createUser_succesfull() throws TechnicalException {
@@ -24,8 +27,9 @@ public class UserFacadeTest extends AbstractIntegrationTest {
 		testUser.setPhoneNumber("+4074567892");
 		testUser.setUsername("SmithW");
 
-		String[] nameRoles = { "ADMINISTRATOR" };
-		UserDTO createdUser = sut.createUser(testUser, nameRoles);
+		List<String> nameRoles = new ArrayList<String>();
+		nameRoles.add("ADMINISTRATOR");
+		UserDTO createdUser = userFacade.createUser(testUser, nameRoles);
 
 		Assert.assertNotNull("The newly persisted user should have an id!", createdUser.getId());
 	}
@@ -39,8 +43,9 @@ public class UserFacadeTest extends AbstractIntegrationTest {
 		testUser.setPassword("12345");
 		testUser.setUsername("SamueW");
 		testUser.setPhoneNumber("+4074567892");
-		String[] nameRoles = { "ADMINISTRATOR" };
-		UserDTO createdUser = sut.createUser(testUser, nameRoles);
+		List<String> nameRoles = new ArrayList<String>();
+		nameRoles.add("ADMINISTRATOR");
+		UserDTO createdUser = userFacade.createUser(testUser, nameRoles);
 
 		Assert.assertTrue("The newly persisted user should be active!", createdUser.isActive());
 	}

@@ -1,5 +1,8 @@
 package ro.msg.edu.business.user.validator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.EJB;
 
 import org.junit.Assert;
@@ -15,7 +18,7 @@ import ro.msg.edu.business.user.dto.UserDTO;
 public class UserValidatorTest extends AbstractIntegrationTest {
 
 	@EJB
-	private UserCRUDControl sut;
+	private UserCRUDControl userCRUDControl;
 
 	@EJB
 	private UserDAO userDAO;
@@ -32,7 +35,8 @@ public class UserValidatorTest extends AbstractIntegrationTest {
 		testUser.setUsername("somethig");
 		testUser.setPhoneNumber("+40788877697");
 		testUser.setEmail("dorin_danescu@msggroup.com");
-		String[] nameRoles = { "ADMINISTRATOR" };
+		List<String> nameRoles = new ArrayList<String>();
+		nameRoles.add("ADMINISTRATOR");
 
 		UserDTO testUser2 = new UserDTO();
 		testUser2.setFirstname("Dorin");
@@ -40,8 +44,8 @@ public class UserValidatorTest extends AbstractIntegrationTest {
 		testUser2.setPassword("1234");
 		testUser2.setPhoneNumber("+407888776");
 		testUser2.setEmail("dorin_danescu2@msggroup.com");
-		UserDTO persisted = sut.createUser(testUser, nameRoles);
-		UserDTO persisted2 = sut.createUser(testUser2, nameRoles);
+		UserDTO persisted = userCRUDControl.createUser(testUser, nameRoles);
+		UserDTO persisted2 = userCRUDControl.createUser(testUser2, nameRoles);
 
 		Assert.assertNotEquals("Users with same name should have different username", persisted.getUsername(),
 				persisted2.getUsername());
@@ -56,8 +60,9 @@ public class UserValidatorTest extends AbstractIntegrationTest {
 		testUser.setEmail("john_smith@msgssds.com");
 		testUser.setUsername("DoeJohn");
 		testUser.setPhoneNumber("+4047500437");
-		String[] nameRoles = { "ADMINISTRATOR" };
-		sut.createUser(testUser, nameRoles);
+		List<String> nameRoles = new ArrayList<String>();
+		nameRoles.add("ADMINISTRATOR");
+		userCRUDControl.createUser(testUser, nameRoles);
 
 	}
 
