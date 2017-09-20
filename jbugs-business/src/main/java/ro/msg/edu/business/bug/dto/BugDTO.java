@@ -14,6 +14,8 @@ import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
 
 public class BugDTO extends AbstractDTO {
 
+	private static final long serialVersionUID = 1L;
+
 	private String titleBug;
 
 	private String descriptionBug;

@@ -181,8 +181,8 @@ public class UserCRUDControl implements Serializable {
 		Optional<User> entity = userDAO.findUserByUsername(userDTO.getUsername());
 		if (entity.isPresent()) {
 			User userEntity = entity.get();
-			userEntity.setCounter(userEntity.getCounter() + 1);
-			if (userEntity.getCounter() > MAX_NUMBER_OF_TRIES) {
+			userEntity.setNumberOfTries(userEntity.getNumberOfTries() + 1);
+			if (userEntity.getNumberOfTries() > MAX_NUMBER_OF_TRIES) {
 				userEntity.setActive(false);
 			}
 
@@ -197,7 +197,7 @@ public class UserCRUDControl implements Serializable {
 		Optional<User> entity = userDAO.findUserByUsername(userDTO.getUsername());
 		if (entity.isPresent()) {
 			User userEntity = entity.get();
-			userEntity.setCounter(0);
+			userEntity.setNumberOfTries(0);
 			return userDTOMapper.mapToDTO(userEntity);
 		} else {
 			return userDTO;

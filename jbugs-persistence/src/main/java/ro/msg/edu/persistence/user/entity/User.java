@@ -64,7 +64,7 @@ public class User extends AbstractEntity {
 	private String phoneNumber;
 
 	@Column
-	private int counter;
+	private int numberOfTries;
 
 	@Column
 	private boolean active;
@@ -191,19 +191,18 @@ public class User extends AbstractEntity {
 		this.history = history;
 	}
 
-	public int getCounter() {
-		return counter;
+	public int getNumberOfTries() {
+		return numberOfTries;
 	}
 
-	public void setCounter(int counter) {
-		this.counter = counter;
+	public void setNumberOfTries(int numberOfTries) {
+		this.numberOfTries = numberOfTries;
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + idUser + ", username=" + username +", roles=" + roles +"]";
+		return "User [id=" + idUser + ", username=" + username + ", roles=" + roles + "]";
 	}
-	
 
 	public void setIdUser(Long idUser) {
 		this.idUser = idUser;

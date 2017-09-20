@@ -23,6 +23,8 @@ import ro.msg.edu.persistence.user.entity.User;
 @Stateless
 public class BugDTOMapper extends AbstractDTOMapper<Bug, BugDTO> {
 
+	private static final long serialVersionUID = 1L;
+
 	@EJB
 	AttachmentDTOMapper attachmentDTOMapper;
 

@@ -58,10 +58,9 @@
 					<p:menuitem value="#{msg['close.bug.button']}" icon="ui-icon-trash"
 						url="closeBug.xhtml" rendered="#{userBean.verifyPermissionRendered('BUG_CLOSE')}"/>
 				</p:submenu>
-
 				<p:submenu label="#{msg['menu.notification']}"
 					icon="ui-icon-mail-closed">
-					<p:menuitem value="#{msg['view.notification']}" icon="ui-icon-info" />
+					<p:menuitem value="#{msg['view.notification']}" icon="ui-icon-info" url="notifications.xhtml" />
 					<p:menuitem value="#{msg['delete.notification']}"
 						icon="ui-icon-trash" />
 				</p:submenu>

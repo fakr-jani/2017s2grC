@@ -15,6 +15,8 @@ import ro.msg.edu.persistence.user.entity.User;
  */
 public class UserDTO extends AbstractDTO {
 
+	private static final long serialVersionUID = 1L;
+
 	private String firstname;
 
 	private String lastname;
@@ -29,7 +31,7 @@ public class UserDTO extends AbstractDTO {
 
 	private boolean active;
 
-	private int counter;
+	private int numberOfTries;
 
 	private List<RoleDTO> roles;
 
@@ -101,6 +103,11 @@ public class UserDTO extends AbstractDTO {
 		this.roles = roles;
 	}
 
+	public int getNumberOfTries() {
+		return numberOfTries;
+
+	}
+
 	public List<BugDTO> getCreatedBugs() {
 		return createdBugs;
 	}
@@ -117,18 +124,14 @@ public class UserDTO extends AbstractDTO {
 		this.assignedBugs = assignedBugs;
 	}
 
-	public int getCounter() {
-		return counter;
-	}
-
-	public void setCounter(int counter) {
-		this.counter = counter;
+	public void setNumberOfTries(int numberOfTries) {
+		this.numberOfTries = numberOfTries;
 	}
 
 	@Override
 	public String toString() {
 		return getId() + "," + firstname + "," + lastname + "," + email + "," + username + "," + password + ","
-				+ phoneNumber + "," + active + "," + counter;
+				+ phoneNumber + "," + active + "," + numberOfTries;
 	}
 
 	@Override
@@ -142,7 +145,7 @@ public class UserDTO extends AbstractDTO {
 		UserDTO other = (UserDTO) obj;
 		if (active != other.active)
 			return false;
-		if (counter != other.counter)
+		if (numberOfTries != other.numberOfTries)
 			return false;
 		if (email == null) {
 			if (other.email != null)
@@ -175,6 +178,7 @@ public class UserDTO extends AbstractDTO {
 		} else if (!username.equals(other.username))
 			return false;
 		return true;
+
 	}
 
 }

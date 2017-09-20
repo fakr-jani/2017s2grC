@@ -26,6 +26,8 @@ import ro.msg.edu.persistence.user.entity.User;
 @Stateless
 public class UserDTOMapper extends AbstractDTOMapper<User, UserDTO> {
 
+	private static final long serialVersionUID = 1L;
+
 	@EJB
 	RoleDTOMapper roleDTOMapper;
 
@@ -46,7 +48,7 @@ public class UserDTOMapper extends AbstractDTOMapper<User, UserDTO> {
 		dto.setPhoneNumber(entity.getPhoneNumber());
 		dto.setUsername(entity.getUsername());
 		dto.setActive(entity.isActive());
-		dto.setCounter(entity.getCounter());
+		dto.setNumberOfTries(entity.getNumberOfTries());
 
 		List<Role> roleEntities = entity.getRoles();
 		if (roleEntities != null) {
@@ -68,6 +70,7 @@ public class UserDTOMapper extends AbstractDTOMapper<User, UserDTO> {
 					.collect(Collectors.toList());
 			dto.setCreatedBugs(bugDTOs);
 		}
+
 	}
 
 	@Override
@@ -80,7 +83,7 @@ public class UserDTOMapper extends AbstractDTOMapper<User, UserDTO> {
 		entity.setPhoneNumber(dto.getPhoneNumber());
 		entity.setUsername(dto.getUsername());
 		entity.setActive(dto.isActive());
-		entity.setCounter(dto.getCounter());
+		entity.setNumberOfTries(dto.getNumberOfTries());
 
 		List<RoleDTO> roleDTOs = dto.getRoles();
 		if (roleDTOs != null) {
@@ -111,6 +114,7 @@ public class UserDTOMapper extends AbstractDTOMapper<User, UserDTO> {
 			}).collect(Collectors.toList());
 			entity.setCreatedBugs(bugEntities);
 		}
+
 	}
 
 }

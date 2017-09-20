@@ -12,7 +12,7 @@ import ro.msg.edu.business.user.dto.UserDTO;
 import ro.msg.edu.persistence.user.entity.User;
 
 @Stateless
-public class UserValidator implements Serializable{
+public class UserValidator implements Serializable {
 
 	@EJB
 	private UserDAO userDAO;
@@ -62,6 +62,6 @@ public class UserValidator implements Serializable{
 
 	public boolean uniqueUsername(StringBuilder username) {
 		Optional<User> user = userDAO.findUserByUsername(username.toString());
-		return user.isPresent() && user.get().getId() != null;
+		return user.isPresent() && user.get().getId() == null;
 	}
 }

@@ -27,7 +27,7 @@ public class UserConverterBean implements Converter {
 		userDTO.setPassword(strArr[5]);
 		userDTO.setPhoneNumber(strArr[6]);
 		userDTO.setActive(Boolean.valueOf(strArr[7]));
-		userDTO.setCounter(Integer.parseInt(strArr[8]));
+		userDTO.setNumberOfTries(Integer.parseInt(strArr[8]));
 
 		return userDTO;
 	}
