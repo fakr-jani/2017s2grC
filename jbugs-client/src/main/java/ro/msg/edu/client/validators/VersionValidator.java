@@ -27,7 +27,7 @@ public class VersionValidator implements Validator {
 		String stringValue = value.toString();
 
 		boolean res = Pattern.matches(VALID_BUG_VERSION_REGEX, stringValue);
-		if(res == false ){
+		if(!res){
 			String versionValidationMessage = context.getApplication().evaluateExpressionGet(context, "#{msg['validator.version']}", String.class);
 			FacesMessage message = new FacesMessage(versionValidationMessage);
 			throw new ValidatorException(message);

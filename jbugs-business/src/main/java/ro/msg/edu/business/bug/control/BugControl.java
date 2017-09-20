@@ -16,7 +16,6 @@ import ro.msg.edu.business.bug.dto.mapper.AttachmentDTOMapper;
 import ro.msg.edu.business.bug.dto.mapper.BugDTOMapper;
 import ro.msg.edu.business.bug.validator.BugValidator;
 import ro.msg.edu.business.common.exception.TechnicalException;
-import ro.msg.edu.business.user.control.UserCRUDControl;
 import ro.msg.edu.business.user.dao.UserDAO;
 import ro.msg.edu.business.user.dto.mapper.UserDTOMapper;
 import ro.msg.edu.persistence.bug.entity.Bug;

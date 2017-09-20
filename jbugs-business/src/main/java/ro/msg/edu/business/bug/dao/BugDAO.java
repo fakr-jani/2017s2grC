@@ -3,13 +3,10 @@ package ro.msg.edu.business.bug.dao;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.persistence.NoResultException;
-import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import ro.msg.edu.business.common.dao.AbstractDao;
-import ro.msg.edu.business.common.exception.TechnicalException;
 import ro.msg.edu.persistence.bug.entity.Bug;
 import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
 
@@ -27,7 +24,7 @@ public class BugDAO extends AbstractDao<Bug> {
 		return Bug.class;
 	}
 
-	public Bug findBugByTitle(String title) throws TechnicalException {
+	public Bug findBugByTitle(String title) {
 		TypedQuery<Bug> query = this.em.createNamedQuery(Bug.FIND_BUG_BY_TITLE, Bug.class);
 		query.setParameter("title", title);
 

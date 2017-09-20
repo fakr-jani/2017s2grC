@@ -11,7 +11,7 @@ import javax.faces.validator.ValidatorException;
 public class NameValidator implements Validator {
 
 	@Override
-	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+	public void validate(FacesContext context, UIComponent component, Object value){
 		String name = value.toString();
 		if (name == null || name.length() < 3) {
 			String nameValidationMessage = context.getApplication().evaluateExpressionGet(context,

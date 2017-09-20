@@ -147,10 +147,10 @@ public class BugBean extends AbstractBean {
 			newBug.setSeverity(BugSeverityType.valueOf(selectedSeverity));
 			newBug.setTargetDate(date2);
 			if (user == null ) {
-				FacesMessage message = new FacesMessage("Username-ul introdus este gresit!");
+				new FacesMessage("Username-ul introdus este gresit!");
 				//addMessage("#{msg['assigned.username']}");
 			} else {
-				BugDTO bugCreated = bugFacade.createBug(newBug);
+				bugFacade.createBug(newBug);
 				addMessage(newBug.getTitleBug() + " " + getMessageFromProperty("#{msg['bug.added']}"));
 
 			}

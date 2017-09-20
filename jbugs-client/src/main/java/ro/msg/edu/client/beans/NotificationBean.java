@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 
 import ro.msg.edu.business.common.exception.TechnicalException;
 import ro.msg.edu.business.notification.boundary.NotificationFacade;
-import ro.msg.edu.business.notification.dao.NotificationDAO;
 import ro.msg.edu.business.notification.dto.NotificationDTO;
 import ro.msg.edu.business.user.boundary.UserFacade;
 import ro.msg.edu.business.user.dto.UserDTO;

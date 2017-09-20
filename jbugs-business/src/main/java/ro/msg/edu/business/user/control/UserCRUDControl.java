@@ -2,11 +2,9 @@ package ro.msg.edu.business.user.control;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -18,7 +16,6 @@ import ro.msg.edu.business.user.dao.UserDAO;
 import ro.msg.edu.business.user.dto.UserDTO;
 import ro.msg.edu.business.user.dto.mapper.UserDTOMapper;
 import ro.msg.edu.business.user.validator.UserValidator;
-import ro.msg.edu.persistence.user.entity.Permission;
 import ro.msg.edu.persistence.user.entity.Role;
 import ro.msg.edu.persistence.user.entity.User;
 import ro.msg.edu.persistence.user.entity.enums.PermissionType;
@@ -32,6 +29,11 @@ import ro.msg.edu.persistence.user.entity.enums.RoleType;
  */
 @Stateless
 public class UserCRUDControl implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@EJB
 	private UserDTOMapper userDTOMapper;
@@ -207,12 +209,15 @@ public class UserCRUDControl implements Serializable {
 		return selectedRoles.stream().map(role->roleDAO.getRoleByName(RoleType.valueOf(role))).collect(Collectors.toList());
 	}
 	
-	public List<String> viewRoles(UserDTO selectedUser) {
+	public List<String> viewRoles(UserDTO selectedUser) throws TechnicalException {
 		Optional<User> user = userDAO.findUserByUsername(selectedUser.getUsername());
+		if (user.isPresent()) {
 		List<Role> roleList =user.get().getRoles();
 		List<String> roleTypeList = new ArrayList<>();
 		roleList.stream().forEach(e -> roleTypeList.add(e.getRoleName().toString()));
 		return roleTypeList;
+		}else
+			throw new TechnicalException(USER_NOT_FOUND);
 
 	}
 }

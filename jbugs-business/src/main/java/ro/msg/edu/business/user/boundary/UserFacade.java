@@ -84,7 +84,7 @@ public class UserFacade implements Serializable {
 		return userCRUDControl.hasPermission(username, permissionType);
 	}
 	
-	public List<String> viewRoles(UserDTO selectedUser) {
+	public List<String> viewRoles(UserDTO selectedUser) throws TechnicalException {
 		return userCRUDControl.viewRoles(selectedUser);
 	}
 
