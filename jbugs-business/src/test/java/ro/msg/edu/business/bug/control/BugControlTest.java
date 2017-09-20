@@ -16,11 +16,11 @@ import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
 
 public class BugControlTest extends AbstractIntegrationTest {
 	@EJB
-	private BugControl sut;
+	private BugControl bugControl;
 
 	@Test
 	public void findAllBugs_Success() throws TechnicalException {
-		List<BugDTO> bugs = sut.findAllBugs();
+		List<BugDTO> bugs = bugControl.findAllBugs();
 
 		Assert.assertEquals(4, bugs.size());
 	}
@@ -36,7 +36,7 @@ public class BugControlTest extends AbstractIntegrationTest {
 		bug.setTargetDate(date);
 		bug.setSeverity(BugSeverityType.LOW);
 		bug.setStatus(BugStatusType.FIXED);
-		BugDTO bugDTO = sut.closeBug(bug);
+		BugDTO bugDTO = bugControl.closeBug(bug);
 		Assert.assertEquals( "CLOSED",bugDTO.getStatus().toString());
 	}
 }

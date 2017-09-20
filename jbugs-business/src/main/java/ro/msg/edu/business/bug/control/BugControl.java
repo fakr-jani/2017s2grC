@@ -96,14 +96,14 @@ public class BugControl implements Serializable{
 	public List<BugDTO> findAllBugs() {
 		List<Bug> bugEnitites = bugDAO.findAllBugs();
 
-		return bugEnitites.stream().map(e -> bugDTOMapper.mapToDTO(e)).collect(Collectors.toList());
+		return bugEnitites.stream().map(bugEntity -> bugDTOMapper.mapToDTO(bugEntity)).collect(Collectors.toList());
 
 	}
 
-	public List<BugDTO> findAllFixedAndRejectedBugs() {
-		List<Bug> bugEnitites = bugDAO.findAllFixedAndRejectedBugs();
+	public List<BugDTO> findBugsThatCanBeClosed() {
+		List<Bug> bugEnitites = bugDAO.findBugsThatCanBeClosed();
 
-		return bugEnitites.stream().map(e -> bugDTOMapper.mapToDTO(e)).collect(Collectors.toList());
+		return bugEnitites.stream().map(bugEntity -> bugDTOMapper.mapToDTO(bugEntity)).collect(Collectors.toList());
 
 	}
 

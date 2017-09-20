@@ -30,7 +30,7 @@ import ro.msg.edu.persistence.user.entity.User;
 public class UserCRUDControlTest extends AbstractIntegrationTest {
 
 	@EJB
-	private UserCRUDControl sut;
+	private UserCRUDControl userCRUDControl;
 
 	@EJB
 	private UserDAO userDAO;
@@ -49,8 +49,8 @@ public class UserCRUDControlTest extends AbstractIntegrationTest {
 		testUser.setPhoneNumber("+407098884443");
 
 		String[] nameRoles = { "ADMINISTRATOR" };
-		UserDTO persisted = sut.createUser(testUser, nameRoles);
-		boolean existUser = sut.verifyUserExists(persisted);
+		UserDTO persisted = userCRUDControl.createUser(testUser, nameRoles);
+		boolean existUser = userCRUDControl.verifyUserExists(persisted);
 		Assert.assertEquals(true,existUser);
 
 	}
@@ -66,7 +66,7 @@ public class UserCRUDControlTest extends AbstractIntegrationTest {
 		testUser.setEmail("marthss@msggroup.com");
 		String[] nameRoles = { "ADMINISTRATOR" };
 
-		UserDTO persisted = sut.createUser(testUser, nameRoles);
+		UserDTO persisted = userCRUDControl.createUser(testUser, nameRoles);
 
 		Bug bug = new Bug();
 		Optional<User> user = userDAO.findUserByUsername(persisted.getUsername());
@@ -82,7 +82,7 @@ public class UserCRUDControlTest extends AbstractIntegrationTest {
 		bug.setTargetDate(d);
 		bug.setStatus(BugStatusType.CLOSED);
 		bugDAO.persistEntity(bug);
-		UserDTO deletedUser = sut.deleteUser(persisted);
+		UserDTO deletedUser = userCRUDControl.deleteUser(persisted);
 		Assert.assertEquals(false, deletedUser.isActive());
 
 	}
@@ -98,7 +98,7 @@ public class UserCRUDControlTest extends AbstractIntegrationTest {
 		testUser.setEmail("marthssasaa@msggroup.com");
 		String[] nameRoles = { "ADMINISTRATOR" };
 
-		UserDTO persisted = sut.createUser(testUser, nameRoles);
+		UserDTO persisted = userCRUDControl.createUser(testUser, nameRoles);
 		Bug bug = new Bug();
 		Optional<User> user = userDAO.findUserByUsername(persisted.getUsername());
 		bug.setAssignedTo(user.get());
@@ -114,7 +114,7 @@ public class UserCRUDControlTest extends AbstractIntegrationTest {
 		bug.setTargetDate(d);
 		bugDAO.persistEntity(bug);
 
-		UserDTO deletedUser = sut.deleteUser(persisted);
+		UserDTO deletedUser = userCRUDControl.deleteUser(persisted);
 		Assert.assertEquals(true, deletedUser.isActive());
 
 	}

@@ -12,7 +12,7 @@ import ro.msg.edu.business.user.dto.UserDTO;
 public class UserFacadeTest extends AbstractIntegrationTest {
 
 	@EJB
-	private UserFacade sut;
+	private UserFacade userFacade;
 
 	@Test
 	public void createUser_succesfull() throws TechnicalException {
@@ -25,7 +25,7 @@ public class UserFacadeTest extends AbstractIntegrationTest {
 		testUser.setUsername("SmithW");
 
 		String[] nameRoles = { "ADMINISTRATOR" };
-		UserDTO createdUser = sut.createUser(testUser, nameRoles);
+		UserDTO createdUser = userFacade.createUser(testUser, nameRoles);
 
 		Assert.assertNotNull("The newly persisted user should have an id!", createdUser.getId());
 	}
@@ -40,7 +40,7 @@ public class UserFacadeTest extends AbstractIntegrationTest {
 		testUser.setUsername("SamueW");
 		testUser.setPhoneNumber("+4074567892");
 		String[] nameRoles = { "ADMINISTRATOR" };
-		UserDTO createdUser = sut.createUser(testUser, nameRoles);
+		UserDTO createdUser = userFacade.createUser(testUser, nameRoles);
 
 		Assert.assertTrue("The newly persisted user should be active!", createdUser.isActive());
 	}

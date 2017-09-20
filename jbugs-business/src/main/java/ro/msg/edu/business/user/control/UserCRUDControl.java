@@ -2,8 +2,11 @@ package ro.msg.edu.business.user.control;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -55,13 +58,7 @@ public class UserCRUDControl implements Serializable {
 
 		userEntity.setActive(true);
 		userEntity.setUsername(generateUsername(user.getFirstname(), user.getLastname()));
-		List<Role> roles = new ArrayList<Role>();
-
-		for (String role : selectedRoles) {
-
-			roles.add(roleDAO.getRoleByName(RoleType.valueOf(role)));
-		}
-		userEntity.setRoles(roles);
+		userEntity.setRoles(convertArrayToList(selectedRoles));
 		userDAO.persistEntity(userEntity);
 
 		User persistedUser = userDAO.findEntity(userEntity.getId());
@@ -96,13 +93,8 @@ public class UserCRUDControl implements Serializable {
 		Optional<User> userOptional = userDAO.findUserByUsername(userToUpdate.getUsername());
 		if (userOptional.isPresent()) {
 			User entity = userOptional.get();
-			List<Role> roleList = new ArrayList<>();
-
-			for (String roleName : updateRoles) {
-				roleList.add(roleDAO.getRoleByName(RoleType.valueOf(roleName)));
-			}
 			userValidator.validateUserData(userToUpdate);
-			entity.setRoles(roleList);
+			entity.setRoles(updateRoles.stream().map(role->roleDAO.getRoleByName(RoleType.valueOf(role))).collect(Collectors.toList()));
 			entity.setEmail(userToUpdate.getEmail());
 			entity.setFirstname(userToUpdate.getFirstname());
 			entity.setLastname(userToUpdate.getLastname());
@@ -208,4 +200,7 @@ public class UserCRUDControl implements Serializable {
 		return userDAO.hasPermission(username, permissionType);
 	}
 
+	private List<Role> convertArrayToList(String[] selectedRoles){
+		return  Arrays.stream(selectedRoles).map(role->roleDAO.getRoleByName(RoleType.valueOf(role))).collect(Collectors.toList());
+	}
 }

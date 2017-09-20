@@ -13,26 +13,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.runner.RunWith;
 
-/**
- * Abstract class for all integration tests.
- * <p>
- * <b>Important notes:</b>
- * <ol>
- * <li>The tests are run with a maven build with profile
- * '{@code payara-remote}', <b>on the parent module</b></li>
- * <li>The payara server has to be manually started before running the
- * integration tests</li>
- * <li>No application should be deployed!!</li>
- * <li>By default the standard jbugs package 'edu.msg.ro' is used as the common
- * parent package for all EJBs. Overwrite {@link #getEjbPackages()} in order to
- * change that.</li>
- * <li>ddl strategy should be 'drop-and-create'. Change it on your
- * responsability</li>
- * </ol>
- * 
- * @author Andrei Floricel, msg systems ag
- *
- */
+
 @RunWith(Arquillian.class)
 public abstract class AbstractIntegrationTest {
 

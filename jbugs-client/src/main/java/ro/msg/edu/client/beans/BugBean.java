@@ -64,7 +64,7 @@ public class BugBean extends AbstractBean {
 		} catch (TechnicalException e) {
 			addMessage(e.getMessage());
 		}
-		return EDIT_BUGS ;
+		return EDIT_BUGS;
 	}
 
 	public void addUploadedFile(FileUploadEvent fileUploadEvent) {
@@ -87,20 +87,20 @@ public class BugBean extends AbstractBean {
 
 	public String enterUpdateMode(BugDTO bug) {
 		this.selectedBug = bug;
-		return EDIT_BUGS ;
+		return EDIT_BUGS;
 	}
 
 	public String leaveUpdateMode() {
 		selectedBug = new BugDTO();
-		return EDIT_BUGS ;
+		return EDIT_BUGS;
 	}
 
 	public boolean verifyEditRendered(BugDTO bug) {
 		return (selectedBug != null && bug.getId().equals(selectedBug.getId()));
 	}
 
-	public List<BugDTO> getFixedAndRejectedBugs() {
-		return bugFacade.findRejectedAndFixedBugs();
+	public List<BugDTO> getBugsThatCanBeClosed() {
+		return bugFacade.findBugsThatCanBeClosed();
 	}
 
 	public String closeBug(BugDTO bugDTO) {

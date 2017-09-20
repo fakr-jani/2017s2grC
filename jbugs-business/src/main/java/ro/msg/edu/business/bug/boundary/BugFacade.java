@@ -41,7 +41,7 @@ public class BugFacade implements Serializable {
 		return bugControl.closeBug(bugDTO);
 	}
 
-	public List<BugDTO> findRejectedAndFixedBugs() {
-		return bugControl.findAllFixedAndRejectedBugs();
+	public List<BugDTO> findBugsThatCanBeClosed() {
+		return bugControl.findBugsThatCanBeClosed();
 	}
 }

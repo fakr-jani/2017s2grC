@@ -48,7 +48,7 @@ public class BugDAO extends AbstractDao<Bug> {
 
 	}
 
-	public List<Bug> findAllFixedAndRejectedBugs() {
+	public List<Bug> findBugsThatCanBeClosed() {
 		Query query = em.createQuery("SELECT b FROM Bug b WHERE b.status = :fixed OR b.status = :rejected");
 		query.setParameter("fixed", BugStatusType.FIXED);
 		query.setParameter("rejected", BugStatusType.REJECTED);
