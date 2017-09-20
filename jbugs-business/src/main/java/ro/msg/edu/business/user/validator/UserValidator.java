@@ -52,7 +52,7 @@ public class UserValidator implements Serializable {
 	public void validatePhoneNumber(UserDTO userDTO) throws TechnicalException {
 		if (!userDTO.getPhoneNumber().startsWith(MATCHER_PHONE_ROMANIA)
 				&& !userDTO.getPhoneNumber().startsWith(MATCHER_PHONE_GERMANY)) {
-			throw new TechnicalException("Phone number is invalid! Please insert a germany phone or romania");
+			throw new TechnicalException("Phone number is invalid!");
 		} else if (!userDTO.getPhoneNumber().matches(REGEX)) {
 			throw new TechnicalException("Phone number must have only digits");
 
