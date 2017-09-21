@@ -113,7 +113,7 @@ public class UserBean extends AbstractBean {
 		return (selectedUser != null && user.getId().equals(selectedUser.getId()));
 	}
 
-public boolean verifyPermissionRendered(String permissionType) {
+	public boolean verifyPermissionRendered(String permissionType) {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 		String userName = (String) session.getAttribute("username");
 		return permissionCheck.verifyPermissionRendered(userName, permissionType);

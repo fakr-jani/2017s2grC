@@ -17,7 +17,9 @@
 			</h1>
 			<ui:include src="menu.xhtml" />
 			<br /> <br />
-			<h:form id="bugForm" rendered="#{userBean.verifyPermissionRendered('BUG_CLOSE')}">
+			<p:growl widgetVar="growl" showDetail="true" />
+			<h:form id="bugForm"
+				rendered="#{userBean.verifyPermissionRendered('BUG_CLOSE')}">
 				<p:dataTable value="#{bugBean.bugsThatCanBeClosed}" var="bugVar">
 					<p:column>
 						<f:facet name="header">
@@ -91,12 +93,19 @@
 						</f:facet>
 						<h:commandButton value="#{msg['close.bug.button']}"
 							action="#{bugBean.closeBug(bugVar)}"
-							 />
+							actionListener="#{notifyBean.send}" />
 					</p:column>
 				</p:dataTable>
 			</h:form>
 		</div>
 	</f:view>
-
+<p:socket onMessage="handleMessage" channel="/jbugs/*" />
+ 
+<script type="text/javascript">
+        function handleMessage(facesmessage) {
+            facesmessage.severity = 'info';
+            PF('growl').show([facesmessage]);
+        }
+</script>
 </h:body>
 </html>

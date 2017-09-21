@@ -21,6 +21,7 @@ import ro.msg.edu.business.bug.dto.AttachmentDTO;
 import ro.msg.edu.business.bug.dto.BugDTO;
 import ro.msg.edu.business.common.exception.JBugsException;
 import ro.msg.edu.business.common.exception.TechnicalException;
+import ro.msg.edu.business.notification.boundary.NotificationFacade;
 import ro.msg.edu.business.user.boundary.UserFacade;
 import ro.msg.edu.business.user.dto.UserDTO;
 import ro.msg.edu.persistence.bug.entity.enums.BugSeverityType;
@@ -51,6 +52,9 @@ public class BugBean extends AbstractBean {
 
 	private String userAssigned;
 
+	@EJB
+	private NotificationFacade notificationFacade;
+
 	private BugDTO selectedBug = new BugDTO();
 
 	private List<BugDTO> allBugsForEditStatusView = new ArrayList<>();
@@ -65,12 +69,12 @@ public class BugBean extends AbstractBean {
 
 	private static final String EDIT_BUGS = "editBugs";
 
-	private static final String CLOSE_BUG = "closeBug";
-
 	@PostConstruct
 	public void init() {
 		this.allBugsForEditStatusView = bugFacade.findAllBugs();
 	}
+
+	private static final String CLOSE_BUG = "closeBug";
 
 	public List<BugDTO> getAllBugs() {
 		return bugFacade.findAllBugs();
@@ -146,15 +150,7 @@ public class BugBean extends AbstractBean {
 
 	public String updateBug() {
 		try {
-
-			tempAttachmentList.forEach(attachment -> attachment.setBug(selectedBug));
-			List<AttachmentDTO> existingAttachmentsInSelectedBug = selectedBug.getAttachments();
-			if (existingAttachmentsInSelectedBug != null) {
-				existingAttachmentsInSelectedBug.addAll(tempAttachmentList);
-			}
-
-			bugFacade.updateBug(this.selectedBug);
-			this.tempAttachmentList = new ArrayList<>();
+			BugDTO bugUpdated = bugFacade.updateBug(this.selectedBug);
 		} catch (TechnicalException e) {
 			addMessage(e.getMessage());
 		}
@@ -166,7 +162,9 @@ public class BugBean extends AbstractBean {
 		attachmentDTO.setFileBytes(fileUploadEvent.getFile().getContents());
 		attachmentDTO.setFileName(fileUploadEvent.getFile().getFileName());
 
-		this.tempAttachmentList.add(attachmentDTO);
+		attachmentDTO.setBug(selectedBug);
+		attachmentDTO.setFileName(fileUploadEvent.getFile().getFileName());
+		this.selectedBug.getAttachments().add(attachmentDTO);
 
 		addMessage(fileUploadEvent.getFile().getFileName() + " " + getMessageFromProperty("#{msg['is.uploaded']}"));
 	}
@@ -199,6 +197,7 @@ public class BugBean extends AbstractBean {
 		try {
 			bugFacade.closeBug(bugDTO);
 			addMessage(bugDTO.getTitleBug() + " " + getMessageFromProperty("#{msg['close.bug.status']}"));
+			notificationFacade.createClosedBugNotification(bugDTO);
 		} catch (TechnicalException e) {
 			addMessage(e.getMessage());
 		}
@@ -248,5 +247,4 @@ public class BugBean extends AbstractBean {
 			addMessage(e.getMessage());
 		}
 	}
-
 }

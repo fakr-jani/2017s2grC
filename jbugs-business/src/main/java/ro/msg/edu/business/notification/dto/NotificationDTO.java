@@ -16,6 +16,7 @@ public class NotificationDTO extends AbstractDTO {
 	private String message;
 	private NotificationType notificationType;
 	private Timestamp timestamp;
+
 	private BugDTO bug;
 	private List<User> users;
 

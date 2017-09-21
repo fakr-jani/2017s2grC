@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
+import ro.msg.edu.business.bug.dto.BugDTO;
 import ro.msg.edu.business.common.exception.TechnicalException;
 import ro.msg.edu.business.notification.control.NotificationControl;
 import ro.msg.edu.business.notification.dto.NotificationDTO;
@@ -24,6 +25,11 @@ public class NotificationFacade implements Serializable {
 
 	public List<NotificationDTO> getAllNotifications(UserDTO user) throws TechnicalException {
 		return notificationControl.getAllNotifications(user);
+	}
+
+	public void createClosedBugNotification(BugDTO bug) throws TechnicalException {
+		notificationControl.createClosedBugNotification(bug);
+
 	}
 
 }
