@@ -17,7 +17,7 @@ public class PhoneNumberValidator implements Validator {
 	@Override
 	public void validate(FacesContext context, UIComponent component, Object value) {
 		String stringValue = value.toString();
-		if (stringValue.length() < MIN_NUMBER_DIGITS_PHONE && stringValue.length() > MAX_NUMBER_DIGITS_PHONE
+		if (stringValue.length() >= MIN_NUMBER_DIGITS_PHONE && stringValue.length() <= MAX_NUMBER_DIGITS_PHONE
 				&& !(stringValue.startsWith(MATCHER_PHONE_GERMANY)) && !(stringValue.startsWith(MATCHER_PHONE_ROMANIA))
 				&& !(stringValue.matches(REGEX))) {
 			String phoneValidationMessage = context.getApplication().evaluateExpressionGet(context,

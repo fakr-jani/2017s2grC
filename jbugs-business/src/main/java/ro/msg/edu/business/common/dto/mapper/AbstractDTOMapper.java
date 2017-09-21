@@ -3,6 +3,7 @@ package ro.msg.edu.business.common.dto.mapper;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import ro.msg.edu.business.common.dto.AbstractDTO;
 import ro.msg.edu.persistence.common.entity.AbstractEntity;
@@ -12,6 +13,8 @@ public abstract class AbstractDTOMapper<E extends AbstractEntity, D extends Abst
 	private static final long serialVersionUID = 1L;
 
 	public abstract D getDTOInstance();
+
+	public abstract E getEntityInstance();
 
 	public D mapToDTO(E entity) {
 		if (entity == null) {
@@ -36,12 +39,21 @@ public abstract class AbstractDTOMapper<E extends AbstractEntity, D extends Abst
 	}
 
 	public List<D> mapToDTOs(List<E> entities) {
-		List<D> dtos = new ArrayList<>();
-		for (E entity : entities) {
-			dtos.add(mapToDTO(entity));
+		if (entities != null) {
+			return entities.stream().map(entity -> mapToDTO(entity)).collect(Collectors.toList());
 		}
+		return new ArrayList<D>();
+	}
 
-		return dtos;
+	public List<E> mapToEntities(List<D> dtos) {
+		if (dtos != null) {
+			return dtos.stream().map(dto -> {
+				E e = getEntityInstance();
+				mapToEntity(dto, e);
+				return e;
+			}).collect(Collectors.toList());
+		}
+		return new ArrayList<E>();
 	}
 
 	protected abstract void mapEntityToDTOFields(E entity, D dto);

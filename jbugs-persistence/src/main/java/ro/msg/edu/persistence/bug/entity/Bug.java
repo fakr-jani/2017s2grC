@@ -1,5 +1,6 @@
 package ro.msg.edu.persistence.bug.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -81,7 +82,7 @@ public class Bug extends AbstractEntity {
 	@OneToMany(mappedBy = "bug", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Attachment> attachments;
 
-	@OneToMany(mappedBy = "bug")
+	@OneToMany(mappedBy = "bug", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Notification> notifications;
 
 	@OneToMany(mappedBy = "bug")
@@ -169,6 +170,9 @@ public class Bug extends AbstractEntity {
 	}
 
 	public List<Attachment> getAttachments() {
+		if (this.attachments == null) {
+			this.attachments = new ArrayList<Attachment>();
+		}
 		return attachments;
 	}
 

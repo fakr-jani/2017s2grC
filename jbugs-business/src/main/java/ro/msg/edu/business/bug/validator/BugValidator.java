@@ -40,7 +40,7 @@ public class BugValidator implements Serializable{
 
 	public void isBugTitleValid(BugDTO bugDTO) throws TechnicalException {
 		 Bug existingBugWithSameTitle = bugDAO.findBugByTitle(bugDTO.getTitleBug());
-		if (existingBugWithSameTitle != null && existingBugWithSameTitle.getTitleBug() == bugDTO.getTitleBug()) {
+		if (existingBugWithSameTitle != null && existingBugWithSameTitle.getTitleBug().equals(bugDTO.getTitleBug()) ) {
 			throw new TechnicalException("Bug already exists with given title " + bugDTO.getTitleBug());
 		}
 	}

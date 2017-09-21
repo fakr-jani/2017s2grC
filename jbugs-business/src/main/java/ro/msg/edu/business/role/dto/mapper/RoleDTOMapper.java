@@ -10,6 +10,11 @@ import ro.msg.edu.persistence.user.entity.Role;
 public class RoleDTOMapper extends AbstractDTOMapper<Role, RoleDTO> {
 
 	@Override
+	public Role getEntityInstance() {
+		return new Role();
+	}
+
+	@Override
 	public RoleDTO getDTOInstance() {
 		return new RoleDTO();
 	}

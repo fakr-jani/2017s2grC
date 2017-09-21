@@ -10,6 +10,11 @@ import ro.msg.edu.persistence.user.entity.Permission;
 public class PermissionDTOMapper extends AbstractDTOMapper<Permission, PermissionDTO> {
 
 	@Override
+	public Permission getEntityInstance() {
+		return new Permission();
+	}
+
+	@Override
 	public PermissionDTO getDTOInstance() {
 		return new PermissionDTO();
 	}
