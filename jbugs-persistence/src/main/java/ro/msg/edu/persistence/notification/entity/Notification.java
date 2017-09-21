@@ -44,6 +44,9 @@ public class Notification extends AbstractEntity {
 	@Column
 	private Timestamp timestamp;
 
+	@Column
+	private boolean received;
+
 	@ManyToOne
 	private Bug bug;
 
@@ -105,6 +108,14 @@ public class Notification extends AbstractEntity {
 
 	public void setUsers(List<User> users) {
 		this.users = users;
+	}
+
+	public boolean isReceived() {
+		return received;
+	}
+
+	public void setReceived(boolean received) {
+		this.received = received;
 	}
 
 	@Override

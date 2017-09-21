@@ -42,20 +42,30 @@ public class NotificationControl implements Serializable {
 
 	@EJB
 	private UserDTOMapper userMapper;
+	private static final String USER_NOT_FOUND = "Cannot find user in session. Please log in!";
 
 	public List<NotificationDTO> getAllNotifications(UserDTO user) throws TechnicalException {
 		Optional<User> userEntity = userDAO.findUserByUsername(user.getUsername());
 		if (userEntity.isPresent()) {
 			return notificationMapper.mapToDTOs(notificationDAO.findNotificationsByUser(userEntity.get()));
 		} else {
-			throw new TechnicalException("Cannot find user in session. Please log in!");
+			throw new TechnicalException(USER_NOT_FOUND);
+		}
+	}
+
+	public List<NotificationDTO> findNotificationsNotReceived(UserDTO user) throws TechnicalException {
+		Optional<User> userEntity = userDAO.findUserByUsername(user.getUsername());
+		if (userEntity.isPresent()) {
+			return notificationMapper.mapToDTOs(notificationDAO.findNotificationsNotReceived(userEntity.get()));
+		} else {
+			throw new TechnicalException(USER_NOT_FOUND);
 		}
 	}
 
 	public NotificationDTO createClosedBugNotification(BugDTO bugDTO) throws TechnicalException {
 		Bug bugEntity = bugDAO.findBugByTitle(bugDTO.getTitleBug());
 		Notification notificationEntity = setNotification(bugEntity, NotificationType.BUG_CLOSED,
-				"Bug" + bugEntity.getTitleBug() + "has been closed");
+				"Bug " + bugEntity.getTitleBug() + "has been closed");
 		notificationDAO.persistEntity(notificationEntity);
 		Notification persistedNotification = notificationDAO.findEntity(notificationEntity.getId());
 		return notificationMapper.mapToDTO(persistedNotification);
@@ -72,7 +82,15 @@ public class NotificationControl implements Serializable {
 		notificationEntity.setBug(bug);
 		notificationEntity.setNotificationType(notificationType);
 		notificationEntity.setMessage(message);
+		notificationEntity.setReceived(false);
 		return notificationEntity;
 
 	}
+
+	public void setReceivedTrue(NotificationDTO notification) {
+		Notification notificationEntity = notificationDAO.findEntity(notification.getId());
+		notificationEntity.setReceived(true);
+		notificationDAO.persistEntity(notificationEntity);
+	}
+
 }

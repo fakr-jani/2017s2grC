@@ -92,20 +92,12 @@
 							<br />
 						</f:facet>
 						<h:commandButton value="#{msg['close.bug.button']}"
-							action="#{bugBean.closeBug(bugVar)}"
-							actionListener="#{notifyBean.send}" />
+							action="#{bugBean.closeBug(bugVar)}" />
 					</p:column>
 				</p:dataTable>
 			</h:form>
 		</div>
 	</f:view>
-<p:socket onMessage="handleMessage" channel="/jbugs/*" />
- 
-<script type="text/javascript">
-        function handleMessage(facesmessage) {
-            facesmessage.severity = 'info';
-            PF('growl').show([facesmessage]);
-        }
-</script>
+
 </h:body>
 </html>

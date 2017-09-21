@@ -32,4 +32,11 @@ public class NotificationFacade implements Serializable {
 
 	}
 
+	public List<NotificationDTO> findNotificationsNotReceived(UserDTO user) throws TechnicalException {
+		return notificationControl.findNotificationsNotReceived(user);
+	}
+
+	public void setReceivedTrue(NotificationDTO notification) {
+		notificationControl.setReceivedTrue(notification);
+	}
 }

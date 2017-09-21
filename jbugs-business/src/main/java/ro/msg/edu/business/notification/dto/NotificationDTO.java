@@ -19,6 +19,7 @@ public class NotificationDTO extends AbstractDTO {
 
 	private BugDTO bug;
 	private List<User> users;
+	private boolean received;
 
 	public String getBugURL() {
 		return bugURL;
@@ -66,6 +67,14 @@ public class NotificationDTO extends AbstractDTO {
 
 	public void setUsers(List<User> users) {
 		this.users = users;
+	}
+
+	public boolean isReceived() {
+		return received;
+	}
+
+	public void setReceived(boolean received) {
+		this.received = received;
 	}
 
 	@Override

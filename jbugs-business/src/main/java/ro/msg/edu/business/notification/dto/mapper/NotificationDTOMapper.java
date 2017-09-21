@@ -43,6 +43,7 @@ public class NotificationDTOMapper extends AbstractDTOMapper<Notification, Notif
 			bugDTO.setId(bugEntity.getId());
 			notificationDTO.setBug(bugDTO);
 		}
+		notificationDTO.setReceived(notificationEntity.isReceived());
 
 	}
 
@@ -60,6 +61,7 @@ public class NotificationDTOMapper extends AbstractDTOMapper<Notification, Notif
 			bugEntity.setIdBug(bugDTO.getId());
 			notificationEntity.setBug(bugEntity);
 		}
+		notificationEntity.setReceived(notificationDTO.isReceived());
 
 	}
 

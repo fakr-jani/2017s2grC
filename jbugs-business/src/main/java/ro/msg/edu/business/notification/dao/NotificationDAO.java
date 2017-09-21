@@ -23,7 +23,13 @@ public class NotificationDAO extends AbstractDao<Notification> {
 
 		Query query = em.createQuery("Select n from User u inner join u.notifications n where u.idUser=:idUser");
 		query.setParameter("idUser", user.getId());
+		return query.getResultList();
+	}
 
+	public List<Notification> findNotificationsNotReceived(User user) {
+		Query query = em.createQuery(
+				"Select n from User u inner join u.notifications n where u.idUser=:idUser and n.received='false'");
+		query.setParameter("idUser", user.getId());
 		return query.getResultList();
 	}
 
