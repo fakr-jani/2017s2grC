@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import ro.msg.edu.business.common.dto.AbstractDTO;
+import ro.msg.edu.business.notification.dto.NotificationDTO;
 import ro.msg.edu.business.user.dto.UserDTO;
 import ro.msg.edu.persistence.bug.entity.enums.BugSeverityType;
 import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
@@ -35,6 +36,8 @@ public class BugDTO extends AbstractDTO {
 	private UserDTO assignedTo;
 
 	private List<AttachmentDTO> attachments;
+
+	private List<NotificationDTO> notifications;
 
 	private Map<BugStatusType, List<BugStatusType>> statusGraph;
 
@@ -115,6 +118,14 @@ public class BugDTO extends AbstractDTO {
 
 	public void setAttachments(List<AttachmentDTO> attachments) {
 		this.attachments = attachments;
+	}
+
+	public List<NotificationDTO> getNotifications() {
+		return notifications;
+	}
+
+	public void setNotifications(List<NotificationDTO> notifications) {
+		this.notifications = notifications;
 	}
 
 	public Date getTargetDate() {

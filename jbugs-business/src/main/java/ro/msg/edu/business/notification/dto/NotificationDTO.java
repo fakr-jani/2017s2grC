@@ -3,8 +3,8 @@ package ro.msg.edu.business.notification.dto;
 import java.sql.Timestamp;
 import java.util.List;
 
+import ro.msg.edu.business.bug.dto.BugDTO;
 import ro.msg.edu.business.common.dto.AbstractDTO;
-import ro.msg.edu.persistence.bug.entity.Bug;
 import ro.msg.edu.persistence.notification.entity.enums.NotificationType;
 import ro.msg.edu.persistence.user.entity.User;
 
@@ -16,7 +16,7 @@ public class NotificationDTO extends AbstractDTO {
 	private String message;
 	private NotificationType notificationType;
 	private Timestamp timestamp;
-	private Bug bug;
+	private BugDTO bug;
 	private List<User> users;
 
 	public String getBugURL() {
@@ -51,11 +51,11 @@ public class NotificationDTO extends AbstractDTO {
 		this.timestamp = timestamp;
 	}
 
-	public Bug getBug() {
+	public BugDTO getBug() {
 		return bug;
 	}
 
-	public void setBug(Bug bug) {
+	public void setBug(BugDTO bug) {
 		this.bug = bug;
 	}
 

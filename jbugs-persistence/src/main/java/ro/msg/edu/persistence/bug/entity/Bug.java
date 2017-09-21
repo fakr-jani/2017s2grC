@@ -82,7 +82,7 @@ public class Bug extends AbstractEntity {
 	@OneToMany(mappedBy = "bug", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Attachment> attachments;
 
-	@OneToMany(mappedBy = "bug")
+	@OneToMany(mappedBy = "bug", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Notification> notifications;
 
 	@OneToMany(mappedBy = "bug")

@@ -5,6 +5,7 @@ import javax.ejb.Stateless;
 
 import ro.msg.edu.business.bug.dto.BugDTO;
 import ro.msg.edu.business.common.dto.mapper.AbstractDTOMapper;
+import ro.msg.edu.business.notification.dto.mapper.NotificationDTOMapper;
 import ro.msg.edu.business.user.dto.UserDTO;
 import ro.msg.edu.persistence.bug.entity.Bug;
 import ro.msg.edu.persistence.user.entity.User;
@@ -22,6 +23,9 @@ public class BugDTOMapper extends AbstractDTOMapper<Bug, BugDTO> {
 
 	@EJB
 	AttachmentDTOMapper attachmentDTOMapper;
+
+	@EJB
+	NotificationDTOMapper notificationDTOMapper;
 
 	@Override
 	public Bug getEntityInstance() {
@@ -61,6 +65,7 @@ public class BugDTOMapper extends AbstractDTOMapper<Bug, BugDTO> {
 
 		bugDTO.setAttachments(attachmentDTOMapper.mapToDTOs(bugEntity.getAttachments()));
 
+		bugDTO.setNotifications(notificationDTOMapper.mapToDTOs(bugEntity.getNotifications()));
 	}
 
 	@Override
@@ -90,6 +95,8 @@ public class BugDTOMapper extends AbstractDTOMapper<Bug, BugDTO> {
 		}
 
 		bugEntity.setAttachments(attachmentDTOMapper.mapToEntities(bugDTO.getAttachments()));
+
+		bugEntity.setNotifications(notificationDTOMapper.mapToEntities(bugDTO.getNotifications()));
 	}
 
 }

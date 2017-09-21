@@ -48,6 +48,8 @@ public class UserDTOMapper extends AbstractDTOMapper<User, UserDTO> {
 		userDTO.setActive(userEntity.isActive());
 		userDTO.setNumberOfTries(userEntity.getNumberOfTries());
 
+		userDTO.setRoles(roleDTOMapper.mapToDTOs(userEntity.getRoles()));
+
 		userDTO.setAssignedBugs(bugDTOMapper.mapToDTOs(userEntity.getAssignedBugs()));
 
 		userDTO.setCreatedBugs(bugDTOMapper.mapToDTOs(userEntity.getCreatedBugs()));
