@@ -18,6 +18,11 @@ public class NotificationDTOMapper extends AbstractDTOMapper<Notification, Notif
 	private static final long serialVersionUID = 1L;
 
 	@Override
+	public Notification getEntityInstance() {
+		return new Notification();
+	}
+
+	@Override
 	public NotificationDTO getDTOInstance() {
 		return new NotificationDTO();
 	}

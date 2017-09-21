@@ -85,8 +85,6 @@ public class BugControl implements Serializable {
 	public BugDTO createBug(BugDTO bug) throws TechnicalException {
 		bugValidator.validateBugData(bug);
 
-		userDAO.findUserByUsername(bug.getAssignedTo().getUsername());
-
 		Bug bugEntity = new Bug();
 		bugDTOMapper.mapToEntity(bug, bugEntity);
 

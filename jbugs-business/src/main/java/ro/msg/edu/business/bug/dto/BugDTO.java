@@ -107,6 +107,9 @@ public class BugDTO extends AbstractDTO {
 	}
 
 	public List<AttachmentDTO> getAttachments() {
+		if (attachments == null) {
+			attachments = new ArrayList<AttachmentDTO>();
+		}
 		return attachments;
 	}
 

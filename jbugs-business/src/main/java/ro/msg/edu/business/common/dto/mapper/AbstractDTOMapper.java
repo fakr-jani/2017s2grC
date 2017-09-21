@@ -13,6 +13,8 @@ public abstract class AbstractDTOMapper<E extends AbstractEntity, D extends Abst
 
 	public abstract D getDTOInstance();
 
+	public abstract E getEntityInstance();
+
 	public D mapToDTO(E entity) {
 		if (entity == null) {
 			return null;
@@ -37,6 +39,14 @@ public abstract class AbstractDTOMapper<E extends AbstractEntity, D extends Abst
 
 	public List<D> mapToDTOs(List<E> entities) {
 		return entities.stream().map(entity -> mapToDTO(entity)).collect(Collectors.toList());
+	}
+
+	public List<E> mapToEntities(List<D> dtos) {
+		return dtos.stream().map(dto -> {
+			E e = getEntityInstance();
+			mapToEntity(dto, e);
+			return e;
+		}).collect(Collectors.toList());
 	}
 
 	protected abstract void mapEntityToDTOFields(E entity, D dto);

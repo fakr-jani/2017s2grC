@@ -17,6 +17,11 @@ public class AttachmentDTOMapper extends AbstractDTOMapper<Attachment, Attachmen
 	private static final long serialVersionUID = 1L;
 
 	@Override
+	public Attachment getEntityInstance() {
+		return new Attachment();
+	}
+
+	@Override
 	public AttachmentDTO getDTOInstance() {
 		return new AttachmentDTO();
 	}
