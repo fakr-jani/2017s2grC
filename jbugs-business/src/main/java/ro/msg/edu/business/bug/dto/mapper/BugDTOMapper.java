@@ -47,6 +47,10 @@ public class BugDTOMapper extends AbstractDTOMapper<Bug, BugDTO> {
 		bugDTO.setStatus(bugEntity.getStatus());
 		bugDTO.setSeverity(bugEntity.getSeverity());
 
+		bugDTO.setAttachments(attachmentDTOMapper.mapToDTOs(bugEntity.getAttachments()));
+
+		bugDTO.setNotifications(notificationDTOMapper.mapToDTOs(bugEntity.getNotifications()));
+
 		User createdByEntity = bugEntity.getCreatedBy();
 		if (createdByEntity != null) {
 			UserDTO createdByDTO = new UserDTO();
@@ -63,9 +67,6 @@ public class BugDTOMapper extends AbstractDTOMapper<Bug, BugDTO> {
 			bugDTO.setAssignedTo(assignedToDTO);
 		}
 
-		bugDTO.setAttachments(attachmentDTOMapper.mapToDTOs(bugEntity.getAttachments()));
-
-		bugDTO.setNotifications(notificationDTOMapper.mapToDTOs(bugEntity.getNotifications()));
 	}
 
 	@Override
@@ -77,6 +78,10 @@ public class BugDTOMapper extends AbstractDTOMapper<Bug, BugDTO> {
 		bugEntity.setTargetDate(bugDTO.getTargetDate());
 		bugEntity.setStatus(bugDTO.getStatus());
 		bugEntity.setSeverity(bugDTO.getSeverity());
+
+		bugEntity.setAttachments(attachmentDTOMapper.mapToEntities(bugDTO.getAttachments()));
+
+		bugEntity.setNotifications(notificationDTOMapper.mapToEntities(bugDTO.getNotifications()));
 
 		UserDTO createdByDTO = bugDTO.getCreatedBy();
 		if (createdByDTO != null) {
@@ -94,9 +99,6 @@ public class BugDTOMapper extends AbstractDTOMapper<Bug, BugDTO> {
 			bugEntity.setAssignedTo(assignedToEntity);
 		}
 
-		bugEntity.setAttachments(attachmentDTOMapper.mapToEntities(bugDTO.getAttachments()));
-
-		bugEntity.setNotifications(notificationDTOMapper.mapToEntities(bugDTO.getNotifications()));
 	}
 
 }

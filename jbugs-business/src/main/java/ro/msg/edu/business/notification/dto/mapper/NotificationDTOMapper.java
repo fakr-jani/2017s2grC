@@ -34,6 +34,8 @@ public class NotificationDTOMapper extends AbstractDTOMapper<Notification, Notif
 		notificationDTO.setMessage(notificationEntity.getMessage());
 		notificationDTO.setNotificationType(notificationEntity.getNotificationType());
 		notificationDTO.setTimestamp(notificationEntity.getTimestamp());
+		notificationDTO.setBugURL(notificationEntity.getBugURL());
+		notificationDTO.setUsers(notificationEntity.getUsers());
 
 		Bug bugEntity = notificationEntity.getBug();
 		if (bugEntity != null) {
@@ -41,9 +43,7 @@ public class NotificationDTOMapper extends AbstractDTOMapper<Notification, Notif
 			bugDTO.setId(bugEntity.getId());
 			notificationDTO.setBug(bugDTO);
 		}
-		// dto.setBug(entity.getBug());
-		notificationDTO.setBugURL(notificationEntity.getBugURL());
-		notificationDTO.setUsers(notificationEntity.getUsers());
+
 	}
 
 	@Override
@@ -51,6 +51,8 @@ public class NotificationDTOMapper extends AbstractDTOMapper<Notification, Notif
 		notificationEntity.setMessage(notificationDTO.getMessage());
 		notificationEntity.setNotificationType(notificationDTO.getNotificationType());
 		notificationEntity.setTimestamp(notificationDTO.getTimestamp());
+		notificationEntity.setBugURL(notificationDTO.getBugURL());
+		notificationEntity.setUsers(notificationDTO.getUsers());
 
 		BugDTO bugDTO = notificationDTO.getBug();
 		if (bugDTO != null) {
@@ -58,9 +60,7 @@ public class NotificationDTOMapper extends AbstractDTOMapper<Notification, Notif
 			bugEntity.setIdBug(bugDTO.getId());
 			notificationEntity.setBug(bugEntity);
 		}
-		// entity.setBug(dto.getBug());
-		notificationEntity.setBugURL(notificationDTO.getBugURL());
-		notificationEntity.setUsers(notificationDTO.getUsers());
+
 	}
 
 }
