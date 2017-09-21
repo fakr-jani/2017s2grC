@@ -28,7 +28,7 @@ import ro.msg.edu.persistence.bug.entity.enums.BugStatusType;
  * 
  */
 @Stateless
-public class BugControl implements Serializable{
+public class BugControl implements Serializable {
 
 	@EJB
 	private BugDTOMapper bugDTOMapper;
@@ -117,5 +117,13 @@ public class BugControl implements Serializable{
 		Bug bug = bugDAO.findBugByTitle(bugDTO.getTitleBug());
 		bug.setStatus(BugStatusType.CLOSED);
 		return bugDTOMapper.mapToDTO(bug);
+	}
+
+	public List<String> findAssignerForFixedBug() {
+		return bugDAO.findAssignerForFixedBug();
+	}
+
+	public List<String> findCreatorForRejectedBugs() {
+		return bugDAO.findCreatorForRejectedBugs();
 	}
 }

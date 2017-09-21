@@ -31,6 +31,8 @@ public class PageFilter implements Filter {
 	public final static String UPDATEUSER_PAGE = "/editUsers.xhtml";
 	public final static String DELETEUSER_PAGE = "/deleteUser.xhtml";
 	public final static String LOGIN_PAGE = "/login.xhtml";
+	public final static String RAPORTBUG_PAGE = "/raportStatusBug.xhtml";
+	public final static String RAPORTUSERS_PAGE = "/raportUsers.xhtml";
 
 	@EJB
 	private PermissionsCheck permissionCheck;
@@ -66,6 +68,10 @@ public class PageFilter implements Filter {
 			if (requestUrl.indexOf(BUGS_PAGE) >= 0 && (!permissionCheck.verifyPermissionRendered(username,
 					PermissionType.BUG_MANAGEMENT.toString())
 					&& !permissionCheck.verifyPermissionRendered(username, PermissionType.BUG_EXPORT_PDF.toString()))) {
+				httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+			}
+			if ((requestUrl.indexOf(RAPORTBUG_PAGE) >= 0 || requestUrl.indexOf(RAPORTUSERS_PAGE) >= 0)
+					&& !permissionCheck.verifyPermissionRendered(username, PermissionType.BUG_MANAGEMENT.toString())) {
 				httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 			}
 			if (requestUrl.indexOf(EDITBUGSTATUS_PAGE) >= 0 && (!permissionCheck.verifyPermissionRendered(username,

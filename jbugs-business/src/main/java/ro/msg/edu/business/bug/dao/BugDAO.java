@@ -43,4 +43,17 @@ public class BugDAO extends AbstractDao<Bug> {
 		query.setParameter("rejected", BugStatusType.REJECTED);
 		return query.getResultList();
 	}
+
+	public List<String> findAssignerForFixedBug() {
+		Query query = em.createQuery("SELECT a.username FROM Bug b INNER JOIN b.assignedTo a WHERE b.status = :fixed");
+		query.setParameter("fixed", BugStatusType.FIXED);
+		return query.getResultList();
+	}
+
+	public List<String> findCreatorForRejectedBugs() {
+		Query query = em.createQuery("SELECT c.username FROM Bug b INNER JOIN b.createdBy c WHERE b.status= :rejected");
+		query.setParameter("rejected", BugStatusType.REJECTED);
+		return query.getResultList();
+	}
+
 }

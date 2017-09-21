@@ -22,7 +22,7 @@ public class BugControlTest extends AbstractIntegrationTest {
 	public void findAllBugs_Success() throws TechnicalException {
 		List<BugDTO> bugs = bugControl.findAllBugs();
 
-		Assert.assertEquals(4, bugs.size());
+		Assert.assertEquals(8, bugs.size());
 	}
 
 	@Test
@@ -37,6 +37,6 @@ public class BugControlTest extends AbstractIntegrationTest {
 		bug.setSeverity(BugSeverityType.LOW);
 		bug.setStatus(BugStatusType.FIXED);
 		BugDTO bugDTO = bugControl.closeBug(bug);
-		Assert.assertEquals( "CLOSED",bugDTO.getStatus().toString());
+		Assert.assertEquals("CLOSED", bugDTO.getStatus().toString());
 	}
 }

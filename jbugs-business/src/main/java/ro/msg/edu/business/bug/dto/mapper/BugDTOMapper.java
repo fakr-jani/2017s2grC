@@ -52,7 +52,7 @@ public class BugDTOMapper extends AbstractDTOMapper<Bug, BugDTO> {
 		bugDTO.setStatus(bugEntity.getStatus());
 		bugDTO.setSeverity(bugEntity.getSeverity());
 
-		User assignedToEntity = bugEntity.getCreatedBy();
+		User assignedToEntity = bugEntity.getAssignedTo();
 		if (assignedToEntity != null) {
 			UserDTO assignedToDTO = new UserDTO();
 			assignedToDTO.setId(assignedToEntity.getId());
